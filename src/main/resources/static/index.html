@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- loading dummy data to test, delete this later-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel Management System</title>
+</head>
+<body>
+<h1>Welcome to the Hotel Management System</h1>
+
+<h2>Guest Account Management</h2>
+<ul id="guestList">
+</ul>
+
+<h2>Hotel Staff Account Management</h2>
+<ul id="staffList">
+</ul>
+
+<script>
+    function fetchGuests() {
+        fetch('/guests')
+            .then(response => response.json())
+            .then(data => {
+                let guestList = document.getElementById('guestList');
+                guestList.innerHTML = '';
+                data.forEach(guest => {
+                    let listItem = document.createElement('li');
+                    listItem.textContent = guest.name + ' - ' + guest.email;
+                    guestList.appendChild(listItem);
+                });
+            });
+    }
+    function fetchStaff() {
+    fetch('/staff')
+        .then(response => response.json())
+        .then(data => {
+            let staffList = document.getElementById('staffList');
+            staffList.innerHTML = '';
+            data.forEach(staff => {
+                let listItem = document.createElement('li');
+                listItem.textContent = staff.name + ' - ' + staff.email + ' (' + staff.role + ')';
+                staffList.appendChild(listItem);
+            });
+        });
+    }
+
+    // Call the function when the page loads
+    window.onload = function() {
+    fetchGuests();
+    fetchStaff();
+};
+</script>
+
+</body>
+</html>
