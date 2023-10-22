@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -32,12 +33,12 @@ public class GuestAccountController {
     }
 
     @PostMapping
-    public ResponseEntity<GuestAccountEntity> createGuest(@RequestBody GuestAccountEntity guestAccount) {
+    public ResponseEntity<GuestAccountEntity> createGuest(@Valid @RequestBody GuestAccountEntity guestAccount) {
         return ResponseEntity.ok(service.saveGuest(guestAccount));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GuestAccountEntity> updateGuest(@PathVariable Long id, @RequestBody GuestAccountEntity guestAccount) {
+    public ResponseEntity<GuestAccountEntity> updateGuest(@PathVariable Long id, @Valid @RequestBody GuestAccountEntity guestAccount) {
         if (service.getGuestById(id) != null) {
             return ResponseEntity.ok(service.saveGuest(guestAccount));
         } else {
