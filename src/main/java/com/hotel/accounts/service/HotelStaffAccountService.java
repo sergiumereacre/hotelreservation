@@ -29,5 +29,10 @@ public class HotelStaffAccountService {
         repository.deleteById(id);
     }
 
+    public boolean isAdmin(Long id) {
+        HotelStaffAccountEntity staff = repository.findById(id).orElse(null);
+        return staff != null && "Admin".equalsIgnoreCase(staff.getRole());
+    }
+
     // other methods if we need
 }
