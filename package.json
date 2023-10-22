@@ -1,0 +1,14 @@
+{
+  "name": "hotelreservation",
+  "version": "1.0.0",
+  "description": "Hotel Reservation System",
+  "scripts": {
+    "install": "npm run backend:install & npm run frontend:install",
+    "frontend:install": "cd frontend && npm install",
+    "frontend": "cd frontend && npm run dev",
+    "backend:install": "cd backend && mvn clean install",
+    "backend": "cd backend && mvn spring-boot:run"
+  },
+  "keywords": [],
+  "license": "MIT"
+}
