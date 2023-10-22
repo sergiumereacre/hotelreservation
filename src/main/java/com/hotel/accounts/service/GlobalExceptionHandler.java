@@ -10,4 +10,5 @@ public class GlobalExceptionHandler {
         // Return response entity based on exception type
         return;
     }
+
 }
