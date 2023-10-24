@@ -4,7 +4,7 @@ import { useState } from "react";
 
 function StaffList() {
     const [staff, setStaff] = useState([]);
-    
+
     const fetchData = async () => {
         try {
             console.log(process.env.NEXT_PUBLIC_ADMIN_USERNAME, process.env.NEXT_PUBLIC_ADMIN_PASSWORD)
