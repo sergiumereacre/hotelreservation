@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -37,11 +38,11 @@ public class HotelStaffAccountController {
 
     @PostMapping
     public ResponseEntity<HotelStaffAccountEntity> createStaff(@Valid @RequestBody HotelStaffAccountEntity staffAccount) {
-        if (service.isAdmin(staffAccount.getId())) {
+       // if (service.isAdmin(staffAccount.getId())) {
             return ResponseEntity.ok(service.saveStaff(staffAccount));
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // 403 Forbidden
-        }
+       // } else {
+         //   return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // 403 Forbidden
+       // }
     }
 
     @PutMapping("/{id}")
@@ -67,7 +68,13 @@ public class HotelStaffAccountController {
         Optional<HotelStaffAccountEntity> staff = service.authenticate(email, password);
         if (staff.isPresent()) {
             // login successful
-            return ResponseEntity.ok(Map.of("isAuthenticated", true));
+            HotelStaffAccountEntity staffMember = staff.get();
+            System.out.println(staffMember);
+            Map<String, Object> response = new HashMap<>();
+            response.put("isAuthenticated", true);
+            response.put("role", staffMember.getRole()); // Add role to response
+            response.put("id", staffMember.getId().toString());
+            return ResponseEntity.ok(response);
         } else {
             // login failed
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
