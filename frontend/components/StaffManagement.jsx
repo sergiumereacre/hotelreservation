@@ -7,6 +7,7 @@
      const [isAdmin, setIsAdmin] = useState(false);
      const [showStaffOptions, setShowStaffOptions] = useState(false);
      const [loggedIn, setLoggedIn] = useState(false);
+     const [showLoginForm, setShowLoginForm] = useState(false);
      const [allStaff, setAllStaff] = useState([]);
      const [staffList, setStaffList] = useState([]);
      const [actionType, setActionType] = useState(null);  // 'add', 'update', or 'delete'
@@ -210,32 +211,39 @@
  return (
      <div className="space-y-4">
          {!loggedIn ? (
-            // <button onClick={handleLogin} className="bg-blue-500 p-2 rounded-lg">Staff Login</button>
-             <>
-                                <input
-                                    type="text"
-                                    placeholder="Email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="p-2 rounded-md"
-                                />
-                                <input
-                                    type="password"
-                                    placeholder="Password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="p-2 rounded-md"
-                                />
-                                <button onClick={handleLogin} className="bg-blue-500 p-2 rounded-lg">Confirm</button>
-                                {loginError && <p className="text-red-500">{loginError}</p>}
-                            </>
-
+             !showLoginForm ? (
+                 <button
+                     onClick={() => setShowLoginForm(true)}
+                     className="bg-blue-500 p-2 rounded-lg"
+                 >
+                     Staff Login
+                 </button>
+             ) : (
+                 <>
+                     <input
+                         type="text"
+                         placeholder="Email"
+                         value={email}
+                         onChange={(e) => setEmail(e.target.value)}
+                         className="p-2 rounded-md"
+                     />
+                     <input
+                         type="password"
+                         placeholder="Password"
+                         value={password}
+                         onChange={(e) => setPassword(e.target.value)}
+                         className="p-2 rounded-md"
+                     />
+                     <button onClick={handleLogin} className="bg-blue-500 p-2 rounded-lg">Confirm</button>
+                     {loginError && <p className="text-red-500">{loginError}</p>}
+                 </>
+             )
          ) : (
              <>
                  <button
                      onClick={() => {
-                         setIsAdmin(true); // This should be based on the logged-in staff's role
-                         fetchAllStaff(); // Fetch all staff members immediately
+                         setIsAdmin(true);
+                         fetchAllStaff(); // Fetch all staff members
                      }}
                      className="bg-blue-500 p-2 rounded-lg"
                  >
@@ -303,7 +311,35 @@
                          {actionType === 'update' && (
                              <>
                                  <div className="space-y-4">
-                                     {/* ... [Same input elements as above for Add Staff Section] */}
+                                      <input
+                                                     name="name"
+                                                     placeholder="Name"
+                                                     value={staffData.name}
+                                                     onChange={handleInputChange}
+                                                     className="p-2 rounded-md"
+                                                 />
+                                                 <input
+                                                     name="email"
+                                                     placeholder="Email"
+                                                     value={staffData.email}
+                                                     onChange={handleInputChange}
+                                                     className="p-2 rounded-md"
+                                                 />
+                                                 <input
+                                                     name="password"
+                                                     type="password"
+                                                     placeholder="Password"
+                                                     value={staffData.password}
+                                                     onChange={handleInputChange}
+                                                     className="p-2 rounded-md"
+                                                 />
+                                                 <input
+                                                     name="role"
+                                                     placeholder="Role"
+                                                     value={staffData.role}
+                                                     onChange={handleInputChange}
+                                                     className="p-2 rounded-md"
+                                                 />
                                  </div>
                                  <button onClick={handleActionConfirm} className="bg-green-500 p-2 rounded-lg">
                                      Confirm Update
