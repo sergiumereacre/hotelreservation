@@ -24,13 +24,14 @@ services:
   # MySQL Database.
   mysql:
     container_name: mysql
-    image: mysql:latest
+    image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      - MYSQL_DATABASE='spring_db'
+      - MYSQL_DATABASE='spring'
+      - MYSQL_ROOT_HOST='%'
       - MYSQL_USER='jai'
-      - MYSQL_PASSWORD='jaisocool'
+      - MYSQL_PASSWORD='password'
       - MYSQL_ROOT_PASSWORD='password'
     ports:
       - '3306:3306'
@@ -49,7 +50,8 @@ services:
     ports:
       - '9001:80'
     environment:
-      PMA_ARBITRARY: 1
+      PMA_HOST: mysql
+      PMA_PORT: 3306
     networks:
       mysql-phpmyadmin:
         aliases:
@@ -80,9 +82,6 @@ services:
       - nextjs-spring
     depends_on:
       - backend
-
-volumes:
-  db: {}
 
 networks:
   nextjs-spring: {}
