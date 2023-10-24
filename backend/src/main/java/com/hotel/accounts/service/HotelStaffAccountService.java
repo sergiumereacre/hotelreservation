@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HotelStaffAccountService {
@@ -34,5 +35,9 @@ public class HotelStaffAccountService {
         return staff != null && "Admin".equalsIgnoreCase(staff.getRole());
     }
 
+    public Optional<HotelStaffAccountEntity> authenticate(String email, String password) {
+        // Ensure this method is correctly querying the database
+        return repository.findByEmailAndPassword(email, password);
+    }
     // other methods if we need
 }

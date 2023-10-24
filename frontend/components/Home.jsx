@@ -6,7 +6,7 @@
        export default function Home() {
          const [showGuestForm, setShowGuestForm] = useState(false);
          const [showRegisterForm, setShowRegisterForm] = useState(false);
-         const [showStaffManagement, setShowStaffManagement] = useState(false);  // State to toggle staff management
+       //  const [showStaffManagement, setShowStaffManagement] = useState(false);  // State to toggle staff management
 
          return (
            <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -35,11 +35,7 @@
                  </div>
                )}
 
-               <button onClick={() => setShowStaffManagement(true)} className="bg-red-400 p-2 rounded-lg mt-4">
-                 Staff Login
-               </button>
-
-               {showStaffManagement && <StaffManagement />}  {/* Render the Staff Management component when button is clicked */}
+                <StaffManagement /> {/* Render the Staff Management component when button is clicked */}
              </div>
            </main>
          );

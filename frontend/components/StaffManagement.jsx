@@ -1,6 +1,6 @@
  "use client";
  "use strict";
- import { useState } from 'react';
+ import { useState, useEffect} from 'react';
  import axios from 'axios';
 
  function StaffManagement() {
@@ -17,15 +17,42 @@
          role: ''
      });
      const [staffId, setStaffId] = useState(null);
+     const [email, setEmail] = useState('');
+     const [password, setPassword] = useState('');
+     const [loginError, setLoginError] = useState('');
 
+      useEffect(() => {
+             // Fetch all staff when the component mounts
+             fetchAllStaff();
+         }, []);
      const handleInputChange = (event) => {
          const { name, value } = event.target;
          setStaffData(prevState => ({ ...prevState, [name]: value }));
      };
 
-     const handleLogin = () => {
-         setLoggedIn(true);
-     };
+//      const handleLogin = () => {
+//          setLoggedIn(true);
+//      };
+
+
+
+   const handleLogin = async () => {
+       try {
+           const response = await axios.post('/api/staff/login', { email: email, password });
+           if (response.data.isAuthenticated) {
+               setLoggedIn(true);
+               setIsAdmin(true); // Set based on staff member's role or other criteria
+               setLoginError(''); // Clear any previous login error
+           } else {
+               setLoginError('Incorrect email or password.'); // Set an error message
+           }
+       } catch (error) {
+           console.error('An error occurred during login:', error);
+           setLoginError('An error occurred. Please try again.');
+       }
+   };
+
+
 
       const addStaff = async () => {
           try {
@@ -183,7 +210,26 @@
  return (
      <div className="space-y-4">
          {!loggedIn ? (
-             <button onClick={handleLogin} className="bg-blue-500 p-2 rounded-lg">Staff Login</button>
+            // <button onClick={handleLogin} className="bg-blue-500 p-2 rounded-lg">Staff Login</button>
+             <>
+                                <input
+                                    type="text"
+                                    placeholder="Email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="p-2 rounded-md"
+                                />
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="p-2 rounded-md"
+                                />
+                                <button onClick={handleLogin} className="bg-blue-500 p-2 rounded-lg">Confirm</button>
+                                {loginError && <p className="text-red-500">{loginError}</p>}
+                            </>
+
          ) : (
              <>
                  <button

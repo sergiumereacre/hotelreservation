@@ -10,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/staff")
@@ -55,5 +57,20 @@ public class HotelStaffAccountController {
     public ResponseEntity<Void> deleteStaff(@PathVariable Long id) {
         service.deleteStaff(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticate(@RequestBody Map<String, String> credentials) {
+        String email = credentials.get("email");
+        String password = credentials.get("password");
+
+        Optional<HotelStaffAccountEntity> staff = service.authenticate(email, password);
+        if (staff.isPresent()) {
+            // login successful
+            return ResponseEntity.ok(Map.of("isAuthenticated", true));
+        } else {
+            // login failed
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+        }
     }
 }

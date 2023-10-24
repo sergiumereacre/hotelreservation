@@ -1,15 +1,10 @@
-import GuestList from "@/components/Guests"
-import StaffList from "@/components/Staff"
 
-export default function Home() {
+import Home from "@/components/Home";
+
+export default function MainPage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-
-      <div className="flex flex-col gap-2 items-center">
-        <GuestList />
-        <StaffList />
-      </div>
-
+      <Home />  {/* includes Home component and all its contents */}
     </main>
-  )
+  );
 }
