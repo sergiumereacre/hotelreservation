@@ -1,0 +1,92 @@
+version: '3'
+
+services:
+  # Spring Boot Backend.
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_HOST: mysql
+    ports:
+      - '8080:8080'
+    expose:
+      - '8080'
+    volumes:
+      - ./backend:/backend
+    networks:
+      - nextjs-spring
+      - spring-mysql
+    depends_on:
+      - mysql
+
+  # MySQL Database.
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_DATABASE='spring_db'
+      - MYSQL_USER='jai'
+      - MYSQL_PASSWORD='jaisocool'
+      - MYSQL_ROOT_PASSWORD='password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    networks:
+      mysql-phpmyadmin:
+        aliases:
+          - mysql
+      spring-mysql: {}
+  
+  # PhpMyAdmin
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin:latest
+    ports:
+      - '9001:80'
+    environment:
+      PMA_ARBITRARY: 1
+    networks:
+      mysql-phpmyadmin:
+        aliases:
+          - phpmyadmin
+    depends_on:
+      - mysql
+  
+  # NextJS frontend.
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: deps
+    restart: always
+    ports:
+      - '3000:3000'
+    command: npm run dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    networks:
+      - nextjs-spring
+    depends_on:
+      - backend
+
+volumes:
+  db: {}
+
+networks:
+  nextjs-spring: {}
+  spring-mysql: {}
+  mysql-phpmyadmin:
+    name: mysql-phpmyadmin
+    driver: bridge
