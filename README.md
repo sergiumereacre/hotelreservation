@@ -5,8 +5,23 @@
     <br />
   </p>
 
+## Installation (Using Docker)
 
-## Installation
+Use the following steps to set up the project repository. Run all of these commands inside the project folder in WSL.
+
+1. Make sure to install <a href="https://learn.microsoft.com/en-us/windows/wsl/install">**WSL**</a> and <a href="https://www.docker.com/">**Docker Desktop**</a>.
+2. Clone the project repository into the **/etc/home/[username]** directory after you open up wsl. (You can also just use the local repository you've been using on windows this whole time.)
+3. To make it easier you can run vscode in that repository by opening WSL and running the command ```code .```
+4. Open up docker desktop and make sure that these are enabled. <p><img src="https://i.ibb.co/ckJpCtf/Docker-Desktop-hi-Dg-Tax0-WD.png"/></p> <img src="https://i.ibb.co/9GmZT73/Docker-Desktop-k-BB1ud-Hh-W6.png"/>
+5. Run the following command to install the composer dependencies. 
+``` bash
+docker compose up -d
+```
+Congrats that all the steps to get it running :D
+<p><img src="https://i.imgur.com/gzg6ffg.png"/></p>
+
+
+## Installation (No Docker)
 
 ### Clone the repo
 ```sh
