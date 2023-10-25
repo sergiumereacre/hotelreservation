@@ -37,22 +37,38 @@
 
 
    const handleLogin = async () => {
-           try {
-               const response = await axios.post('/api/staff/login', { email, password });
-               if (response.data.isAuthenticated) {
-                   setLoggedIn(true);
-                   setUserRole(response.data.role);
-                   setCurrentStaff(response.data.id);
-                   setLoginError('');
+        try {
+                const response = await fetch("/api/staff/login", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password })
+                });
 
-                  // router.push('/staff-dashboard');  // Redirect to staff dashboard after successful login
-               } else {
-                   setLoginError('Incorrect email or password.');
-               }
-           } catch (error) {
-               console.error('An error occurred during login:', error);
-               setLoginError('An error occurred. Please try again.');
-           }
+//                 if (!response.ok) {
+//                     console.error("Error:", response);
+//                     console.log()
+//                     setLoginError('An error occurred. Please try again.'); // You can also use the response.statusText if you prefer
+//                     return;
+//                 }
+
+                const data = await response.json();
+
+                if (data.isAuthenticated) {
+                    setLoggedIn(true);
+                    setUserRole(data.role);
+                    setCurrentStaff(data.id);
+                    setLoginError('');
+
+                    // router.push('/staff-dashboard');  // Redirect to staff dashboard after successful login
+                } else {
+                    setLoginError('Incorrect email or password.');
+                }
+            } catch (error) {
+                console.error('An error occurred during login:', error);
+                setLoginError('An error occurred. Please try again.');
+            }
        };
 
 
