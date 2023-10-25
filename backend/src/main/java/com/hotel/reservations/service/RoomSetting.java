@@ -1,6 +1,4 @@
-package com.hotel.reservations.interfaces;
-
-public interface IRoomSetting {
+public class RoomSetting {
     String getRoomTheme();
 
     double getTemperature();
