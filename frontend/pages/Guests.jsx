@@ -7,6 +7,8 @@ function GuestList(){
     const [selectedGuest, setSelectedGuest] = useState(null);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [showLoginForm, setShowLoginForm] = useState(false);
+    const [showRegisterForm, setShowRegisterForm] = useState(false);
 
         const fetchData = async () => {
             try {
@@ -67,31 +69,60 @@ function GuestList(){
             }
         };
 
-        return (
-            <div>
-                {guests.length === 0 && <button onClick={fetchData} className="bg-blue-400 p-2 rounded-lg">Fetch Guests</button>}
-                {guests.length > 0 &&
-                    <ul className="flex flex-col items-center bg-slate-800 rounded-lg p-5">
-                        {guests.map(guest => (
-                            <li key={guest.id}>
-                                {guest.name} - {guest.email}
-                                <button onClick={() => setSelectedGuest(guest)}>Edit</button>
-                                <button onClick={() => handleDeleteGuest(guest.id)}>Delete</button>
-                            </li>
-                        ))}
-                    </ul>
-                }
-                <div>
-                    <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Guest Name" />
-                    <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Guest Email" />
-                    {selectedGuest ? (
-                        <button onClick={() => handleUpdateGuest(selectedGuest.id)}>Update Guest</button>
-                    ) : (
-                        <button onClick={handleCreateGuest}>Add Guest</button>
-                    )}
-                </div>
-            </div>
-        );
-    };
+     const handleGuestLogin = async () => {
+         try {
+             const response = await axios.post('/api/guests/login', { email, password });
+             if (response.data.isAuthenticated) {
 
-    export default GuestList;
+             } else {
+                 setLoginError('Incorrect email or password.');
+             }
+         } catch (error) {
+             console.error('An error occurred during login:', error);
+             setLoginError('An error occurred. Please try again.');
+         }
+     };
+
+
+  return (
+        <div className="flex flex-col gap-2 items-center">
+
+            <button
+                onClick={() => { setShowLoginForm(true); setShowRegisterForm(false); }}
+                className="bg-blue-400 p-2 rounded-lg"
+            >
+                Guest Login
+            </button>
+            <button
+                onClick={() => { setShowRegisterForm(true); setShowLoginForm(false); }}
+                className="bg-yellow-400 p-2 rounded-lg"
+            >
+                Register
+            </button>
+
+            {showLoginForm && (
+                <div className="flex flex-col gap-2 mt-4">
+                    <input placeholder="Email" className="p-2 rounded-md" />
+                    <input type="password" placeholder="Password" className="p-2 rounded-md" />
+                    <button className="bg-green-400 p-2 rounded-lg mt-2">Login</button>
+                </div>
+            )}
+
+            {showRegisterForm && (
+                <div className="flex flex-col gap-2 mt-4">
+                    <input placeholder="Name" className="p-2 rounded-md" />
+                    <input placeholder="Email" className="p-2 rounded-md" />
+                    <input type="password" placeholder="Password" className="p-2 rounded-md" />
+                    <button className="bg-green-400 p-2 rounded-lg mt-2">Sign Up</button>
+                </div>
+            )}
+        </div>
+    );
+}
+
+export default GuestList;
+
+
+
+
+

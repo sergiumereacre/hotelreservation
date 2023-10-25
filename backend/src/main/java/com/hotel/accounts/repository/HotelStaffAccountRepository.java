@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface HotelStaffAccountRepository extends JpaRepository<HotelStaffAccountEntity, Long> {
     // add methods if needed
     Optional<HotelStaffAccountEntity> findByEmailAndPassword(String email, String password);
-
+    Optional<HotelStaffAccountEntity> findByEmail(String email);
 }

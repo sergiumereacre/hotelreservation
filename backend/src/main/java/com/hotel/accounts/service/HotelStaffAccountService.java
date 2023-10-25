@@ -3,6 +3,7 @@ package com.hotel.accounts.service;
 import com.hotel.accounts.entity.HotelStaffAccountEntity;
 import com.hotel.accounts.repository.HotelStaffAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,8 @@ public class HotelStaffAccountService {
 
     @Autowired
     private HotelStaffAccountRepository repository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     public List<HotelStaffAccountEntity> getAllStaff() {
         return repository.findAll();
@@ -23,6 +26,7 @@ public class HotelStaffAccountService {
     }
 
     public HotelStaffAccountEntity saveStaff(HotelStaffAccountEntity staffAccount) {
+        staffAccount.setPassword(passwordEncoder.encode(staffAccount.getPassword()));
         return repository.save(staffAccount);
     }
 
@@ -36,8 +40,11 @@ public class HotelStaffAccountService {
     }
 
     public Optional<HotelStaffAccountEntity> authenticate(String email, String password) {
-        // Ensure this method is correctly querying the database
-        return repository.findByEmailAndPassword(email, password);
+        HotelStaffAccountEntity staff = repository.findByEmail(email).orElse(null);
+        if (staff != null && passwordEncoder.matches(password, staff.getPassword())) {
+            return Optional.of(staff);
+        }
+        return Optional.empty();
     }
     // other methods if we need
 }

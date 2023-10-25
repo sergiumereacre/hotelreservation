@@ -37,36 +37,40 @@
 
 
    const handleLogin = async () => {
-       try {
-           const response = await axios.post('/api/staff/login', { email, password });
-           if (response.data.isAuthenticated) {
-               setLoggedIn(true);
-               setUserRole(response.data.role);
-               //setCurrentStaff(response.data.id);// Set the user role here
-               setCurrentStaff(response.data.id);
-               setLoginError(''); // Clear any previous login error
-           } else {
-               setLoginError('Incorrect email or password.'); // Set an error message
+           try {
+               const response = await axios.post('/api/staff/login', { email, password });
+               if (response.data.isAuthenticated) {
+                   setLoggedIn(true);
+                   setUserRole(response.data.role);
+                   setCurrentStaff(response.data.id);
+                   setLoginError('');
+
+                  // router.push('/staff-dashboard');  // Redirect to staff dashboard after successful login
+               } else {
+                   setLoginError('Incorrect email or password.');
+               }
+           } catch (error) {
+               console.error('An error occurred during login:', error);
+               setLoginError('An error occurred. Please try again.');
            }
-       } catch (error) {
-           console.error('An error occurred during login:', error);
-           setLoginError('An error occurred. Please try again.');
-       }
-   };
+       };
 
 
       const addStaff = async () => {
-          try {
-              console.log(process.env.NEXT_PUBLIC_ADMIN_USERNAME, process.env.NEXT_PUBLIC_ADMIN_PASSWORD);
-              const response = await fetch("/api/staff", {
-                  method: "POST",
-                  headers: {
-                      "Content-Type": "application/json",
-                      "Authorization": "Basic " + btoa(process.env.NEXT_PUBLIC_ADMIN_USERNAME + ":" + process.env.NEXT_PUBLIC_ADMIN_PASSWORD),
-                  },
-                  body: JSON.stringify(staffData),
-              });
+           try {
+                  // Check if the user has admin permissions
+                  if (userRole !== 'Admin') {
+                      alert('Unauthorized access: You do not have permission to add staff.');
+                      return;
+                  }
 
+                  const response = await fetch("/api/staff", {
+                      method: "POST",
+                      headers: {
+                          "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify(staffData),
+                  });
               // Only attempt to parse JSON if response is not empty
               const contentType = response.headers.get("content-type");
               let result = {};
@@ -95,46 +99,45 @@
       };
 
    const fetchAllStaff = async () => {
-       try {
-           const response = await fetch("/api/staff", {
-               method: "GET",
-               headers: {
-                   "Content-Type": "application/json",
-                   "Authorization": "Basic " + btoa(process.env.NEXT_PUBLIC_ADMIN_USERNAME + ":" + process.env.NEXT_PUBLIC_ADMIN_PASSWORD),
-               },
-           });
+      try {
+                  const response = await fetch("/api/staff", {
+                      method: "GET",
+                      headers: {
+                          "Content-Type": "application/json"
+                      }
+                  });
 
-           if (response.ok) {
-               const staffList = await response.json();
-               setStaffList(staffList); // <-- Save the staff list to the state
-           } else {
-               console.error("Failed to fetch staff:", response.statusText);
-           }
-       } catch (error) {
-           console.error(error);
-       }
-   };
+                  if (response.ok) {
+                      const staffList = await response.json();
+                      setStaffList(staffList);
+                  } else {
+                      console.error("Failed to fetch staff:", response.statusText);
+                  }
+              } catch (error) {
+                  console.error(error);
+              }
+          };
 
 const updateSelfAccount = async () => {
-    try {
-        const response = await fetch(`/api/staff/${currentStaff}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": "Basic " + btoa(process.env.NEXT_PUBLIC_ADMIN_USERNAME + ":" + process.env.NEXT_PUBLIC_ADMIN_PASSWORD),
-            },
-            body: JSON.stringify(staffData)
-        });
+     try {
+               const response = await fetch(`/api/staff/${currentStaff}`, {
+                   method: 'PUT',
+                   headers: {
+                       'Content-Type': 'application/json'
+                   },
+                   body: JSON.stringify(staffData)
+               });
 
-        if (response.ok) {
-            alert("Account updated successfully!");
-        } else {
-            console.error("Failed to update account");
-        }
-    } catch (err) {
-        console.error("Error updating account:", err);
-    }
-};
+               if (response.ok) {
+                   alert("Account updated successfully!");
+               } else {
+                   console.error("Failed to update account");
+               }
+           } catch (err) {
+               console.error("Error updating account:", err);
+           }
+       };
+
 
     const fetchStaffById = async (id) => {
         try {
@@ -167,32 +170,38 @@ const updateSelfAccount = async () => {
           }
       };
 
-      const handleSaveUpdate = async () => {
-          try {
-              const response = await fetch(`/api/staff/${staffId}`, {
-                  method: 'PUT',
-                  headers: {
-                      'Content-Type': 'application/json',
-                      "Authorization": "Basic " + btoa(process.env.NEXT_PUBLIC_ADMIN_USERNAME + ":" + process.env.NEXT_PUBLIC_ADMIN_PASSWORD),
-                  },
-                  body: JSON.stringify(staffData)
-              });
+     const handleSaveUpdate = async () => {
+         // Check if the user has admin permissions
+         if (userRole !== 'Admin') {
+             alert('Unauthorized access: You do not have permission to update staff details.');
+             return;
+         }
 
-              if (response.ok) {
-                  alert("Staff details updated successfully!");
-                  setStaffData({
-                      name: '',
-                      email: '',
-                      password: '',
-                      role: ''
-                  });
-              } else {
-                  console.error("Failed to update staff details");
-              }
-          } catch (err) {
-              console.error("Error updating staff details:", err);
-          }
-      };
+         try {
+             const response = await fetch(`/api/staff/${staffId}`, {
+                 method: 'PUT',
+                 headers: {
+                     'Content-Type': 'application/json',
+                 },
+                 body: JSON.stringify(staffData)
+             });
+
+             if (response.ok) {
+                 alert("Staff details updated successfully!");
+                 setStaffData({
+                     name: '',
+                     email: '',
+                     password: '',
+                     role: ''
+                 });
+             } else {
+                 console.error("Failed to update staff details");
+             }
+         } catch (err) {
+             console.error("Error updating staff details:", err);
+         }
+     };
+
 
       const handleActionConfirm = () => {
           switch (actionType) {
@@ -211,14 +220,20 @@ const updateSelfAccount = async () => {
       };
 
     const handleDeleteStaff = async (id) => {
+        // Check if the user has admin permissions
+        if (userRole !== 'Admin') {
+            alert('Unauthorized access: You do not have permission to delete staff.');
+            return;
+        }
+
         try {
             const response = await fetch(`/api/staff/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Basic " + btoa(process.env.NEXT_PUBLIC_ADMIN_USERNAME + ":" + process.env.NEXT_PUBLIC_ADMIN_PASSWORD),
                 },
             });
+
             if (response.ok) {
                 alert("Staff deleted successfully!");
                 fetchAllStaff();  // Refresh the staff list
@@ -229,17 +244,12 @@ const updateSelfAccount = async () => {
             console.error(error);
         }
     };
+
 return (
     <div className="space-y-4">
         {!loggedIn ? (
             !showLoginForm ? (
-                <button
-                    onClick={() => setShowLoginForm(true)}
-                    className="bg-blue-500 p-2 rounded-lg"
-                >
-                    Staff Login
-                </button>
-            ) : (
+
                 <>
                     <input
                         type="text"
@@ -258,7 +268,7 @@ return (
                     <button onClick={handleLogin} className="bg-blue-500 p-2 rounded-lg">Confirm</button>
                     {loginError && <p className="text-red-500">{loginError}</p>}
                 </>
-            )
+            ) : null
         ) : (
             <>
                 <button
