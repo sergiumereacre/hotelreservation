@@ -1,3 +1,5 @@
+package com.hotel.reservations.service;
+
 import com.hotel.reservations.entity.Reservation;
 
 public class PreferenceMgt {

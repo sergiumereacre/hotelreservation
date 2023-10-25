@@ -11,7 +11,7 @@ public interface IHotelDetails {
 
     List<Room> getRooms();
 
-    String getRoomDetails(int roomId);
+    Room getRoomById(int roomId);
 
     boolean getRoomIsAvailable(int roomId, Date startDate, Date endDate);
     

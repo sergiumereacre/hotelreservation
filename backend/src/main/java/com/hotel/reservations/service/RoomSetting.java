@@ -1,3 +1,5 @@
+package com.hotel.reservations.service;
+
 public class RoomSetting {
     String getRoomTheme();
 
