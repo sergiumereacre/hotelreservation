@@ -1,5 +1,11 @@
 package com.hotel.reservations.interfaces;
 
-public class IRoomSetting {
-    
+public interface IRoomSetting {
+    String getRoomTheme();
+
+    double getTemperature();
+
+    int getLighting();
+
+    // String setRoom
 }
