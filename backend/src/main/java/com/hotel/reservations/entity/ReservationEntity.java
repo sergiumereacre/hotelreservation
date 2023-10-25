@@ -1,22 +1,33 @@
 package com.hotel.reservations.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.hotel.reservations.interfaces.IRoomSetting;
+
+import lombok.Data;
+
 import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 import java.util.Date;
 
 @Entity
-public class Reservation {
+@Data
+public class ReservationEntity {
     @Id
+    @Column(name = "reservation_ref", unique = true, nullable = false)
     private String reservationRef = UUID.randomUUID().toString();
+
+    private RoomEntity room;
+    private IRoomSetting roomSetting;
 
     @NotBlank(message = "GuestID cannot be blank")
     private String guestID;
     
-    @NotBlank(message= "Number of guests cannot be blank")
+    @NotNull(message= "Number of guests cannot be blank")
     @Size()
     private int numGuests;
 
@@ -34,4 +45,5 @@ public class Reservation {
     private boolean isCancelled;
 
     private boolean isPaid;
+
 }

@@ -1,5 +1,6 @@
 import GuestList from "@/components/Guests"
 import StaffList from "@/components/Staff"
+import Link from "next"
 
 export default function Home() {
   return (

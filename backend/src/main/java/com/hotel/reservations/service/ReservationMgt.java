@@ -1,17 +1,30 @@
 package com.hotel.reservations.service;
 
 import org.springframework.stereotype.Service;
-import com.hotel.reservations.entity.Reservation;
+import com.hotel.reservations.entity.ReservationEntity;
 import com.hotel.reservations.repository.ReservationRepository;
 import java.util.Date;
+import java.util.List;
 
 @Service
-public class ReservationMgt implements IReservationMgt {
+public class ReservationMgt {
 
-        @Autowired
-        private ReservationRepository repository;
+    @Autowired
+    private ReservationRepository repository;
 
-        public Reservation makeReservation(int guestId, int roomId, Date startDate, Date endDate, int numGuests) {
-            
-        }
+    public ReservationEntity saveReservation(ReservationEntity reservation) {
+        return repository.save(reservation);
+    }
+
+    public List<ReservationEntity> getAllReservation() {
+        return repository.findAll();
+    }
+
+    public ReservationEntity getGuestById(String reservationRef) {
+        return repository.findById(reservationRef).orElse(null);
+    }
+
+    public void deleteReservation(String reservationRef) {
+        repository.deleteById(reservationRef);
+    }
 }
