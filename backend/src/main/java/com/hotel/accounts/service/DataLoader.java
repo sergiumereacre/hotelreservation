@@ -74,10 +74,5 @@ public class DataLoader implements CommandLineRunner {
         // Add more dummy staff as needed
     }
 
-    private void loadReservationData() {
-        
-        
-    }
-
 
 }

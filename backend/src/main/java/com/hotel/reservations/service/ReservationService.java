@@ -7,7 +7,6 @@ import com.hotel.reservations.entity.RoomEntity;
 import com.hotel.reservations.entity.RoomSettingEntity;
 import com.hotel.reservations.interfaces.IReservationMgt;
 import com.hotel.reservations.repository.ReservationRepository;
-
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +27,10 @@ public class ReservationService implements IReservationMgt {
     @Override
     public List<ReservationEntity> getAllReservations() {
         return repository.findAll();
+    }
+
+    public ReservationEntity getGuestById(String reservationRef) {
+        return repository.findById(reservationRef).orElse(null);
     }
 
     public void deleteReservation(String reservationRef) {
@@ -70,6 +73,12 @@ public class ReservationService implements IReservationMgt {
         // Save reservation
         return saveReservation(reservation);
     }
+
+    // @Override
+    // public String showConfirmation(ReservationEntity reservation) {
+    //     // TODO Auto-generated method stub
+    //     return null;
+    // }
 
     @Override
     public ReservationEntity updateReservation(String reservationRef, int roomId, Date startDate, Date endDate,
