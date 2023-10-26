@@ -32,6 +32,30 @@ public class GuestAccountController {
         }
     }
 
+    // Mapping that returns the numStays of a guest.
+    @GetMapping("/{id}/numStays")
+    public ResponseEntity<Integer> getNumStays(@PathVariable Long id) {
+        GuestAccountEntity guest = service.getGuestById(id);
+        if (guest != null) {
+            return ResponseEntity.ok(guest.getNumStays());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Put method that increments the numStays of a guest by 1.
+    @PutMapping("/{id}/numStays")
+    public ResponseEntity<GuestAccountEntity> updateNumStays(@PathVariable Long id) {
+        GuestAccountEntity guest = service.getGuestById(id);
+        if (guest != null) {
+            guest.setNumStays(guest.getNumStays() + 1);
+            return ResponseEntity.ok(service.saveGuest(guest));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
     @PostMapping
     public ResponseEntity<GuestAccountEntity> createGuest(@Valid @RequestBody GuestAccountEntity guestAccount) {
         return ResponseEntity.ok(service.saveGuest(guestAccount));
