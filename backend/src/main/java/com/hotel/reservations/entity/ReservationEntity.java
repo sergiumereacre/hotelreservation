@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -16,6 +17,7 @@ import java.util.Date;
 
 @Entity
 @Data
+@Table(name = "reservations")
 public class ReservationEntity {
     @Id
     @Column(name = "reservation_ref", unique = true, nullable = false)

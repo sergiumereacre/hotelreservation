@@ -1,8 +1,11 @@
 package com.hotel.reservations.service;
 
+import org.springframework.stereotype.Service;
+
 import com.hotel.reservations.interfaces.IRoomSetting;
 
-public class RoomSetting implements IRoomSetting{
+@Service
+public class RoomSettingService implements IRoomSetting{
 
     @Override
     public int getLighting() {

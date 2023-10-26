@@ -19,6 +19,7 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         loadGuestData();
         loadStaffData();
+        // loadReservationData();
     }
 
     private void loadGuestData() {
@@ -63,5 +64,10 @@ public class DataLoader implements CommandLineRunner {
         accountController.createStaff(staff3);
 
         // Add more dummy staff as needed
+    }
+
+    private void loadReservationData() {
+        
+        
     }
 }

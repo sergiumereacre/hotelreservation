@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<ReservationEntity, String> {
-    Optional<ReservationEntity> findByReference(String reservationRef);
+    Optional<ReservationEntity> findByReservationRef(String reservationRef);
 }

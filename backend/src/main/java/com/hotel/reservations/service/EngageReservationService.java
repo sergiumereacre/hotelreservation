@@ -1,8 +1,11 @@
 package com.hotel.reservations.service;
 
+import org.springframework.stereotype.Service;
+
 import com.hotel.reservations.interfaces.IEngageReservation;
 
-public class EngageReservation implements IEngageReservation{
+@Service
+public class EngageReservationService implements IEngageReservation{
     public boolean doCheckIn(String reservationRef){
         // 1. Get reservation 
         // 2. Set reservation isClaimed to true

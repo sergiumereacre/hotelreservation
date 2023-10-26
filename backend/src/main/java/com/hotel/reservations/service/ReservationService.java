@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class ReservationMgt implements IReservationMgt {
+public class ReservationService implements IReservationMgt {
 
     @Autowired
     private ReservationRepository repository;
