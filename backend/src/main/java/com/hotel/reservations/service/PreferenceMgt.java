@@ -1,7 +1,9 @@
 package com.hotel.reservations.service;
 
-import com.hotel.reservations.entity.Reservation;
+import com.hotel.reservations.entity.ReservationEntity;
 
 public class PreferenceMgt {
-    void setPreference(Reservation reservation, String theme, double temperature, int lighting);
+    void setPreference(ReservationEntity reservation, String theme, double temperature, int lighting){
+
+    }
 }

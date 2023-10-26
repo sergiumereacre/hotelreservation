@@ -1,15 +1,42 @@
-package com.hotel.reservations.entity;
+package com.hotel.reservations.service;
 
-public class RoomSetting {
-    String getRoomTheme();
+import com.hotel.reservations.interfaces.IRoomSetting;
 
-    double getTemperature();
+public class RoomSetting implements IRoomSetting{
 
-    int getLighting();
+    @Override
+    public int getLighting() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-    void setRoomTheme(String theme);
+    @Override
+    public String getRoomTheme() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-    void setTemperature(double temperature);
+    @Override
+    public double getTemperature() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-    void setLighting(int lighting);
+    @Override
+    public void setLighting(int lighting) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setRoomTheme(String theme) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setTemperature(double temperature) {
+        // TODO Auto-generated method stub
+        
+    }
 }

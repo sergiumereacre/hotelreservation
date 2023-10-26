@@ -3,10 +3,10 @@ package com.hotel.reservations.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.hotel.reservations.interfaces.IRoomSetting;
 
 import lombok.Data;
 
@@ -21,8 +21,12 @@ public class ReservationEntity {
     @Column(name = "reservation_ref", unique = true, nullable = false)
     private String reservationRef = UUID.randomUUID().toString();
 
+    @OneToOne
+    @JoinColumn(name = "room_id")
     private RoomEntity room;
-    private IRoomSetting roomSetting;
+
+    @OneToOne
+    private RoomSettingEntity roomSetting;
 
     @NotBlank(message = "GuestID cannot be blank")
     private String guestID;
