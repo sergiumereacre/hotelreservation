@@ -34,21 +34,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .withUser("admin")
                 .password(passwordEncoder.encode("adminpassword"))
-                .roles("ADMIN");
+                .roles("Admin");
     }
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+//                .antMatchers("/login", "/register", "/").permitAll()
+//                .antMatchers("/StaffManagement").permitAll() // <-- Added this line
+//                .antMatchers("/staff/**").hasRole("Admin")
+//                .anyRequest().permitAll()
+//                .and()
+//                .httpBasic();
+//    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/login", "/register", "/").permitAll()
-                .antMatchers("/staff/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
-                .httpBasic();
+                .httpBasic().disable();  // This line disables HTTP Basic authentication
     }
-
 //    @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
