@@ -1,27 +1,58 @@
 package com.hotel.reservations.entity;
 
-import lombok.Data;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
+
+import com.hotel.reservations.interfaces.IRoomSetting;
 
 @Entity
-@Data
-public class RoomSettingEntity {
+public class RoomSettingEntity implements IRoomSetting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roomSettingId;
 
-    @NotBlank(message = "Room theme cannot be blank")
     private String roomTheme;
 
-    @NotBlank(message = "Room temperature cannot be blank")
     private double temperature;
 
-    @NotBlank(message = "Room lighting cannot be blank")
     private int lighting;
+
+    @Override
+    public int getLighting() {
+        // TODO Auto-generated method stub
+        return this.lighting;
+    }
+
+    @Override
+    public String getRoomTheme() {
+        // TODO Auto-generated method stub
+        return this.roomTheme;
+    }
+
+    @Override
+    public double getTemperature() {
+        // TODO Auto-generated method stub
+        return this.temperature;
+    }
+
+    @Override
+    public void setLighting(int lighting) {
+        // TODO Auto-generated method stub
+        this.lighting = lighting;
+    }
+
+    @Override
+    public void setRoomTheme(String theme) {
+        // TODO Auto-generated method stub
+        this.roomTheme = theme;
+    }
+
+    @Override
+    public void setTemperature(double temperature) {
+        // TODO Auto-generated method stub
+        this.temperature = temperature;
+    }
 }

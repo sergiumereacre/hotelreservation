@@ -11,7 +11,6 @@ public class HotelEntity implements IHotelDetails{
     
     private List<RoomEntity> rooms;
     
-    
     private String hotelDetails = "Hotel Name: Star-Crossed Hotel\n" +
             "Hotel Address: Groningen, 1234 Sesame Street, Star-Crossed Hotel\n" +
             "Hotel Phone: 123-456-7890\n" +

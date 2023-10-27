@@ -20,7 +20,8 @@ public class ReservationService implements IReservationMgt {
         return repository.save(reservation);
     }
 
-    public List<ReservationEntity> getAllReservation() {
+    @Override
+        public List<ReservationEntity> getAllReservations() {
         return repository.findAll();
     }
 
@@ -33,8 +34,9 @@ public class ReservationService implements IReservationMgt {
     }
 
     @Override
-    public void cancelReservation(String reservationRef) {
+    public boolean cancelReservation(String reservationRef) {
         // TODO Auto-generated method stub
+        return false;
         
     }
 
@@ -44,17 +46,19 @@ public class ReservationService implements IReservationMgt {
         return null;
     }
 
+
+
     @Override
     public ReservationEntity makeReservation(int guestId, int roomId, Date startDate, Date endDate, int numGuests) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public String showConfirmation(ReservationEntity reservation) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    // @Override
+    // public String showConfirmation(ReservationEntity reservation) {
+    //     // TODO Auto-generated method stub
+    //     return null;
+    // }
 
     @Override
     public ReservationEntity updateReservation(String reservationRef, int roomId, Date startDate, Date endDate,
