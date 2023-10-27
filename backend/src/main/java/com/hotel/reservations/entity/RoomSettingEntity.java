@@ -14,7 +14,7 @@ public class RoomSettingEntity implements IRoomSetting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roomSettingId;
 
-    private String roomTheme;
+    private RoomTheme roomTheme;
 
     private double temperature;
 
@@ -27,7 +27,7 @@ public class RoomSettingEntity implements IRoomSetting {
     }
 
     @Override
-    public String getRoomTheme() {
+    public RoomTheme getRoomTheme() {
         // TODO Auto-generated method stub
         return this.roomTheme;
     }
@@ -45,7 +45,7 @@ public class RoomSettingEntity implements IRoomSetting {
     }
 
     @Override
-    public void setRoomTheme(String theme) {
+    public void setRoomTheme(RoomTheme theme) {
         // TODO Auto-generated method stub
         this.roomTheme = theme;
     }

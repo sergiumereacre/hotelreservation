@@ -16,6 +16,8 @@ public class RoomEntity {
     private int roomId;
 
     private int roomNumber;
+
+    private int capacity;
     
     private String roomType;
 

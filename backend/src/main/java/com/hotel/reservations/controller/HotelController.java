@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hotel.reservations.entity.RoomEntity;
+import com.hotel.reservations.entity.RoomTheme;
 import com.hotel.reservations.service.HotelService;
 
 @RestController
@@ -39,5 +40,11 @@ public class HotelController {
     @GetMapping("/room/{roomId}/is-available")
     public ResponseEntity<Boolean> getRoomIsAvailable(int roomId, Date startDate, Date endDate) {
         return ResponseEntity.ok(service.getRoomIsAvailable(roomId, startDate, endDate));
+    }
+
+    // Get all themes
+    @GetMapping("/themes")
+    public ResponseEntity<List<RoomTheme>> getAllThemes() {
+        return ResponseEntity.ok(service.getAllRoomThemes());
     }
 }

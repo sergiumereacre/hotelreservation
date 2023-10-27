@@ -1,5 +1,6 @@
 package com.hotel.reservations.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +68,13 @@ public class ReservationController {
     public ResponseEntity<Boolean> cancelReservation(@PathVariable String reservationRef) {
         boolean ok = reservationService.cancelReservation(reservationRef);
         return ResponseEntity.ok(ok);
+    }
+
+    // Request to update reservation
+    @PutMapping("/reservation/{reservationRef}")
+    public ResponseEntity<ReservationEntity> updateReservation(@PathVariable String reservationRef, int roomId,
+            Date startDate, Date endDate, int numGuests) {
+        ReservationEntity reservation = reservationService.updateReservation(reservationRef, roomId, startDate, endDate, numGuests);
+        return ResponseEntity.ok(reservation);
     }
 }
