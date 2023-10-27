@@ -4,15 +4,13 @@ import com.hotel.accounts.entity.GuestAccountEntity;
 import com.hotel.loyalty.entity.LoyaltyEntity;
 import com.hotel.loyalty.interfaces.ILoyaltyObserver;
 import com.hotel.loyalty.repository.LoyaltyRepository;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class LoyaltyService {
     @Autowired
     private LoyaltyRepository loyaltyRepository;
-
-    @Autowired
-    private AccountRepository accountRepository;
 
     private List<ILoyaltyObserver> observers = new ArrayList<>();
 
