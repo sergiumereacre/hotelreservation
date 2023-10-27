@@ -53,6 +53,13 @@ public class DataLoader implements CommandLineRunner {
         staff2.setPassword("staffpassword456");
         staff2.setRole("Housekeeping");
         staffService.saveStaff(staff2);
+        
+        HotelStaffAccountEntity staff3 = new HotelStaffAccountEntity();
+        staff3.setName("Jai Jaison");
+        staff3.setEmail("jai@example.com");
+        staff3.setPassword("jaisocool");
+        staff3.setRole("Admin");
+        staffService.saveStaff(staff3);
 
         // Add more dummy staff as needed
     }
