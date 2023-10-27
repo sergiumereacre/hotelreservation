@@ -5,7 +5,6 @@ import com.hotel.accounts.service.GuestAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -54,7 +53,6 @@ public class GuestAccountController {
             return ResponseEntity.notFound().build();
         }
     }
-
 
     @PostMapping
     public ResponseEntity<GuestAccountEntity> createGuest(@Valid @RequestBody GuestAccountEntity guestAccount) {
