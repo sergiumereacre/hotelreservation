@@ -34,7 +34,7 @@ export default function NavbarWithCTAButton() {
                     <Navbar.Link active={pathname === '/staff'} className="font-semibold" href="/staff">
                         Staff
                     </Navbar.Link>
-                    <Navbar.Link active={pathname === '/guest'} className="font-semibold" href="/guest">
+                    <Navbar.Link active={pathname === '/guests'} className="font-semibold" href="/Guest">
                         Guest
                     </Navbar.Link>
                 </Navbar.Collapse>

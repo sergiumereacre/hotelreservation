@@ -25,15 +25,10 @@ export default function Staff() {
     const [userRole, setUserRole] = useState('');
 
 
-    // useEffect(() => {
-    // Fetch all staff when the component mounts
-    //     fetchAllStaff();
-    // }, []);
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setStaffData(prevState => ({ ...prevState, [name]: value }));
     };
-
 
     const handleLogin = async () => {
         try {
@@ -45,12 +40,6 @@ export default function Staff() {
                 body: JSON.stringify({ email, password })
             });
 
-            //                 if (!response.ok) {
-            //                     console.error("Error:", response);
-            //                     console.log()
-            //                     setLoginError('An error occurred. Please try again.'); // You can also use the response.statusText if you prefer
-            //                     return;
-            //                 }
 
             const data = await response.json();
 
@@ -60,7 +49,6 @@ export default function Staff() {
                 setCurrentStaff(data.id);
                 setLoginError('');
 
-                // router.push('/staff-dashboard');  // Redirect to staff dashboard after successful login
             } else {
                 setLoginError('Incorrect email or password.');
             }
@@ -94,7 +82,9 @@ export default function Staff() {
             }
 
             if (response.ok) {
-                console.log("Staff added successfully!", result);
+                const savedStaff = await response.json();
+                console.log("Staff added successfully!", savedStaff);
+
                 // Reset staffData AFTER successfully adding the staff
                 setStaffData({
                     name: '',
@@ -106,7 +96,7 @@ export default function Staff() {
                 // Fetch all staff after the addition
                 fetchAllStaff();
             } else {
-                console.error("Failed to add staff:", result.message || response.statusText);
+                console.error("Failed to add staff:", response.statusText);
             }
         } catch (error) {
             console.error(error);
@@ -192,31 +182,40 @@ export default function Staff() {
             return;
         }
 
-        try {
-            const response = await fetch(`/api/staff/${staffId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(staffData)
-            });
+        console.log("Sending update for staff:", staffData);
 
-            if (response.ok) {
-                alert("Staff details updated successfully!");
-                setStaffData({
-                    name: '',
-                    email: '',
-                    password: '',
-                    role: ''
+         try {
+                const response = await fetch(`/api/staff/${staffId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(staffData)
                 });
-            } else {
-                console.error("Failed to update staff details");
-            }
-        } catch (err) {
-            console.error("Error updating staff details:", err);
-        }
-    };
 
+                const text = await response.text();  // Get the response as text
+
+                if (response.ok) {
+                    if (!text) {
+                        console.error("Empty response from the server.");
+                        return;
+                    }
+
+                    const responseData = JSON.parse(text);
+
+
+                    if (responseData.name !== staffData.name || responseData.email !== staffData.email) {
+                        console.error("Updated data on the server doesn't match the sent data.");
+                        return;
+                    }
+
+                } else {
+                    console.error("Failed to update staff details.");
+                }
+            } catch (err) {
+                console.error("Error updating staff details:", err);
+            }
+        };
 
     const handleActionConfirm = () => {
         switch (actionType) {

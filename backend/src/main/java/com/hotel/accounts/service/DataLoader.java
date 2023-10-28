@@ -1,8 +1,7 @@
 package com.hotel.accounts.service;
+import com.hotel.accounts.controller.AccountController;
 import com.hotel.accounts.entity.GuestAccountEntity;
 import com.hotel.accounts.entity.HotelStaffAccountEntity;
-import com.hotel.accounts.service.GuestAccountService;
-import com.hotel.accounts.service.HotelStaffAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -11,11 +10,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataLoader implements CommandLineRunner {
 
-    @Autowired
-    private GuestAccountService guestService;
 
     @Autowired
-    private HotelStaffAccountService staffService;
+    private AccountController accountController;
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -25,41 +23,44 @@ public class DataLoader implements CommandLineRunner {
 
     private void loadGuestData() {
         GuestAccountEntity guest1 = new GuestAccountEntity();
-        guest1.setName("Edison Cai");
-        guest1.setEmail("edison.cai@example.com");
-        guest1.setPassword("password123");
-        guestService.saveGuest(guest1);
+        guest1.setName("John Doe");
+        guest1.setEmail("john@example.com");
+        guest1.setPassword("password");
+        accountController.createGuest(guest1);
 
         GuestAccountEntity guest2 = new GuestAccountEntity();
-        guest2.setName("Jai");
-        guest2.setEmail("jai@example.com");
-        guest2.setPassword("password456");
-        guestService.saveGuest(guest2);
+        guest2.setName("Jane Smith");
+        guest2.setEmail("jane@example.com");
+        guest2.setPassword("password");
+        accountController.createGuest(guest2);
 
         // Add more dummy guests as needed
     }
 
     private void loadStaffData() {
         HotelStaffAccountEntity staff1 = new HotelStaffAccountEntity();
-        staff1.setName("Jack O Brien");
-        staff1.setEmail("Jack.obrien@example.com");
-        staff1.setPassword("staffpassword123");
-        staff1.setRole("Receptionist");
-        staffService.saveStaff(staff1);
+        staff1.setName("Alice Admin");
+        staff1.setEmail("alice@example.com");
+        staff1.setPassword("password");
+        staff1.setRole("Staff");
+        staff1.setStaff(true);
+        accountController.createStaff(staff1);
 
         HotelStaffAccountEntity staff2 = new HotelStaffAccountEntity();
-        staff2.setName("David Walsh");
-        staff2.setEmail("david.walsh@example.com");
-        staff2.setPassword("staffpassword456");
-        staff2.setRole("Housekeeping");
-        staffService.saveStaff(staff2);
-        
+        staff2.setName("Bob Manager");
+        staff2.setEmail("bob@example.com");
+        staff2.setPassword("password");
+        staff2.setRole("Staff");
+        staff2.setStaff(true);
+        accountController.createStaff(staff2);
+
         HotelStaffAccountEntity staff3 = new HotelStaffAccountEntity();
-        staff3.setName("Jai Jaison");
+        staff3.setName("Jai");
         staff3.setEmail("jai@example.com");
         staff3.setPassword("jaisocool");
         staff3.setRole("Admin");
-        staffService.saveStaff(staff3);
+        staff3.setStaff(true);
+        accountController.createStaff(staff3);
 
         // Add more dummy staff as needed
     }
