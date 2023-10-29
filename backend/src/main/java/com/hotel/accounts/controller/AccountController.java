@@ -97,13 +97,13 @@ public class AccountController {
     // GUEST ENDPOINTS
 
     @GetMapping("/guests")
-    public ResponseEntity<List<AccountEntity>> getAllGuests() {
+    public ResponseEntity<List<GuestAccountEntity>> getAllGuests() {
         return ResponseEntity.ok(service.getAllGuests());
     }
 
     @GetMapping("/guests/{id}")
-    public ResponseEntity<AccountEntity> getGuestById(@PathVariable Long id) {
-        AccountEntity guest = service.getGuestById(id);
+    public ResponseEntity<GuestAccountEntity> getGuestById(@PathVariable Long id) {
+        GuestAccountEntity guest = service.getGuestById(id);
         if (guest != null) {
             return ResponseEntity.ok(guest);
         } else {
@@ -112,19 +112,20 @@ public class AccountController {
     }
 
     @PostMapping("/guests")
-    public ResponseEntity<AccountEntity> createGuest(@Valid @RequestBody GuestAccountEntity guestAccount) {
-        return ResponseEntity.ok(service.saveAccount(guestAccount));
+    public ResponseEntity<GuestAccountEntity> createGuest(@Valid @RequestBody GuestAccountEntity guestAccount) {
+
+        return ResponseEntity.ok(service.saveGuestAccount(guestAccount));
     }
 
     @PutMapping("/guests/{id}")
     public ResponseEntity<Map<String, Object>> updateGuest(@PathVariable Long id, @Valid @RequestBody GuestAccountEntity guestAccount) {
-        AccountEntity existingAccount = service.getGuestById(id);
+       GuestAccountEntity existingAccount = service.getGuestById(id);
         Map<String, Object> response = new HashMap<>();
         if (existingAccount != null) {
             existingAccount.setEmail(guestAccount.getEmail());
             existingAccount.setPassword(guestAccount.getPassword());
 
-            AccountEntity updatedAccount = service.saveAccount(existingAccount);
+            GuestAccountEntity updatedAccount = service.saveGuestAccount(existingAccount);
             return ResponseEntity.ok(response);
         } else {
             response.put("status", "error");
@@ -146,10 +147,10 @@ public class AccountController {
         String email = credentials.get("email");
         String password = credentials.get("password");
 
-        Optional<AccountEntity> guest = service.authenticateGuest(email, password);
+        Optional<GuestAccountEntity> guest = service.authenticateGuest(email, password);
         if (guest.isPresent()) {
             // login successful
-            AccountEntity guestMember = guest.get();
+            GuestAccountEntity guestMember = guest.get();
             Map<String, Object> response = new HashMap<>();
             response.put("isAuthenticated", true);
             response.put("id", guestMember.getId().toString());

@@ -21,17 +21,22 @@ public class DataLoader implements CommandLineRunner {
         loadStaffData();
     }
 
+
     private void loadGuestData() {
         GuestAccountEntity guest1 = new GuestAccountEntity();
         guest1.setName("John Doe");
         guest1.setEmail("john@example.com");
         guest1.setPassword("password");
+        guest1.setNumStays(1);
+        guest1.setGuest(true);
         accountController.createGuest(guest1);
 
         GuestAccountEntity guest2 = new GuestAccountEntity();
         guest2.setName("Jane Smith");
         guest2.setEmail("jane@example.com");
         guest2.setPassword("password");
+        guest2.setNumStays(0);
+        guest2.setGuest(true);
         accountController.createGuest(guest2);
 
         // Add more dummy guests as needed

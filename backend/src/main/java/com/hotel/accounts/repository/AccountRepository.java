@@ -1,6 +1,7 @@
 package com.hotel.accounts.repository;
 
 import com.hotel.accounts.entity.AccountEntity;
+import com.hotel.accounts.entity.GuestAccountEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,9 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
     List<AccountEntity> findAllByIsStaff(boolean isStaff);
     Optional<AccountEntity> findByIdAndIsStaff(Long id, boolean isStaff);
     Optional<AccountEntity> findByEmailAndIsStaff(String email, boolean isStaff);
+
+    //Guest methods
+    Optional<GuestAccountEntity> findByIdAndIsGuest(Long id, boolean isGuest);
+    List<GuestAccountEntity> findAllByIsGuest(boolean isGuest);
+    Optional<GuestAccountEntity> findByEmailAndIsGuest(String email, boolean isGuest);
 }
