@@ -9,9 +9,11 @@ import com.hotel.reservations.interfaces.IRoomSetting;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class RoomSettingEntity implements IRoomSetting {
 
@@ -19,11 +21,13 @@ public class RoomSettingEntity implements IRoomSetting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roomSettingId;
 
-    private RoomTheme roomTheme;
+    private RoomTheme roomTheme = RoomTheme.DEFAULT;
 
-    private double temperature;
+    private double temperature = -1;
 
-    private int lighting;
+    private int lighting = -1;
+
+    
 
     @Override
     public int getLighting() {
