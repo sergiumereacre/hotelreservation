@@ -1,7 +1,7 @@
 package com.hotel.loyalty.interfaces;
 import com.hotel.accounts.entity.GuestAccountEntity;
 
-public interface ILoyaltyObserver {
+public interface IGuestAccountObserver {
     void updateLoyalty(GuestAccountEntity account);
 }
 
