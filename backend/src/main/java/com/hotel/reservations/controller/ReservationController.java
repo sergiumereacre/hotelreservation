@@ -18,7 +18,7 @@ import com.hotel.reservations.service.EngageReservationService;
 import com.hotel.reservations.service.PreferenceService;
 
 @RestController
-@RequestMapping("/api/reservations")
+@RequestMapping("/reservations")
 public class ReservationController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.getReservation(reservationRef));
     }
 
-    @GetMapping("/reservations")
+    @GetMapping
     public ResponseEntity<List<ReservationEntity>> getAllReservations() {
         return ResponseEntity.ok(reservationService.getAllReservations());
     }

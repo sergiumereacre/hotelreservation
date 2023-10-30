@@ -1,12 +1,7 @@
 package com.hotel.reservations.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class HotelEntity {
     private static HotelEntity hotelInstance;
-
-    private List<RoomEntity> rooms;
 
     private String hotelDetails = "Hotel Name: Star-Crossed Hotel\n" +
             "Hotel Address: Groningen, 1234 Sesame Street, Star-Crossed Hotel\n" +
@@ -14,7 +9,10 @@ public class HotelEntity {
             "Hotel Email: starcrossedhotel@gmail.com";
 
     private HotelEntity() {
-        rooms = new ArrayList<>();
+    }
+    
+    private HotelEntity(String hotelDetails) {
+        this.hotelDetails = hotelDetails;
     }
 
     public static HotelEntity getInstance() {
@@ -27,8 +25,5 @@ public class HotelEntity {
     public String getHotelDetails() {
         return hotelDetails;
     }
-
-    public List<RoomEntity> getRooms() {
-        return rooms;
-    }
+    
 }

@@ -2,6 +2,7 @@ package com.hotel.reservations.service;
 
 import org.springframework.stereotype.Service;
 
+import com.hotel.reservations.entity.RoomTheme;
 import com.hotel.reservations.interfaces.IRoomSetting;
 
 @Service
@@ -14,7 +15,7 @@ public class RoomSettingService implements IRoomSetting{
     }
 
     @Override
-    public String getRoomTheme() {
+    public RoomTheme getRoomTheme() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -32,7 +33,7 @@ public class RoomSettingService implements IRoomSetting{
     }
 
     @Override
-    public void setRoomTheme(String theme) {
+    public void setRoomTheme(RoomTheme theme) {
         // TODO Auto-generated method stub
         
     }

@@ -7,7 +7,12 @@ import javax.persistence.Id;
 
 import com.hotel.reservations.interfaces.IRoomSetting;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 @Entity
+@Data
+@AllArgsConstructor
 public class RoomSettingEntity implements IRoomSetting {
 
     @Id
@@ -22,37 +27,31 @@ public class RoomSettingEntity implements IRoomSetting {
 
     @Override
     public int getLighting() {
-        // TODO Auto-generated method stub
         return this.lighting;
     }
 
     @Override
     public RoomTheme getRoomTheme() {
-        // TODO Auto-generated method stub
         return this.roomTheme;
     }
 
     @Override
     public double getTemperature() {
-        // TODO Auto-generated method stub
         return this.temperature;
     }
 
     @Override
     public void setLighting(int lighting) {
-        // TODO Auto-generated method stub
         this.lighting = lighting;
     }
 
     @Override
     public void setRoomTheme(RoomTheme theme) {
-        // TODO Auto-generated method stub
         this.roomTheme = theme;
     }
 
     @Override
     public void setTemperature(double temperature) {
-        // TODO Auto-generated method stub
         this.temperature = temperature;
     }
 }
