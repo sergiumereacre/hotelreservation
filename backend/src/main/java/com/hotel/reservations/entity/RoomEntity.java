@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@AllArgsConstructor
+
 public class RoomEntity {
 
     @Id
