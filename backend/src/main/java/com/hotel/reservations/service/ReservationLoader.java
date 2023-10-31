@@ -18,15 +18,15 @@ public class ReservationLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        loadRoomData();
+        loadRoomData(20);
     }
 
     private void loadReservationData() {
 
     }
 
-    private void loadRoomData() {
-        for(int i = 0; i < 10; i++) {
+    private void loadRoomData(int numRooms) {
+        for(int i = 0; i < numRooms; i++) {
             RoomEntity room = createRandomRoom();
             hotelController.createRoom(room);
         }
