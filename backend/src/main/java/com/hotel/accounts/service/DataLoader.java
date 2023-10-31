@@ -25,8 +25,6 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         loadGuestData();
         loadStaffData();
-        loadRoomData();
-        // loadReservationData();
     }
 
 
@@ -83,12 +81,5 @@ public class DataLoader implements CommandLineRunner {
         
     }
 
-    private void loadRoomData() {
-        RoomEntity room1 = new RoomEntity(0, 123, 1, "Single", true, 100.00);
-        hotelController.createRoom(room1);
-        
-        // // Create more dummy rooms as needed
-        // RoomEntity room2 = new RoomEntity(1, 1234, 1, "Single", true, 100.00);
-        // hotelController.createRoom(room2);
-    }
+
 }
