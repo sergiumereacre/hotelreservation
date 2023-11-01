@@ -13,11 +13,11 @@ export default function Home() {
                     <p className="text-6xl text-white font-semibold text-center mb-4">Landing page</p>
                 </div>
                 <div className="mt-20 p-6 bg-opacity-70 bg-black rounded-lg">
-                    <img
+                    {/* <img
                         src="amog.gif"
                         alt="Description of GIF"
                         className="w-32 h-auto mx-auto" // Adjust size with w-[size] and h-[size]
-                    />
+                    /> */}
                 </div>
             </main>
         </>
