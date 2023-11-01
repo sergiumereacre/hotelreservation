@@ -19,10 +19,12 @@ public class HotelService implements IHotelDetails {
     @Autowired
     private RoomRepository roomRepository;
 
+    @Override
     public String getHotelDetails() {
         return HotelEntity.getInstance().getHotelDetails();
     }
 
+    @Override
     public List<RoomEntity> getRooms() {
 
         // Get all rooms from the database
@@ -39,13 +41,15 @@ public class HotelService implements IHotelDetails {
         rooms.add(room);
     }
 
+    @Override
     public RoomEntity getRoomById(int roomId) {
         return roomRepository.findByRoomId(roomId).orElse(null);
     }
 
+    @Override
     public boolean getRoomIsAvailable(int roomId, Date startDate, Date endDate) {
 
-        if (startDate.after(endDate)){
+        if (startDate.after(endDate)) {
             return false;
         }
 
@@ -55,7 +59,7 @@ public class HotelService implements IHotelDetails {
         return false;
     }
 
-       public boolean getRoomHasCapacity(int roomId, int numGuests) {
+    public boolean getRoomHasCapacity(int roomId, int numGuests) {
         RoomEntity room = getRoomById(roomId);
 
         if (room != null) {
@@ -64,10 +68,39 @@ public class HotelService implements IHotelDetails {
             return false;
         }
 
-       }
+    }
 
-       public RoomEntity saveRoom(RoomEntity room) {
+    @Override
+    public List<RoomEntity> getAvailableRooms(Date startDate, Date endDate, int numGuests) {
+        List<RoomEntity> rooms = roomRepository.getAvailableRooms(startDate, endDate);
+
+        int totalCapacity = getRoomListCapacity(rooms);
+
+        if(totalCapacity >= numGuests){
+            return rooms;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public int getTotalAvailableCapacity() {
+        List<RoomEntity> rooms = getRooms();
+
+        return getRoomListCapacity(rooms);
+    }
+
+    public RoomEntity saveRoom(RoomEntity room) {
         return roomRepository.save(room);
-       }
+    }
 
+    private int getRoomListCapacity(List<RoomEntity> rooms) {
+        int totalCapacity = 0;
+
+        for (RoomEntity room : rooms) {
+            totalCapacity += room.getCapacity();
+        }
+
+        return totalCapacity;
+    }
 }

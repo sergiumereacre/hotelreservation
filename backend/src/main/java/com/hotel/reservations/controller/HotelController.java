@@ -47,6 +47,12 @@ public class HotelController {
         return ResponseEntity.ok(service.getRoomIsAvailable(roomId, startDate, endDate));
     }
 
+    // Get all available rooms between dates and can accommodate number of guests
+    @PostMapping("/rooms/available")
+    public ResponseEntity<List<RoomEntity>> getAvailableRooms(Date startDate, Date endDate, int numGuests) {
+        return ResponseEntity.ok(service.getAvailableRooms(startDate, endDate, numGuests));
+    }
+
     // Get all themes
     @GetMapping("/themes")
     public ResponseEntity<List<RoomTheme>> getAllThemes() {
