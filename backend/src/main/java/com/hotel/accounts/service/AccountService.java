@@ -3,6 +3,7 @@ package com.hotel.accounts.service;
 import com.hotel.accounts.entity.AccountEntity;
 import com.hotel.accounts.entity.GuestAccountEntity;
 import com.hotel.accounts.repository.AccountRepository;
+import com.hotel.accounts.repository.GuestAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ public class AccountService {
 
     @Autowired
     private AccountRepository repository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -62,15 +64,15 @@ public class AccountService {
     // GUEST SPECIFIC METHODS
 
     public List<GuestAccountEntity> getAllGuests() {
-        return repository.findAllByIsGuest(true);
+        return repository.findAllGuests();
     }
 
     public GuestAccountEntity getGuestById(Long id) {
-        return repository.findByIdAndIsGuest(id, true).orElse(null);
+        return (GuestAccountEntity) repository.findById(id).orElse(null);
     }
 
     public Optional<GuestAccountEntity> authenticateGuest(String email, String password) {
-        GuestAccountEntity guest = repository.findByEmailAndIsGuest(email, true).orElse(null);
+        GuestAccountEntity guest = repository.findByEmail(email).orElse(null);
         if (guest != null && passwordEncoder.matches(password, guest.getPassword())) {
             return Optional.of(guest);
         }
