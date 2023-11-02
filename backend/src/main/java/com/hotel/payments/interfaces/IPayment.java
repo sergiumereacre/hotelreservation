@@ -1,5 +1,10 @@
 package com.hotel.payments.interfaces;
 
-public class IPayment {
+import java.util.List;
+
+public interface IPayment {
+ boolean processPayment(IInvoice invoice, String paymentType);
+
+ IInvoice generateIInvoice(List<IBilling> billings);
     
 }
