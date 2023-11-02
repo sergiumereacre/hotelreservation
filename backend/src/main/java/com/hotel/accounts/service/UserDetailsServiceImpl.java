@@ -1,8 +1,6 @@
 package com.hotel.accounts.service;
 import com.hotel.accounts.entity.AccountEntity;
-import com.hotel.accounts.entity.GuestAccountEntity;
 import com.hotel.accounts.repository.AccountRepository;
-import com.hotel.accounts.repository.GuestAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

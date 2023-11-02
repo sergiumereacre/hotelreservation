@@ -85,7 +85,8 @@ public class AccountService {
 
     // Increment the number of stays for the guest account.
     public Optional<GuestAccountEntity> updateNumStays(Long id) {
-        GuestAccountEntity guest = repository.findByIdAndIsGuest(id, true).orElse(null);
+        GuestAccountEntity guest = getGuestById(id);
+
         if (guest != null) {
             guest.setNumStays(guest.getNumStays() + 1);
             repository.save(guest);
