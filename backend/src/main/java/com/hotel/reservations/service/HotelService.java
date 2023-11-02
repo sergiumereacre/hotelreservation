@@ -72,7 +72,8 @@ public class HotelService implements IHotelDetails {
 
     @Override
     public List<RoomEntity> getAvailableRooms(Date startDate, Date endDate, int numGuests) {
-        List<RoomEntity> rooms = roomRepository.getAvailableRooms(startDate, endDate);
+        // List<RoomEntity> rooms = roomRepository.getAvailableRooms(startDate, endDate);
+        List<RoomEntity> rooms = null;
 
         int totalCapacity = getRoomListCapacity(rooms);
 
