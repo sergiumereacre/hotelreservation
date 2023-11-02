@@ -2,6 +2,9 @@ package com.hotel.accounts.service;
 import com.hotel.accounts.controller.AccountController;
 import com.hotel.accounts.entity.GuestAccountEntity;
 import com.hotel.accounts.entity.HotelStaffAccountEntity;
+import com.hotel.reservations.controller.HotelController;
+import com.hotel.reservations.entity.RoomEntity;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -13,6 +16,9 @@ public class DataLoader implements CommandLineRunner {
 
     @Autowired
     private AccountController accountController;
+
+    @Autowired
+    private HotelController hotelController;
 
 
     @Override
@@ -28,7 +34,6 @@ public class DataLoader implements CommandLineRunner {
         guest1.setEmail("john@example.com");
         guest1.setPassword("password");
         guest1.setNumStays(1);
-        guest1.setGuest(true);
         accountController.createGuest(guest1);
 
         GuestAccountEntity guest2 = new GuestAccountEntity();
@@ -36,7 +41,6 @@ public class DataLoader implements CommandLineRunner {
         guest2.setEmail("jane@example.com");
         guest2.setPassword("password");
         guest2.setNumStays(0);
-        guest2.setGuest(true);
         accountController.createGuest(guest2);
 
         // Add more dummy guests as needed
@@ -69,4 +73,11 @@ public class DataLoader implements CommandLineRunner {
 
         // Add more dummy staff as needed
     }
+
+    private void loadReservationData() {
+        
+        
+    }
+
+
 }
