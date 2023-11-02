@@ -10,7 +10,6 @@ import lombok.Data;
 
 @Entity
 @Data
-
 public class RoomEntity {
 
     @Id
@@ -22,9 +21,13 @@ public class RoomEntity {
     private int capacity;
     
     private String roomType;
-
+    
     private boolean isAvailable;
 
     private Double price;
+
+    // public boolean getIsAvailable(){
+    //     return isAvailable;
+    // }
 
 }

@@ -1,6 +1,5 @@
 package com.hotel.reservations.service;
 
-import com.hotel.accounts.entity.GuestAccountEntity;
 import com.hotel.reservations.controller.HotelController;
 import com.hotel.reservations.entity.RoomEntity;
 import org.springframework.beans.factory.annotation.Autowired;

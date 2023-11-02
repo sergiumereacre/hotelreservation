@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Room from "./room";
 
 export default function Rooms() {
   const [roomList, setRoomList] = useState([]);
@@ -31,19 +32,16 @@ export default function Rooms() {
 
   return (
     <>
-      <main className="flex flex-grow items-center justify-center bg-white">
-        <p className="text-3xl">Rooms page</p>
-
+      <main className="flex flex-grow items-center justify-center bg-white py-8 px-8">
         <div>
-          <h1>Rooms</h1>
-          <ul>
+          <p className="text-3xl">Rooms page</p>
+          <div className="flex flex-wrap">
             {roomList.map((room) => (
-              <li key={room.roomId}>
-                <h2>{room.roomName}</h2>
-                <p>Capacity: {room.capacity}</p>
-              </li>
+              <div key={room.roomId} className="m-4">
+                <Room {...room} />
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </main>
     </>
