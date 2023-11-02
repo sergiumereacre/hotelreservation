@@ -2,8 +2,8 @@ package com.hotel.discount.interfaces;
 
 public interface IDiscountMgt {
     // Waiting for IChargeable interface
-    //void applySimpleDiscount(IChargeable chargeable, double flatDiscount, double percentageDiscount, int applierId);
+    void applySimpleDiscount(IChargeable chargeable, double flatDiscount, double percentageDiscount, int applierId);
 
     // Waiting for IChargeable and ILoyaltyStatus interfaces
-    //void applyLoyaltyDiscount(IChargeable chargeable, ILoyaltyStatus loyaltyStatus);
+    void applyLoyaltyDiscount(IChargeable chargeable, ILoyaltyStatus loyaltyStatus);
 }
