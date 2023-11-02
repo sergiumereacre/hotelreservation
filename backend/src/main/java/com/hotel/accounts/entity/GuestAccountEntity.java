@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 public class GuestAccountEntity extends AccountEntity {
 
    private int numStays;
-   private boolean isGuest = true;
+
 }
 
 
