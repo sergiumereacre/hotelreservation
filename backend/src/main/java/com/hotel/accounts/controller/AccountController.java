@@ -40,10 +40,16 @@ public class AccountController {
     }
 
     @PostMapping("/staff")
-    public ResponseEntity<AccountEntity> createStaff(@Valid @RequestBody HotelStaffAccountEntity staffAccount) {
-        staffAccount.setStaff(true);
+    public ResponseEntity<AccountEntity> createStaff(@Valid @RequestBody HotelStaffAccountEntity staffData) {
+        HotelStaffAccountEntity staffAccount = service.createStaffAccount();
+        staffAccount.setName(staffData.getName());
+        staffAccount.setEmail(staffData.getEmail());
+        staffAccount.setPassword(staffData.getPassword());
+        staffAccount.setRole(staffData.getRole());
+        staffAccount.setStaff(true);  // Assuming all staff accounts have this as true
         return ResponseEntity.ok(service.saveAccount(staffAccount));
     }
+
 
 
     @PutMapping("/staff/{id}")
@@ -111,11 +117,6 @@ public class AccountController {
         }
     }
 
-    @PostMapping("/guests")
-    public ResponseEntity<GuestAccountEntity> createGuest(@Valid @RequestBody GuestAccountEntity guestAccount) {
-
-        return ResponseEntity.ok(service.saveGuestAccount(guestAccount));
-    }
 
     @PutMapping("/guests/{id}")
     public ResponseEntity<Map<String, Object>> updateGuest(@PathVariable Long id, @Valid @RequestBody GuestAccountEntity guestAccount) {
@@ -160,4 +161,15 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
     }
+
+    @PostMapping("/guests")
+    public ResponseEntity<GuestAccountEntity> createGuest(@Valid @RequestBody GuestAccountEntity guestData) {
+        GuestAccountEntity guestAccount = service.createGuestAccount();
+        guestAccount.setName(guestData.getName());
+        guestAccount.setEmail(guestData.getEmail());
+        guestAccount.setPassword(guestData.getPassword());
+        guestAccount.setNumStays(guestData.getNumStays());
+        return ResponseEntity.ok(service.saveGuestAccount(guestAccount));
+    }
+
 }
