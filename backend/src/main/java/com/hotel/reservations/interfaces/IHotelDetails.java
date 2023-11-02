@@ -9,10 +9,14 @@ public interface IHotelDetails {
 
     String getHotelDetails();
 
+    int getTotalAvailableCapacity();
+
     List<RoomEntity> getRooms();
 
     RoomEntity getRoomById(int roomId);
 
     boolean getRoomIsAvailable(int roomId, Date startDate, Date endDate);
+
+    List<RoomEntity> getAvailableRooms(Date startDate, Date endDate, int numGuests);
     
 }

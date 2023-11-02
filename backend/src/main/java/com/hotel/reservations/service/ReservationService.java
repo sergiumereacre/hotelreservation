@@ -8,6 +8,7 @@ import com.hotel.reservations.entity.RoomSettingEntity;
 import com.hotel.reservations.interfaces.IReservationMgt;
 import com.hotel.reservations.repository.ReservationRepository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +29,10 @@ public class ReservationService implements IReservationMgt {
     @Override
     public List<ReservationEntity> getAllReservations() {
         return repository.findAll();
+    }
+
+    public ReservationEntity getGuestById(String reservationRef) {
+        return repository.findById(reservationRef).orElse(null);
     }
 
     public void deleteReservation(String reservationRef) {
@@ -55,21 +60,31 @@ public class ReservationService implements IReservationMgt {
     }
 
     @Override
-    public ReservationEntity makeReservation(int guestId, int roomId, Date startDate, Date endDate, int numGuests) {
-        // TODO Auto-generated method stub
+    public List<ReservationEntity> makeReservation(int guestId, List<Integer> roomIds, Date startDate, Date endDate,
+            int numGuests) {
 
-        if (!validateReservation(guestId, roomId, startDate, endDate, numGuests)) {
-            return null;
+        List<ReservationEntity> reservations = new ArrayList<>();
+
+        for (Integer i : roomIds) {
+            RoomEntity room = hotelService.getRoomById(i);
+            // Create reservation
+            ReservationEntity reservation = new ReservationEntity(room, new RoomSettingEntity(), guestId, numGuests,
+                    startDate, endDate);
+
+            // Save reservation
+            reservations.add(reservation);
+            saveReservation(reservation);
         }
 
-        RoomEntity room = hotelService.getRoomById(roomId);
-        // Create reservation
-        ReservationEntity reservation = new ReservationEntity(room, new RoomSettingEntity(), guestId, numGuests,
-                startDate, endDate);
+        return reservations;
 
-        // Save reservation
-        return saveReservation(reservation);
     }
+
+    // @Override
+    // public String showConfirmation(ReservationEntity reservation) {
+    // // TODO Auto-generated method stub
+    // return null;
+    // }
 
     @Override
     public ReservationEntity updateReservation(String reservationRef, int roomId, Date startDate, Date endDate,
@@ -89,6 +104,5 @@ public class ReservationService implements IReservationMgt {
         return hotelService.getRoomHasCapacity(numGuests, roomId)
                 && hotelService.getRoomIsAvailable(roomId, startDate, endDate);
     }
-
 
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IReservationMgt {
     // Code for creating the reservation.
-    ReservationEntity makeReservation(int guestId, int roomId, Date startDate, Date endDate, int numGuests);
+    List<ReservationEntity> makeReservation(int guestId, List<Integer> roomId, Date startDate, Date endDate, int numGuests);
 
     // Might be better to create a separate Confirmation class and return that instead
     // String showConfirmation(ReservationEntity reservation);
