@@ -143,10 +143,6 @@ public class AccountController {
         }
     }
 
-    @PostMapping("/guests")
-    public ResponseEntity<GuestAccountEntity> createGuest(@Valid @RequestBody GuestAccountEntity guestAccount) {
-        return ResponseEntity.ok(service.saveGuestAccount(guestAccount));
-    }
 
     @PutMapping("/guests/{id}")
     public ResponseEntity<Map<String, Object>> updateGuest(@PathVariable Long id, @Valid @RequestBody GuestAccountEntity guestAccount) {
