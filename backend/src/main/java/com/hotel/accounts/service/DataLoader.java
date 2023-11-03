@@ -1,7 +1,9 @@
 package com.hotel.accounts.service;
 import com.hotel.accounts.controller.AccountController;
 import com.hotel.accounts.entity.GuestAccountEntity;
+import com.hotel.accounts.entity.GuestAccountFactory;
 import com.hotel.accounts.entity.HotelStaffAccountEntity;
+import com.hotel.accounts.entity.HotelStaffAccountFactory;
 import com.hotel.reservations.controller.HotelController;
 import com.hotel.reservations.entity.RoomEntity;
 
@@ -13,12 +15,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataLoader implements CommandLineRunner {
 
-
     @Autowired
     private AccountController accountController;
 
     @Autowired
     private HotelController hotelController;
+
+    @Autowired
+    private GuestAccountFactory guestAccountFactory;
+
+    @Autowired
+    private HotelStaffAccountFactory staffAccountFactory;
+
 
 
     @Override
@@ -27,16 +35,15 @@ public class DataLoader implements CommandLineRunner {
         loadStaffData();
     }
 
-
     private void loadGuestData() {
-        GuestAccountEntity guest1 = new GuestAccountEntity();
+        GuestAccountEntity guest1 = (GuestAccountEntity) guestAccountFactory.createAccount();
         guest1.setName("John Doe");
         guest1.setEmail("john@example.com");
         guest1.setPassword("password");
         guest1.setNumStays(1);
         accountController.createGuest(guest1);
 
-        GuestAccountEntity guest2 = new GuestAccountEntity();
+        GuestAccountEntity guest2 = (GuestAccountEntity) guestAccountFactory.createAccount();
         guest2.setName("Jane Smith");
         guest2.setEmail("jane@example.com");
         guest2.setPassword("password");
@@ -47,7 +54,7 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void loadStaffData() {
-        HotelStaffAccountEntity staff1 = new HotelStaffAccountEntity();
+        HotelStaffAccountEntity staff1 = (HotelStaffAccountEntity) staffAccountFactory.createAccount();
         staff1.setName("Alice Admin");
         staff1.setEmail("alice@example.com");
         staff1.setPassword("password");
@@ -55,7 +62,7 @@ public class DataLoader implements CommandLineRunner {
         staff1.setStaff(true);
         accountController.createStaff(staff1);
 
-        HotelStaffAccountEntity staff2 = new HotelStaffAccountEntity();
+        HotelStaffAccountEntity staff2 = (HotelStaffAccountEntity) staffAccountFactory.createAccount();
         staff2.setName("Bob Manager");
         staff2.setEmail("bob@example.com");
         staff2.setPassword("password");
@@ -63,7 +70,7 @@ public class DataLoader implements CommandLineRunner {
         staff2.setStaff(true);
         accountController.createStaff(staff2);
 
-        HotelStaffAccountEntity staff3 = new HotelStaffAccountEntity();
+        HotelStaffAccountEntity staff3 = (HotelStaffAccountEntity) staffAccountFactory.createAccount();
         staff3.setName("Jai");
         staff3.setEmail("jai@example.com");
         staff3.setPassword("jaisocool");
