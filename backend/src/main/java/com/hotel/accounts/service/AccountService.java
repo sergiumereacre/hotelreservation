@@ -1,7 +1,6 @@
 package com.hotel.accounts.service;
 
-import com.hotel.accounts.entity.AccountEntity;
-import com.hotel.accounts.entity.GuestAccountEntity;
+import com.hotel.accounts.entity.*;
 import com.hotel.accounts.repository.AccountRepository;
 import com.hotel.loyalty.interfaces.IGuestAccountObserver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,20 @@ public class AccountService {
     private PasswordEncoder passwordEncoder;
     private ApplicationEventPublisher eventPublisher;
     private List<IGuestAccountObserver> observers = new ArrayList<>();
+
+    @Autowired
+    private GuestAccountFactory guestAccountFactory;
+
+    @Autowired
+    private HotelStaffAccountFactory staffAccountFactory;
+
+    public GuestAccountEntity createGuestAccount() {
+        return (GuestAccountEntity) guestAccountFactory.createAccount();
+    }
+
+    public HotelStaffAccountEntity createStaffAccount() {
+        return (HotelStaffAccountEntity) staffAccountFactory.createAccount();
+    }
 
     @Autowired
     public AccountService(PasswordEncoder passwordEncoder, ApplicationEventPublisher eventPublisher) {
@@ -59,6 +72,8 @@ public class AccountService {
     public AccountEntity getStaffById(Long id) {
         return repository.findByIdAndIsStaff(id, true).orElse(null);
     }
+
+
 
     public boolean isAdmin(Long id) {
         AccountEntity account = repository.findById(id).orElse(null);
@@ -99,7 +114,7 @@ public class AccountService {
             return Optional.empty();
         }
     }
-    
+
     public Optional<GuestAccountEntity> authenticateGuest(String email, String password) {
         GuestAccountEntity guest = repository.findByEmail(email).orElse(null);
         if (guest != null && passwordEncoder.matches(password, guest.getPassword())) {
