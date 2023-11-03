@@ -1,6 +1,6 @@
 package com.hotel.payments.interfaces;
 
 public interface IBilling {
-    boolean calculateBill();
+    double calculateBill();
     boolean isRefundable();
 }
