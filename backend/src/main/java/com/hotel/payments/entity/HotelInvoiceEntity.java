@@ -14,6 +14,8 @@ import lombok.Data;
 @Entity
 @Data
 public class HotelInvoiceEntity implements IInvoice {
+    private int guestID;
+    private int invoiceID;
     private List<BillEntity> bills;
 
     @Override

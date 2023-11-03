@@ -11,7 +11,7 @@ import com.hotel.payments.interfaces.IPayment;
 @Service
 public class PaymentService implements IPayment {
     @Override
-    public boolean processPayment(IInvoice invoice, String paymentType) {
+    public boolean processPayment(int invoiceId, String paymentType) {
         return false;
     }
 
@@ -20,7 +20,7 @@ public class PaymentService implements IPayment {
         return null;
     }
 
-    public List<IInvoice> getInvoiceHistory() {
+    public List<IInvoice> getInvoiceHistory(int userId) {
         return null;
     }
 }
