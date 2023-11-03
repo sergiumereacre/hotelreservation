@@ -19,4 +19,8 @@ public class PaymentService implements IPayment {
     public IInvoice generateIInvoice(List<IBilling> billings) {
         return null;
     }
+
+    public List<IInvoice> getInvoiceHistory() {
+        return null;
+    }
 }
