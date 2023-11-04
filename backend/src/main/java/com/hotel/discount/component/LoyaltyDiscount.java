@@ -2,8 +2,10 @@ package com.hotel.discount.component;
 
 import org.springframework.stereotype.Component;
 
+import com.hotel.discount.entity.DiscountDecoratorEntity;
+
 @Component
-class LoyaltyDiscount extends DiscountDecorator {
+class LoyaltyDiscount extends DiscountDecoratorEntity {
     private ILoyaltyStatus loyaltyStatus;
 
     LoyaltyDiscount(IChargeable chargeable, ILoyaltyStatus loyaltyStatus) {

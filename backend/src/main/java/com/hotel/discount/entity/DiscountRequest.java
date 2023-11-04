@@ -1,7 +1,7 @@
 package com.hotel.discount.entity;
 
 // DiscountRequest.java (Hypothetical DTO class)
-public class DiscountRequestEntity {
+public class DiscountRequest {
 
     private IChargeable chargeable;
     private double flatDiscount;
