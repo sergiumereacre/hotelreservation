@@ -10,6 +10,7 @@ import com.hotel.discount.entity.DiscountRequest;
 @RestController
 @RequestMapping("/discount")
 public class DiscountController {
+    
     private final DiscountMgtService discountMgt;
 
     DiscountController(DiscountMgtService discountMgt) {

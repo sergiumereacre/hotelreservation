@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 // Abstract decorator class
 @Entity
 public abstract class DiscountDecoratorEntity implements IChargeable {
+    
     protected IChargeable chargeable;
     protected double flatDiscount;
     protected double percentageDiscount;
