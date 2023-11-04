@@ -5,12 +5,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.internal.util.Cloneable;
+
+import com.hotel.reservations.interfaces.RoomPrototype;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
 @Data
-public class RoomEntity {
+public abstract class RoomEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +30,16 @@ public class RoomEntity {
 
     private Double price;
 
-    // public boolean getIsAvailable(){
-    //     return isAvailable;
-    // }
+
+    public abstract RoomEntity clone();
+    
+    public RoomEntity(RoomEntity room){
+        this.roomId = room.roomId;
+        this.roomNumber = room.roomNumber;
+        this.capacity = room.capacity;
+        this.roomType = room.roomType;
+        this.isAvailable = room.isAvailable;
+        this.price = room.price;
+    }
 
 }
