@@ -19,7 +19,7 @@ public class LoyaltyDiscountService extends DiscountDecoratorEntity {
     @Override
     public void applyLoyaltyDiscount(IChargeable chargeable, ILoyaltyStatus loyaltyStatus) {
         // TODO Add loyalty discount logic
-        return;
+        // check what loyalty status they have, then apply the discount
+        // price * discountRate
     }
-    
 }

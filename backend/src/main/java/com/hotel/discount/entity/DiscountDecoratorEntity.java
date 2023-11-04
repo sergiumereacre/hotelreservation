@@ -8,18 +8,10 @@ import com.hotel.discount.interfaces.IDiscountMgt;
 @Entity
 public abstract class DiscountDecoratorEntity implements IDiscountMgt {
     protected IDiscountMgt discount;
+    protected double flatDiscount;
+    protected double percentageDiscount;
 
     public DiscountDecoratorEntity(IDiscountMgt discount) {
         this.discount = discount;
-    }
-
-    @Override
-    public double applySimpleDiscount() {
-
-    }
-
-    @Override
-    public double applyLoyaltyDiscount() {
-
     }
 }
