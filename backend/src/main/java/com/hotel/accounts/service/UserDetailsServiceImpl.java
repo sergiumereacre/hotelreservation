@@ -1,6 +1,6 @@
 package com.hotel.accounts.service;
-import com.hotel.accounts.entity.GuestAccountEntity;
-import com.hotel.accounts.repository.GuestAccountRepository;
+import com.hotel.accounts.entity.AccountEntity;
+import com.hotel.accounts.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,16 +14,16 @@ import javax.persistence.EntityNotFoundException;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private GuestAccountRepository repository;
+    private AccountRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        GuestAccountEntity guest = repository.findByEmail(email)
+        AccountEntity account = repository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + email));
 
         return User.builder()
-                .username(guest.getEmail())
-                .password(guest.getPassword())
+                .username(account.getEmail())
+                .password(account.getPassword())
                 .roles("GUEST") // or another role
                 .build();
     }

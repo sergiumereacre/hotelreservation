@@ -40,8 +40,13 @@ public class AccountController {
     }
 
     @PostMapping("/staff")
-    public ResponseEntity<AccountEntity> createStaff(@Valid @RequestBody HotelStaffAccountEntity staffAccount) {
-        staffAccount.setStaff(true);
+    public ResponseEntity<AccountEntity> createStaff(@Valid @RequestBody HotelStaffAccountEntity staffData) {
+        HotelStaffAccountEntity staffAccount = service.createStaffAccount();
+        staffAccount.setName(staffData.getName());
+        staffAccount.setEmail(staffData.getEmail());
+        staffAccount.setPassword(staffData.getPassword());
+        staffAccount.setRole(staffData.getRole());
+        staffAccount.setStaff(true);  // Assuming all staff accounts have this as true
         return ResponseEntity.ok(service.saveAccount(staffAccount));
     }
 
@@ -111,11 +116,33 @@ public class AccountController {
         }
     }
 
-    @PostMapping("/guests")
-    public ResponseEntity<GuestAccountEntity> createGuest(@Valid @RequestBody GuestAccountEntity guestAccount) {
-
-        return ResponseEntity.ok(service.saveGuestAccount(guestAccount));
+    // Get the numStays for a guest.
+    @GetMapping("/guests/{id}/numStays")
+    public ResponseEntity<Integer> getNumStays(@PathVariable Long id) {
+        GuestAccountEntity guest = service.getGuestById(id);
+        if (guest != null) {
+            return ResponseEntity.ok(guest.getNumStays());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
+    // Increment the numStays for a guest.
+    @PutMapping("/guests/{id}/numStays")
+    public ResponseEntity<Map<String, Object>> updateNumStays(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        Optional<GuestAccountEntity> guest = service.updateNumStays(id);
+        if (guest.isPresent()) {
+            response.put("status", "success");
+            response.put("message", "Number of stays updated.");
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("status", "error");
+            response.put("message", "Guest not found.");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+    }
+
 
     @PutMapping("/guests/{id}")
     public ResponseEntity<Map<String, Object>> updateGuest(@PathVariable Long id, @Valid @RequestBody GuestAccountEntity guestAccount) {
@@ -160,4 +187,15 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
     }
+
+    @PostMapping("/guests")
+    public ResponseEntity<GuestAccountEntity> createGuest(@Valid @RequestBody GuestAccountEntity guestData) {
+        GuestAccountEntity guestAccount = service.createGuestAccount();
+        guestAccount.setName(guestData.getName());
+        guestAccount.setEmail(guestData.getEmail());
+        guestAccount.setPassword(guestData.getPassword());
+        guestAccount.setNumStays(guestData.getNumStays());
+        return ResponseEntity.ok(service.saveGuestAccount(guestAccount));
+    }
+
 }
