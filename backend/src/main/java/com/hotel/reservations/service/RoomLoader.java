@@ -21,11 +21,12 @@ public class RoomLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        initialiseRooms();
         loadRoomData(20);
     }
 
     private void initialiseRooms(){
-        roomFactory.registerRoom(new );
+        roomFactory.initialiseRooms();
     }
 
     private void loadRoomData(int numRooms) {
@@ -37,14 +38,8 @@ public class RoomLoader implements CommandLineRunner {
 
     private RoomEntity createRandomRoom() {
         Random random = new Random();
-        RoomEntity room = new RoomEntity();
 
-        RoomEntity room = 
-        room.setRoomType(getRandomRoomType(random));
-        room.setAvailable(true);
-        room.setRoomNumber(getRandomNumber(random, 1, 999));
-        room.setPrice(getRandomDouble(random, 100, 2000));
-        return room;
+        return roomFactory.createRoom(getRandomRoomType(random), getRandomNumber(random, 1, 999), getRandomDouble(random, 100, 2000));
     }
 
     private String getRandomRoomType(Random random) {
