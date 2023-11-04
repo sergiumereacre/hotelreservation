@@ -1,5 +1,7 @@
 package com.hotel.discount.entity;
 
+import com.hotel.loyalty.service.LoyaltyService;
+
 // DiscountRequest.java (Hypothetical DTO class)
 public class DiscountRequest {
 
@@ -9,14 +11,14 @@ public class DiscountRequest {
     // Assuming that chargeable and loyaltyStatus are simple enough to be serialized directly;
     // otherwise, you would use some form of identifier to look up the relevant objects.
     private IChargeable chargeable;
-    private ILoyaltyStatus loyaltyStatus;
+    private LoyaltyService loyaltyStatus;
 
     // Default constructor for JSON deserialization
     public DiscountRequest() {
     }
 
     // Full constructor for all fields
-    public DiscountRequest(IChargeable chargeable, double flatDiscount, double percentageDiscount, int applierId, ILoyaltyStatus loyaltyStatus) {
+    public DiscountRequest(IChargeable chargeable, double flatDiscount, double percentageDiscount, int applierId, LoyaltyService loyaltyStatus) {
         this.chargeable = chargeable;
         this.flatDiscount = flatDiscount;
         this.percentageDiscount = percentageDiscount;
@@ -57,11 +59,11 @@ public class DiscountRequest {
         this.applierId = applierId;
     }
 
-    public ILoyaltyStatus getLoyaltyStatus() {
+    public LoyaltyService getLoyaltyStatus() {
         return loyaltyStatus;
     }
 
-    public void setLoyaltyStatus(ILoyaltyStatus loyaltyStatus) {
+    public void setLoyaltyStatus(LoyaltyService loyaltyStatus) {
         this.loyaltyStatus = loyaltyStatus;
     }
 

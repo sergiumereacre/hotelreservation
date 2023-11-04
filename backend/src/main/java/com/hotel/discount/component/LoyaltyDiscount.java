@@ -6,6 +6,7 @@ import com.hotel.discount.entity.DiscountDecoratorEntity;
 
 @Component
 class LoyaltyDiscount extends DiscountDecoratorEntity {
+    
     private ILoyaltyStatus loyaltyStatus;
 
     LoyaltyDiscount(IChargeable chargeable, ILoyaltyStatus loyaltyStatus) {

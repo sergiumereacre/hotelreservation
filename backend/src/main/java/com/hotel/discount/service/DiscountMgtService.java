@@ -14,6 +14,7 @@ class DiscountMgtService implements IDiscountMgt {
         this.accountRepository = accountRepository;
     }
 
+    // Note update account stuff, currently wrong
     @Override
     public void applySimpleDiscount(IChargeable chargeable, double flatDiscount, double percentageDiscount, int applierId) {
         Optional<Account> accountOptional = accountRepository.findById(applierId);
@@ -24,6 +25,7 @@ class DiscountMgtService implements IDiscountMgt {
         });
     }
 
+    // Need to update business logic
     @Override
     public void applyLoyaltyDiscount(IChargeable chargeable, ILoyaltyStatus loyaltyStatus) {
         Optional<Account> accountOptional = accountRepository.findById(loyaltyStatus.getUserId());

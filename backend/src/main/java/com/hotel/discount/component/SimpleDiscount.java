@@ -6,6 +6,7 @@ import com.hotel.discount.entity.DiscountDecoratorEntity;
 
 @Component
 class SimpleDiscount extends DiscountDecoratorEntity {
+    
     SimpleDiscount(IChargeable chargeable, double flatDiscount, double percentageDiscount) {
         super(chargeable);
         this.flatDiscount = flatDiscount;
