@@ -7,13 +7,13 @@ import javax.persistence.Id;
 
 import org.hibernate.internal.util.Cloneable;
 
-import com.hotel.reservations.interfaces.RoomPrototype;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public abstract class RoomEntity  {
 
     @Id
@@ -42,4 +42,9 @@ public abstract class RoomEntity  {
         this.price = room.price;
     }
 
+    public void setPrice(Double price) {
+        if(price > 0){
+            this.price = price;
+        }
+    }
 }
