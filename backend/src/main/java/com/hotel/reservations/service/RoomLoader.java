@@ -43,7 +43,7 @@ public class RoomLoader implements CommandLineRunner {
     }
 
     private String getRandomRoomType(Random random) {
-        String[] roomTypes = { "Single", "Double", "Twin", "Suite" };
+        String[] roomTypes = roomFactory.getRoomTypes();
         return roomTypes[random.nextInt(roomTypes.length)];
     }
 
