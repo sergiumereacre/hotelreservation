@@ -1,31 +1,28 @@
 package com.hotel.discount.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hotel.discount.interfaces.IDiscountMgt;
+import com.hotel.discount.entity.DiscountRequest;
 
 @RestController
 @RequestMapping("/discount")
 public class DiscountController {
-    private final IDiscountMgt discountService;
+    private final DiscountMgtService discountMgt;
 
-    @Autowired
-    public DiscountController(IDiscountMgt discountService) {
-        this.discountService = discountService;
+    DiscountController(DiscountMgtService discountMgt) {
+        this.discountMgt = discountMgt;
     }
 
-    @GetMapping("/applySimple")
-    public ResponseEntity<Void> applySimpleDiscount(@RequestParam("paramName") String paramName) {
-        return ResponseEntity.ok(discountService.applySimpleDiscount());
+    @PostMapping("/applySimpleDiscount")
+    public void applySimpleDiscount(@RequestBody DiscountRequest request) {
+        discountMgt.applySimpleDiscount(request.getChargeable(), request.getFlatDiscount(), request.getPercentageDiscount(), request.getApplierId());
     }
-    
-    @GetMapping("/applyLoyalty")
-    public ResponseEntity<Void> applyLoyaltyDiscount(@RequestParam("paramName") String paramName) {
-        return ResponseEntity.ok(discountService.applyLoyaltyDiscount());
+
+    @PostMapping("/applyLoyaltyDiscount")
+    public void applyLoyaltyDiscount(@RequestBody DiscountRequest request) {
+        discountMgt.applyLoyaltyDiscount(request.getChargeable(), request.getLoyaltyStatus());
     }
 }
