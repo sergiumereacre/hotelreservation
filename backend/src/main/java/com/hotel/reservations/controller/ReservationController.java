@@ -1,5 +1,6 @@
 package com.hotel.reservations.controller;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -74,13 +75,13 @@ public class ReservationController {
     // Request to update reservation
     @PutMapping("/reservation/{reservationRef}")
     public ResponseEntity<ReservationEntity> updateReservation(@PathVariable String reservationRef, int roomId,
-            Date startDate, Date endDate, int numGuests) {
+    LocalDate startDate, LocalDate endDate, int numGuests) {
         ReservationEntity reservation = reservationService.updateReservation(reservationRef, roomId, startDate, endDate, numGuests);
         return ResponseEntity.ok(reservation);
     }
 
     @PostMapping("/reservation")
-    public ResponseEntity<List<ReservationEntity>> makeReservation(int guestId, List<Integer> roomId, Date startDate, Date endDate, int numGuests) {
+    public ResponseEntity<List<ReservationEntity>> makeReservation(int guestId, List<Integer> roomId, LocalDate startDate, LocalDate endDate, int numGuests) {
         List<ReservationEntity> reservation = reservationService.makeReservation(guestId, roomId, startDate, endDate, numGuests);
         return ResponseEntity.ok(reservation);
     }

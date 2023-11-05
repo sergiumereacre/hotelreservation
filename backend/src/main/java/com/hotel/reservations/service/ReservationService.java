@@ -8,6 +8,8 @@ import com.hotel.reservations.entity.RoomSettingEntity;
 import com.hotel.reservations.interfaces.IReservationMgt;
 import com.hotel.reservations.repository.ReservationRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,7 +62,7 @@ public class ReservationService implements IReservationMgt {
     }
 
     @Override
-    public List<ReservationEntity> makeReservation(int guestId, List<Integer> roomIds, Date startDate, Date endDate,
+    public List<ReservationEntity> makeReservation(int guestId, List<Integer> roomIds, LocalDate startDate, LocalDate endDate,
             int numGuests) {
 
         List<ReservationEntity> reservations = new ArrayList<>();
@@ -87,7 +89,7 @@ public class ReservationService implements IReservationMgt {
     // }
 
     @Override
-    public ReservationEntity updateReservation(String reservationRef, int roomId, Date startDate, Date endDate,
+    public ReservationEntity updateReservation(String reservationRef, int roomId, LocalDate startDate, LocalDate endDate,
             int numGuests) {
         // TODO Auto-generated method stub
         ReservationEntity reservation = getReservation(reservationRef);
@@ -100,7 +102,7 @@ public class ReservationService implements IReservationMgt {
         return null;
     }
 
-    private boolean validateReservation(int guestId, int roomId, Date startDate, Date endDate, int numGuests) {
+    private boolean validateReservation(int guestId, int roomId, LocalDate startDate, LocalDate endDate, int numGuests) {
         return hotelService.getRoomHasCapacity(numGuests, roomId)
                 && hotelService.getRoomIsAvailable(roomId, startDate, endDate);
     }

@@ -2,7 +2,6 @@ package com.hotel.reservations.service;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.hotel.reservations.entity.RoomEntity;
 import com.hotel.reservations.entity.RoomTheme;
 import com.hotel.reservations.interfaces.IHotelDetails;
+import com.hotel.reservations.repository.ReservationRepository;
 import com.hotel.reservations.repository.RoomRepository;
 import com.hotel.reservations.entity.HotelEntity;
 
@@ -19,6 +19,9 @@ public class HotelService implements IHotelDetails {
 
     @Autowired
     private RoomRepository roomRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     @Override
     public String getHotelDetails() {
@@ -65,7 +68,12 @@ public class HotelService implements IHotelDetails {
         // Go through list of reservations and check if the room is available
         // If the room is available, return true
         // If the room is not available, return false
-        return false;
+
+        if(reservationRepository.findByRoomInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(Arrays.asList(roomId), startDate, endDate).isPresent()){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public boolean getRoomHasCapacity(int roomId, int numGuests) {

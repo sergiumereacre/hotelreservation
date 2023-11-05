@@ -7,7 +7,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,12 +47,21 @@ public class HotelController {
 
     // Check if room is available
     @GetMapping("/room/{roomId}/is-available")
-    public ResponseEntity<Boolean> getRoomIsAvailable(@PathVariable int roomId,
+    public ResponseEntity<Boolean> getRoomIsAvailable(@PathVariable int roomId
+    ,
             @RequestParam(name = "start-date") String startDateString,
-            @RequestParam(name = "end-date") String endDateString) {
+            @RequestParam(name = "end-date") String endDateString)
+            {
 
+        int numGuests = 1;
+
+        LocalDate startDate = LocalDate.parse(startDateString);
+        LocalDate endDate = LocalDate.parse(endDateString);
+        
         return ResponseEntity.ok(
-                service.getRoomIsAvailable(roomId, LocalDate.parse(startDateString), LocalDate.parse(endDateString)));
+                service.getRoomIsAvailable(roomId, startDate, endDate));
+
+        // return null;
     }
 
     // Get room by id
