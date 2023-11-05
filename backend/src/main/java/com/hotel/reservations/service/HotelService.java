@@ -1,5 +1,6 @@
 package com.hotel.reservations.service;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -55,9 +56,9 @@ public class HotelService implements IHotelDetails {
     }
 
     @Override
-    public boolean getRoomIsAvailable(int roomId, Date startDate, Date endDate) {
+    public boolean getRoomIsAvailable(int roomId, LocalDate startDate, LocalDate endDate) {
 
-        if (startDate.after(endDate)) {
+        if (startDate.isAfter(endDate)) {
             return false;
         }
 
@@ -79,7 +80,7 @@ public class HotelService implements IHotelDetails {
     }
 
     @Override
-    public List<RoomEntity> getAvailableRooms(Date startDate, Date endDate, int numGuests) {
+    public List<RoomEntity> getAvailableRooms(LocalDate startDate, LocalDate endDate, int numGuests) {
         // List<RoomEntity> rooms = roomRepository.getAvailableRooms(startDate, endDate);
         List<RoomEntity> rooms = null;
 
