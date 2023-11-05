@@ -24,6 +24,7 @@ public class RoomFactory implements IRoomFactory {
     public RoomEntity createRoom(String type, int roomNumber, Double price) {
         RoomEntity room = (roomRegistry.get(type)).clone();
         room.setPrice(price);
+        room.setRoomNumber(roomNumber);
 
         return room;
     }

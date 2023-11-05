@@ -19,6 +19,9 @@ public class FamilyRoomEntity extends RoomEntity {
         super(room);
     }
 
+    public FamilyRoomEntity() {
+    }
+
     @Override
     public FamilyRoomEntity clone(){
         return new FamilyRoomEntity(this);

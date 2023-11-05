@@ -28,7 +28,15 @@ public class HotelService implements IHotelDetails {
     public List<RoomEntity> getRooms() {
 
         // Get all rooms from the database
-        return roomRepository.findAll();
+        List<RoomEntity> rooms = null;
+
+        try {
+            rooms = roomRepository.findAll();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return rooms;
     }
 
     public List<RoomTheme> getAllRoomThemes() {

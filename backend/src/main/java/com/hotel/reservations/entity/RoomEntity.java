@@ -4,14 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-import org.hibernate.internal.util.Cloneable;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "room_entity")
 @Data
 @NoArgsConstructor
 public abstract class RoomEntity  {
@@ -26,7 +25,7 @@ public abstract class RoomEntity  {
     
     private String roomType;
     
-    private boolean isAvailable;
+    private boolean isAvailable = true;
 
     private Double price;
 

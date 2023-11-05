@@ -19,6 +19,9 @@ public class SingleRoomEntity extends RoomEntity {
         super(room);
     }
 
+    public SingleRoomEntity() {
+    }
+
     @Override
     public SingleRoomEntity clone(){
         return new SingleRoomEntity(this);
