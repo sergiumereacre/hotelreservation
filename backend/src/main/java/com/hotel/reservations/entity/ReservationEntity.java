@@ -1,6 +1,7 @@
 package com.hotel.reservations.entity;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -9,9 +10,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.hotel.payments.entity.PaymentEntity;
 import com.hotel.payments.interfaces.IChargeable;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 import java.time.LocalDate;
@@ -19,12 +22,10 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 @Entity
-@Data
 @Table(name = "reservations")
-public class ReservationEntity implements IChargeable {
-    @Id
-    @Column(name = "reservation_ref", unique = true, nullable = false)
-    private String reservationRef = UUID.randomUUID().toString();
+@Data
+public class ReservationEntity extends PaymentEntity {
+
 
     // @OneToOne
     // @JoinColumn(name = "room_id", referencedColumnName = "room_id")
@@ -50,6 +51,9 @@ public class ReservationEntity implements IChargeable {
     private boolean isCancelled;
 
     private boolean isPaid;
+
+    public ReservationEntity() {
+    }
 
     public ReservationEntity(RoomEntity room, RoomSettingEntity roomSetting, int guestID, Integer numGuests,
             LocalDate startDate, LocalDate endDate) {
@@ -91,6 +95,8 @@ public class ReservationEntity implements IChargeable {
     public String getDiscountDetails() {
         return "";
     }
+
+    
 
     @Override
     public String getChargeDetails() {

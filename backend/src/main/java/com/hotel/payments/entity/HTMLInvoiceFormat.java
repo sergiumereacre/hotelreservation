@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import com.hotel.payments.interfaces.IInvoice;
 import com.hotel.payments.interfaces.IInvoiceFormat;
 
-@Entity
+// @Entity
 public class HTMLInvoiceFormat implements IInvoiceFormat {
 
     @Override

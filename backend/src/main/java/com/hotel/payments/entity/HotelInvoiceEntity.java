@@ -3,19 +3,29 @@ package com.hotel.payments.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.hotel.payments.interfaces.IBilling;
-import com.hotel.payments.interfaces.IChargeable;
 import com.hotel.payments.interfaces.IInvoice;
 import com.hotel.payments.interfaces.IInvoiceFormat;
+import com.hotel.reservations.entity.ReservationEntity;
 
 import lombok.Data;
 
 @Entity
 @Data
 public class HotelInvoiceEntity implements IInvoice {
-    private int guestID;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int invoiceID;
+
+    private int guestID;
+
+    @OneToMany
     private List<BillEntity> bills;
 
     @Override
@@ -24,7 +34,7 @@ public class HotelInvoiceEntity implements IInvoice {
     }
 
     @Override
-    public boolean addBill(IChargeable bill) {
+    public boolean addBill(PaymentEntity bill) {
         this.bills.add(new BillEntity(bill, false));
 
         return true;

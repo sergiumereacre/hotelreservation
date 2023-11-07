@@ -1,6 +1,13 @@
 package com.hotel.payments.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import com.hotel.payments.interfaces.IBilling;
 import com.hotel.payments.interfaces.IChargeable;
@@ -12,13 +19,19 @@ import lombok.Data;
 @Data
 public class BillEntity implements IRefundable, IBilling {
 
-    private IChargeable payment;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int billId;
+
+    @OneToOne
+    private PaymentEntity payment;
+    
     private boolean isRefundable;
     private double refundableAmount;
     private final double CITY_TAX = 3;
     private final double TOURIST_TAX = 5;
 
-    public BillEntity(IChargeable payment, boolean isRefundable) {
+    public BillEntity(PaymentEntity payment, boolean isRefundable) {
         this.payment = payment;
         this.isRefundable = isRefundable;
     }
