@@ -1,4 +1,4 @@
-package com.hotel.discount.repository;
+package com.hotel.discounts.repository;
 
 import org.springframework.stereotype.Repository;
 

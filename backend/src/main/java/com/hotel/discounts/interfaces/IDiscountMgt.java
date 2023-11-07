@@ -1,4 +1,4 @@
-package com.hotel.discount.interfaces;
+package com.hotel.discounts.interfaces;
 
 // Component (Decorator Pattern)
 public interface IDiscountMgt {
