@@ -11,9 +11,9 @@ import com.hotel.discount.entity.DiscountRequest;
 @RequestMapping("/discount")
 public class DiscountController {
     
-    private final DiscountMgtService discountMgt;
+    private final DiscountMgt discountMgt;
 
-    DiscountController(DiscountMgtService discountMgt) {
+    DiscountController(DiscountMgt discountMgt) {
         this.discountMgt = discountMgt;
     }
 
