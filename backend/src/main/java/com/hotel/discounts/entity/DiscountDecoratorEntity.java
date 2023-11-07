@@ -1,4 +1,4 @@
-package com.hotel.discount.entity;
+package com.hotel.discounts.entity;
 
 import javax.persistence.Entity;
 

@@ -1,8 +1,8 @@
-package com.hotel.discount.component;
+package com.hotel.discounts.component;
 
 import org.springframework.stereotype.Component;
 
-import com.hotel.discount.entity.DiscountDecoratorEntity;
+import com.hotel.discounts.entity.DiscountDecoratorEntity;
 
 // ConcreteDecorator (Decorator Pattern)
 @Component

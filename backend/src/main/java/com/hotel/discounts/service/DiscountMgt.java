@@ -1,11 +1,11 @@
-package com.hotel.discount.service;
+package com.hotel.discounts.service;
 
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.hotel.accounts.repository.AccountRepository;
-import com.hotel.discount.interfaces.IDiscountMgt;
+import com.hotel.discounts.interfaces.IDiscountMgt;
 
 // Note: Creation of percentage discounts by staff (limited to a certain percentage off) for bookings. Only one discount can be applied per reservation. 
 
