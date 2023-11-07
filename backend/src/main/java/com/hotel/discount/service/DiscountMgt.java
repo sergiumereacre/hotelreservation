@@ -1,16 +1,21 @@
 package com.hotel.discount.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.hotel.accounts.repository.AccountRepository;
 import com.hotel.discount.interfaces.IDiscountMgt;
 
+// Note: Creation of percentage discounts by staff (limited to a certain percentage off) for bookings. Only one discount can be applied per reservation. 
+
+// ConcreteComponent (Decorator Pattern)
 @Service
-class DiscountMgtService implements IDiscountMgt {
+class DiscountMgt implements IDiscountMgt {
     // Sort out account stuff here
     private final AccountRepository accountRepository;
 
-    DiscountMgtService(AccountRepository accountRepository) {
+    DiscountMgt(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 

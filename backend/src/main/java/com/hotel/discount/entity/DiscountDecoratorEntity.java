@@ -2,7 +2,7 @@ package com.hotel.discount.entity;
 
 import javax.persistence.Entity;
 
-// Abstract decorator class
+// BaseDecorator (Decorator Pattern)
 @Entity
 public abstract class DiscountDecoratorEntity implements IChargeable {
     

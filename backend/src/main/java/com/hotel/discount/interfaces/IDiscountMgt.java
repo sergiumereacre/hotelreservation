@@ -1,6 +1,6 @@
 package com.hotel.discount.interfaces;
 
-// Interface for discount management
+// Component (Decorator Pattern)
 public interface IDiscountMgt {
     // Waiting for IChargeable interface
     void applySimpleDiscount(IChargeable chargeable, double flatDiscount, double percentageDiscount, int applierId);

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.hotel.discount.entity.DiscountDecoratorEntity;
 
+// ConcreteDecorator (Decorator Pattern)
 @Component
 class LoyaltyDiscount extends DiscountDecoratorEntity {
     
