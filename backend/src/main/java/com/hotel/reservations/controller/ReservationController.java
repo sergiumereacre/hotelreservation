@@ -1,5 +1,6 @@
 package com.hotel.reservations.controller;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hotel.reservations.entity.ReservationEntity;
 import com.hotel.reservations.service.ReservationService;
-import com.hotel.reservations.service.RoomSettingService;
 import com.hotel.reservations.service.EngageReservationService;
 import com.hotel.reservations.service.PreferenceService;
 
@@ -24,9 +24,6 @@ public class ReservationController {
 
     @Autowired
     private ReservationService reservationService;
-
-    @Autowired
-    private RoomSettingService roomSettingService;
 
     @Autowired
     private EngageReservationService engageReservationService;
@@ -45,11 +42,9 @@ public class ReservationController {
     }
 
     @PutMapping("/reservation/{reservationRef}/preferences")
-    public ResponseEntity<ReservationEntity> updatePreferences(String reservationRef, String theme, double temperature,
+    public void updatePreferences(String reservationRef, String theme, double temperature,
             int lighting) {
-        ReservationEntity reservation = reservationService.getReservation(reservationRef);
-        preferenceService.setPreference(reservation, theme, temperature, lighting);
-        return ResponseEntity.ok(reservation);
+        preferenceService.setPreference(reservationRef, theme, temperature, lighting);
     }
 
     @PutMapping("/reservation/{reservationRef}/check-in")
@@ -74,13 +69,13 @@ public class ReservationController {
     // Request to update reservation
     @PutMapping("/reservation/{reservationRef}")
     public ResponseEntity<ReservationEntity> updateReservation(@PathVariable String reservationRef, int roomId,
-            Date startDate, Date endDate, int numGuests) {
+    LocalDate startDate, LocalDate endDate, int numGuests) {
         ReservationEntity reservation = reservationService.updateReservation(reservationRef, roomId, startDate, endDate, numGuests);
         return ResponseEntity.ok(reservation);
     }
 
     @PostMapping("/reservation")
-    public ResponseEntity<List<ReservationEntity>> makeReservation(int guestId, List<Integer> roomId, Date startDate, Date endDate, int numGuests) {
+    public ResponseEntity<List<ReservationEntity>> makeReservation(int guestId, List<Integer> roomId, LocalDate startDate, LocalDate endDate, int numGuests) {
         List<ReservationEntity> reservation = reservationService.makeReservation(guestId, roomId, startDate, endDate, numGuests);
         return ResponseEntity.ok(reservation);
     }

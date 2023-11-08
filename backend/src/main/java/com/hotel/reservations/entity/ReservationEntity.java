@@ -2,15 +2,18 @@ package com.hotel.reservations.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
 
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Data
@@ -20,8 +23,10 @@ public class ReservationEntity {
     @Column(name = "reservation_ref", unique = true, nullable = false)
     private String reservationRef = UUID.randomUUID().toString();
 
-    @OneToOne
-    @JoinColumn(name = "room_id")
+    // @OneToOne
+    // @JoinColumn(name = "room_id", referencedColumnName = "room_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     private RoomEntity room;
 
     @OneToOne
@@ -31,9 +36,9 @@ public class ReservationEntity {
 
     private Integer numGuests;
 
-    private Date startDate;
+    private LocalDate startDate;
 
-    private Date endDate;
+    private LocalDate endDate;
 
     private boolean isClaimed;
 
@@ -44,7 +49,7 @@ public class ReservationEntity {
     private boolean isPaid;
 
     public ReservationEntity(RoomEntity room, RoomSettingEntity roomSetting, int guestID, Integer numGuests,
-            Date startDate, Date endDate) {
+            LocalDate startDate, LocalDate endDate) {
         this.room = room;
         this.roomSetting = roomSetting;
         this.guestID = guestID;
@@ -63,9 +68,7 @@ public class ReservationEntity {
         // Room already has a price. We just need to calculate the number of days and
         // multiply by the price
 
-        long timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-
-        long daysDiff = TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS);
+        long daysDiff = ChronoUnit.DAYS.between(startDate, endDate);
 
         return daysDiff * room.getPrice();
     }

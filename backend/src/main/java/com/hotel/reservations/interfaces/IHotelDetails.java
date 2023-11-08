@@ -1,5 +1,6 @@
 package com.hotel.reservations.interfaces;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -15,8 +16,8 @@ public interface IHotelDetails {
 
     RoomEntity getRoomById(int roomId);
 
-    boolean getRoomIsAvailable(int roomId, Date startDate, Date endDate);
+    boolean getRoomIsAvailable(int roomId, LocalDate startDate, LocalDate endDate);
 
-    List<RoomEntity> getAvailableRooms(Date startDate, Date endDate, int numGuests);
+    List<RoomEntity> getAvailableRooms(LocalDate startDate, LocalDate endDate, int numGuests);
     
 }
