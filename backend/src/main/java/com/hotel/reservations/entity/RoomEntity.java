@@ -22,7 +22,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public abstract class RoomEntity  {
 
-     // @Column(name = "room_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "room_id")

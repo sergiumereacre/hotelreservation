@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hotel.reservations.entity.ReservationEntity;
 import com.hotel.reservations.service.ReservationService;
-import com.hotel.reservations.service.RoomSettingService;
 import com.hotel.reservations.service.EngageReservationService;
 import com.hotel.reservations.service.PreferenceService;
 
@@ -25,9 +24,6 @@ public class ReservationController {
 
     @Autowired
     private ReservationService reservationService;
-
-    @Autowired
-    private RoomSettingService roomSettingService;
 
     @Autowired
     private EngageReservationService engageReservationService;
@@ -46,11 +42,9 @@ public class ReservationController {
     }
 
     @PutMapping("/reservation/{reservationRef}/preferences")
-    public ResponseEntity<ReservationEntity> updatePreferences(String reservationRef, String theme, double temperature,
+    public void updatePreferences(String reservationRef, String theme, double temperature,
             int lighting) {
-        ReservationEntity reservation = reservationService.getReservation(reservationRef);
-        preferenceService.setPreference(reservation, theme, temperature, lighting);
-        return ResponseEntity.ok(reservation);
+        preferenceService.setPreference(reservationRef, theme, temperature, lighting);
     }
 
     @PutMapping("/reservation/{reservationRef}/check-in")

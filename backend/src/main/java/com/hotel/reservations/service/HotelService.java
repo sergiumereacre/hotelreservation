@@ -65,15 +65,34 @@ public class HotelService implements IHotelDetails {
             return false;
         }
 
+        RoomEntity room = getRoomById(roomId);
+
         // Go through list of reservations and check if the room is available
         // If the room is available, return true
         // If the room is not available, return false
 
-        if(reservationRepository.findByRoomInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(Arrays.asList(roomId), startDate, endDate).isPresent()){
-            return false;
+        // if(reservationRepository.findByRoomsInDateRange(roomId, startDate, endDate).isPresent()){
+
+
+            try {
+                reservationRepository.findByRoomAndStartDateLessThanEqualAndEndDateGreaterThanEqual(room, startDate, endDate);
+            }
+            catch (Exception e) {
+                System.out.println(e);
+            }
+        
+               if(reservationRepository.findByRoomAndStartDateLessThanEqualAndEndDateGreaterThanEqual(room, startDate, endDate).isPresent()){
+            
+        return false;
         } else {
-            return true;
+        return true;
         }
+
+        // if (reservationRepository.findByRoomsInDateRange(Arrays.asList(roomId)).isPresent()) {
+        //     return false;
+        // } else {
+        //     return true;
+        // }
     }
 
     public boolean getRoomHasCapacity(int roomId, int numGuests) {
@@ -89,12 +108,13 @@ public class HotelService implements IHotelDetails {
 
     @Override
     public List<RoomEntity> getAvailableRooms(LocalDate startDate, LocalDate endDate, int numGuests) {
-        // List<RoomEntity> rooms = roomRepository.getAvailableRooms(startDate, endDate);
+        // List<RoomEntity> rooms = roomRepository.getAvailableRooms(startDate,
+        // endDate);
         List<RoomEntity> rooms = null;
 
         int totalCapacity = getRoomListCapacity(rooms);
 
-        if(totalCapacity >= numGuests){
+        if (totalCapacity >= numGuests) {
             return rooms;
         } else {
             return null;

@@ -58,7 +58,10 @@ public class HotelController {
         LocalDate startDate = LocalDate.parse(startDateString);
         LocalDate endDate = LocalDate.parse(endDateString);
         
-        return ResponseEntity.ok(
+        // return ResponseEntity.ok(
+        //         service.getRoomIsAvailable(roomId, startDate, endDate));
+
+         return ResponseEntity.ok(
                 service.getRoomIsAvailable(roomId, startDate, endDate));
 
         // return null;

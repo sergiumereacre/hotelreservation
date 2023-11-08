@@ -12,7 +12,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoomSettingEntity implements IRoomSetting {
