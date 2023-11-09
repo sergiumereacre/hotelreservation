@@ -1,6 +1,8 @@
 package com.hotel.reservations.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -10,9 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hotel.reservations.entity.ReservationEntity;
 import com.hotel.reservations.service.ReservationService;
 import com.hotel.reservations.service.EngageReservationService;
@@ -69,14 +74,46 @@ public class ReservationController {
     // Request to update reservation
     @PutMapping("/reservation/{reservationRef}")
     public ResponseEntity<ReservationEntity> updateReservation(@PathVariable String reservationRef, int roomId,
-    LocalDate startDate, LocalDate endDate, int numGuests) {
-        ReservationEntity reservation = reservationService.updateReservation(reservationRef, roomId, startDate, endDate, numGuests);
+            LocalDate startDate, LocalDate endDate, int numGuests) {
+        ReservationEntity reservation = reservationService.updateReservation(reservationRef, roomId, startDate, endDate,
+                numGuests);
         return ResponseEntity.ok(reservation);
     }
 
-    @PostMapping("/reservation")
-    public ResponseEntity<List<ReservationEntity>> makeReservation(int guestId, List<Integer> roomId, LocalDate startDate, LocalDate endDate, int numGuests) {
-        List<ReservationEntity> reservation = reservationService.makeReservation(guestId, roomId, startDate, endDate, numGuests);
+    // @PostMapping("/reservation/make-reservations")
+    // public ResponseEntity<List<ReservationEntity>> makeReservation(int guestId,
+    // List<Integer> roomId, LocalDate startDate, LocalDate endDate, int numGuests)
+    // {
+    // List<ReservationEntity> reservation =
+    // reservationService.makeReservation(guestId, roomId, startDate, endDate,
+    // numGuests);
+    // return ResponseEntity.ok(reservation);
+    // }
+
+    @PostMapping("/reservation/make-reservations")
+    public ResponseEntity<List<ReservationEntity>> makeReservation(@RequestBody JsonNode payload) {
+        int guestId = payload.get("guestId").asInt();
+
+        // ObjectMapper mapper = new ObjectMapper();
+
+        // List<Integer> myObjects = Arrays.asList(mapper.readValue(payload,
+        // Integer[].class));
+
+        JsonNode roomListJson = payload.get("roomIds");
+
+        List<Integer> roomIdList = new ArrayList<>();
+        if (roomListJson.isArray()) {
+            for (JsonNode roomIdJson : roomListJson) {
+                roomIdList.add(roomIdJson.asInt());
+            }
+        }
+
+        LocalDate startDate = LocalDate.parse(payload.get("startDate").asText());
+        LocalDate endDate = LocalDate.parse(payload.get("endDate").asText());
+        int numGuests = payload.get("numGuests").asInt();
+
+        List<ReservationEntity> reservation = reservationService.makeReservation(guestId, roomIdList, startDate, endDate,
+                numGuests);
         return ResponseEntity.ok(reservation);
     }
 }
