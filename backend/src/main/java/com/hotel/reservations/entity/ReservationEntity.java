@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ import java.time.temporal.ChronoUnit;
 @Entity
 @Data
 @Table(name = "reservations")
+@NoArgsConstructor
 public class ReservationEntity {
     @Id
     @Column(name = "reservation_ref", unique = true, nullable = false)

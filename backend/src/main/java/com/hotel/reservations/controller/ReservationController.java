@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hotel.reservations.entity.ReservationEntity;
 import com.hotel.reservations.service.ReservationService;
 import com.hotel.reservations.service.EngageReservationService;
@@ -41,7 +41,7 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.getReservation(reservationRef));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<ReservationEntity>> getAllReservations() {
         return ResponseEntity.ok(reservationService.getAllReservations());
     }
@@ -90,8 +90,11 @@ public class ReservationController {
     // return ResponseEntity.ok(reservation);
     // }
 
-    @PostMapping("/reservation/make-reservations")
-    public ResponseEntity<List<ReservationEntity>> makeReservation(@RequestBody JsonNode payload) {
+    @PostMapping("/make-reservations")
+    public ResponseEntity<?> makeReservation(@RequestBody JsonNode payload) {
+
+        System.out.println(payload.toString());
+
         int guestId = payload.get("guestId").asInt();
 
         // ObjectMapper mapper = new ObjectMapper();
@@ -112,8 +115,14 @@ public class ReservationController {
         LocalDate endDate = LocalDate.parse(payload.get("endDate").asText());
         int numGuests = payload.get("numGuests").asInt();
 
-        List<ReservationEntity> reservation = reservationService.makeReservation(guestId, roomIdList, startDate, endDate,
-                numGuests);
+        List<ReservationEntity> reservation = null;
+
+        try {
+            reservation = reservationService.makeReservation(guestId, roomIdList, startDate, endDate,
+                    numGuests);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return ResponseEntity.ok(reservation);
     }
 }
