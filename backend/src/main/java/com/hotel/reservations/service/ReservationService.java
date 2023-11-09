@@ -7,6 +7,7 @@ import com.hotel.reservations.entity.RoomEntity;
 import com.hotel.reservations.entity.RoomSettingEntity;
 import com.hotel.reservations.interfaces.IReservationMgt;
 import com.hotel.reservations.repository.ReservationRepository;
+import com.hotel.reservations.repository.RoomSettingRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ public class ReservationService implements IReservationMgt {
 
     @Autowired
     private ReservationRepository repository;
+
+    @Autowired
+    private RoomSettingRepository roomSettingRepository;
 
     // Autowire hotelservice
     @Autowired
@@ -67,8 +71,10 @@ public class ReservationService implements IReservationMgt {
 
         for (Integer i : roomIds) {
             RoomEntity room = hotelService.getRoomById(i);
+            RoomSettingEntity roomSetting = new RoomSettingEntity();
+            roomSettingRepository.save(roomSetting);
             // Create reservation
-            ReservationEntity reservation = new ReservationEntity(room, new RoomSettingEntity(), guestId, numGuests,
+            ReservationEntity reservation = new ReservationEntity(room, roomSetting, guestId, numGuests,
                     startDate, endDate);
 
             // Save reservation
