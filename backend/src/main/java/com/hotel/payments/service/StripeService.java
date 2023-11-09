@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 @Service
 public class StripeService {
-    @Value("${STRIPE_SECRET_KEY}")
+    // @Value("${STRIPE_SECRET_KEY}")
     private String secretKey;
 
     @PostConstruct

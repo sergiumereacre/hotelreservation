@@ -1,7 +1,6 @@
 package com.hotel.payments.interfaces;
 
 import com.hotel.payments.entity.PaymentEntity;
-import com.hotel.reservations.entity.ReservationEntity;
 
 public interface IInvoice {
     String printInvoice(IInvoiceFormat format);
