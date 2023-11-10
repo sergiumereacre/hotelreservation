@@ -56,7 +56,6 @@ public class ReservationController {
     public ResponseEntity<Boolean> checkIn(@PathVariable String reservationRef) {
         boolean ok = engageReservationService.doCheckIn(reservationRef);
         return ResponseEntity.ok(ok);
-
     }
 
     @PutMapping("/reservation/{reservationRef}/check-out")

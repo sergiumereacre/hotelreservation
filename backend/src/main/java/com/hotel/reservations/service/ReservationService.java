@@ -9,18 +9,21 @@ import com.hotel.reservations.interfaces.IReservationMgt;
 import com.hotel.reservations.repository.ReservationRepository;
 import com.hotel.reservations.repository.RoomSettingRepository;
 
+import lombok.RequiredArgsConstructor;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ReservationService implements IReservationMgt {
 
-    @Autowired
-    private ReservationRepository repository;
 
-    @Autowired
-    private RoomSettingRepository roomSettingRepository;
+    private final ReservationRepository repository;
+
+
+    private final RoomSettingRepository roomSettingRepository;
 
     // Autowire hotelservice
     @Autowired
