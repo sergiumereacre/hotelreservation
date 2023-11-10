@@ -23,8 +23,8 @@ public class ReservationService implements IReservationMgt {
     @Autowired
     private ReservationRepository repository;
 
-    @Autowired
-    private RoomSettingRepository roomSettingRepository;
+
+    private final RoomSettingRepository roomSettingRepository;
 
     // Autowire hotelservice
     @Autowired
