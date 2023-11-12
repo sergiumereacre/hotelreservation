@@ -1,6 +1,5 @@
 package com.hotel.reservations.controller;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -47,24 +46,15 @@ public class HotelController {
 
     // Check if room is available
     @GetMapping("/room/{roomId}/is-available")
-    public ResponseEntity<Boolean> getRoomIsAvailable(@PathVariable int roomId
-    ,
+    public ResponseEntity<Boolean> getRoomIsAvailable(@PathVariable int roomId,
             @RequestParam(name = "start-date") String startDateString,
-            @RequestParam(name = "end-date") String endDateString)
-            {
-
-        int numGuests = 1;
+            @RequestParam(name = "end-date") String endDateString) {
 
         LocalDate startDate = LocalDate.parse(startDateString);
         LocalDate endDate = LocalDate.parse(endDateString);
-        
-        // return ResponseEntity.ok(
-        //         service.getRoomIsAvailable(roomId, startDate, endDate));
 
-         return ResponseEntity.ok(
+        return ResponseEntity.ok(
                 service.getRoomIsAvailable(roomId, startDate, endDate));
-
-        // return null;
     }
 
     // Get room by id
