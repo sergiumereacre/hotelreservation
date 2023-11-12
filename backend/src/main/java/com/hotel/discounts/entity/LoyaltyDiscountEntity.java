@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ public class LoyaltyDiscountEntity extends DiscountDecoratorEntity {
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
     // private Long discountId;
 
+    @OneToOne(fetch = javax.persistence.FetchType.LAZY)
     private LoyaltyEntity loyaltyStatus;
 
     public LoyaltyDiscountEntity(PaymentEntity chargeable, LoyaltyEntity loyaltyStatus) {

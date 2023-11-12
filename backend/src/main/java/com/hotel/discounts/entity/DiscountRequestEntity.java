@@ -12,11 +12,11 @@ import com.hotel.payments.entity.PaymentEntity;
 import com.hotel.payments.interfaces.IChargeable;
 
 // DiscountRequest.java (Hypothetical DTO class)
-@Entity
+// @Entity
 public class DiscountRequestEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long discountId;
 
     private double flatDiscount;

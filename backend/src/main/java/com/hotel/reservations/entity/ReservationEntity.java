@@ -9,13 +9,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-// import com.hotel.payments.entity.ChargeableEntity;
 import com.hotel.payments.entity.PaymentEntity;
+
+// import com.hotel.payments.entity.ChargeableEntity;
+// import com.hotel.payments.entity.PaymentEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.UUID;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -24,8 +27,8 @@ import java.time.temporal.ChronoUnit;
 @AllArgsConstructor
 @Data
 public class ReservationEntity extends PaymentEntity {
-    @Id
-    @Column(name = "reservation_ref", unique = true, nullable = false)
+    
+    // Might create Idclass later
     private String reservationRef = UUID.randomUUID().toString();
 
     // @OneToOne

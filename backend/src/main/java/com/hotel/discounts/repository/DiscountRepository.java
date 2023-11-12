@@ -9,7 +9,7 @@ import com.hotel.discounts.entity.DiscountDecoratorEntity;
 
 // Unsure what to add here
 @Repository
-public interface DiscountRepository extends JpaRepository<DiscountDecoratorEntity, Long>  {
+public interface DiscountRepository extends JpaRepository<DiscountDecoratorEntity, String>  {
 
     
 }
