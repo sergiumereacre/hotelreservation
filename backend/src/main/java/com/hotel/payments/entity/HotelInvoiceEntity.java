@@ -17,7 +17,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class HotelInvoiceEntity implements IInvoice {
+public class HotelInvoiceEntity extends InvoiceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,5 +64,9 @@ public class HotelInvoiceEntity implements IInvoice {
         }
 
         return total;
+    }
+
+    public HotelInvoiceEntity(List<BillEntity> bills) {
+        this.bills = bills;
     }
 }

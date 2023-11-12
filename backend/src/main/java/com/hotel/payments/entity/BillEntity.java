@@ -70,5 +70,8 @@ public class BillEntity implements IRefundable, IBilling {
         return payment.getDiscountDetails();
     }
 
+    public BillEntity(PaymentEntity payment) {
+        this.payment = payment;
+    }
 
 }

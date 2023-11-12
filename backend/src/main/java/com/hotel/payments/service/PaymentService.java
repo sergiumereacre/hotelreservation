@@ -22,10 +22,10 @@ public class PaymentService implements IPayment {
         return false;
     }
 
-    @Override
-    public IInvoice generateIInvoice(List<IBilling> billings) {
-        return null;
-    }
+    // @Override
+    // public IInvoice generateIInvoice(List<IBilling> billings) {
+    //     return null;
+    // }
 
     public List<IInvoice> getInvoiceHistory(int userId) {
         return null;
@@ -33,5 +33,9 @@ public class PaymentService implements IPayment {
 
     public List<PaymentEntity> getAllPayments() {
         return paymentRepository.findAll();
+    }
+
+    public PaymentEntity getPaymentByRef(String paymentRef) {
+        return paymentRepository.findById(paymentRef).orElse(null);
     }
 }
