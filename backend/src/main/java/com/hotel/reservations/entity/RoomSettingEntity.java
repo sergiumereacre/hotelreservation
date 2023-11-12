@@ -18,7 +18,7 @@ public class RoomSettingEntity implements IRoomSetting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int roomSettingId;
+    private long roomSettingId;
 
     private RoomTheme roomTheme = RoomTheme.DEFAULT;
 
