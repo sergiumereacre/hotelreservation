@@ -12,7 +12,8 @@ import com.hotel.payments.entity.PaymentEntity;
 @Table(name = "loyalty_discount")
 public class LoyaltyDiscountEntity extends DiscountDecoratorEntity {
 
-    @OneToOne(fetch = javax.persistence.FetchType.LAZY)
+    // (fetch = javax.persistence.FetchType.LAZY)
+    @OneToOne
     private LoyaltyEntity loyaltyStatus;
 
     public LoyaltyDiscountEntity(PaymentEntity chargeable, LoyaltyEntity loyaltyStatus) {

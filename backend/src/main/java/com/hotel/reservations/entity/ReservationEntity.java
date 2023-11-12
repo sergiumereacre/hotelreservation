@@ -25,7 +25,9 @@ public class ReservationEntity extends PaymentEntity {
     // Might create Idclass later
     private String reservationRef = UUID.randomUUID().toString();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+// (fetch = FetchType.LAZY)
+
+    @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     private RoomEntity room;
 
@@ -49,6 +51,10 @@ public class ReservationEntity extends PaymentEntity {
     private boolean isPaid;
 
     public ReservationEntity() {
+    }
+
+    public ReservationEntity(String paymentRef) {
+        super(paymentRef);
     }
 
     public ReservationEntity(RoomEntity room, RoomSettingEntity roomSetting, int guestID, Integer numGuests,

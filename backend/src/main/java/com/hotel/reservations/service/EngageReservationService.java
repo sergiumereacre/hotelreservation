@@ -38,7 +38,7 @@ public class EngageReservationService implements IEngageReservation {
     public boolean doCheckIn(String reservationRef) {
         ReservationEntity reservation = reservationService.getReservation(reservationRef);
 
-        if (reservation == null) {
+        if (!canCheckIn(reservation)) {
             return false;
         }
 
@@ -51,7 +51,7 @@ public class EngageReservationService implements IEngageReservation {
     public boolean doCheckOut(String reservationRef) {
         ReservationEntity reservation = reservationService.getReservation(reservationRef);
 
-        if (reservation == null) {
+        if (!canCheckOut(reservation)) {
             return false;
         }
 
@@ -91,26 +91,14 @@ public class EngageReservationService implements IEngageReservation {
             }
         }
     }
+    
+    private boolean canCheckIn(ReservationEntity reservation) {
+        return reservation != null && !reservation.isCancelled() && !reservation.isClaimed();
+    }
 
-    // private void applyEarlyCheckInFee(ReservationEntity reservation) {
-
-    // if (difference > 0) {
-    // reservation.setStayPrice(reservation.getPrice() + difference *
-    // EARLY_CHECKIN_HOURLY_RATE);
-    // }
-    // }
-
-    // private void applyLateCheckOutFee(ReservationEntity reservation) {
-    // Calendar checkInTime = Calendar.getInstance();
-    // int hour = checkInTime.get(Calendar.HOUR_OF_DAY);
-
-    // int difference = hour - CHECK_OUT_HOUR;
-
-    // if (difference > 0) {
-    // reservation.setStayPrice(reservation.getPrice() + difference *
-    // LATE_CHECKOUT_HOURLY_RATE);
-    // }
-    // }
+    private boolean canCheckOut(ReservationEntity reservation) {
+        return reservation != null && !reservation.isCancelled() && reservation.isClaimed();
+    }
 }
 
 enum EngageFeeType {
