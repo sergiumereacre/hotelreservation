@@ -3,6 +3,7 @@ package com.hotel.discounts.component;
 import org.springframework.stereotype.Component;
 
 import com.hotel.discounts.entity.DiscountDecoratorEntity;
+import com.hotel.payments.interfaces.IChargeable;
 
 // ConcreteDecorator (Decorator Pattern)
 @Component

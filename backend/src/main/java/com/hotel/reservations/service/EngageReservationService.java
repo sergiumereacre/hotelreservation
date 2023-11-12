@@ -75,7 +75,7 @@ public class EngageReservationService implements IEngageReservation {
         int difference = CHECK_IN_HOUR - hour;
 
         if (difference > 0) {
-            reservation.setStayPrice(reservation.getStayPrice() + difference * EARLY_CHECKIN_HOURLY_RATE);
+            reservation.setStayPrice(reservation.getPrice() + difference * EARLY_CHECKIN_HOURLY_RATE);
         }
     }
 
@@ -86,7 +86,7 @@ public class EngageReservationService implements IEngageReservation {
         int difference = hour - CHECK_OUT_HOUR;
 
         if (difference > 0) {
-            reservation.setStayPrice(reservation.getStayPrice() + difference * LATE_CHECKOUT_HOURLY_RATE);
+            reservation.setStayPrice(reservation.getPrice() + difference * LATE_CHECKOUT_HOURLY_RATE);
         }
     }
 }

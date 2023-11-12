@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import com.hotel.payments.interfaces.IChargeable;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.util.UUID;
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ import java.time.temporal.ChronoUnit;
 @Entity
 @Table(name = "reservations")
 @AllArgsConstructor
+@Data
 public class ReservationEntity implements IChargeable {
     @Id
     @Column(name = "reservation_ref", unique = true, nullable = false)

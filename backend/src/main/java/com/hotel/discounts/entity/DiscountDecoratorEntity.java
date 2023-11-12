@@ -2,6 +2,8 @@ package com.hotel.discounts.entity;
 
 import javax.persistence.Entity;
 
+import com.hotel.payments.interfaces.IChargeable;
+
 // BaseDecorator (Decorator Pattern)
 @Entity
 public abstract class DiscountDecoratorEntity implements IChargeable {
@@ -10,7 +12,7 @@ public abstract class DiscountDecoratorEntity implements IChargeable {
     protected double flatDiscount;
     protected double percentageDiscount;
 
-    DiscountDecoratorEntity(IChargeable chargeable) {
+    public DiscountDecoratorEntity(IChargeable chargeable) {
         this.chargeable = chargeable;
     }
 

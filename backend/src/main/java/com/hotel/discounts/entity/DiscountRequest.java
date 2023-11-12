@@ -1,6 +1,7 @@
 package com.hotel.discounts.entity;
 
 import com.hotel.loyalty.service.LoyaltyService;
+import com.hotel.payments.interfaces.IChargeable;
 
 // DiscountRequest.java (Hypothetical DTO class)
 public class DiscountRequest {
