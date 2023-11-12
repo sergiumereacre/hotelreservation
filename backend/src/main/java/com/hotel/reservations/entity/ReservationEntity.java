@@ -100,4 +100,12 @@ public class ReservationEntity extends PaymentEntity {
                 + room.getRoomId() + " for " + getPrice() + "";
     }
 
+    public void setStartDate(String startDate) {
+        this.startDate = LocalDate.parse(startDate);
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = LocalDate.parse(endDate);
+    }
+
 }

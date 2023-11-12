@@ -71,28 +71,19 @@ public class HotelService implements IHotelDetails {
         // If the room is available, return true
         // If the room is not available, return false
 
-        // if(reservationRepository.findByRoomsInDateRange(roomId, startDate, endDate).isPresent()){
-
-
-            try {
-                reservationRepository.findByRoomAndStartDateLessThanEqualAndEndDateGreaterThanEqual(room, startDate, endDate);
-            }
-            catch (Exception e) {
-                System.out.println(e);
-            }
-        
-               if(reservationRepository.findByRoomAndStartDateLessThanEqualAndEndDateGreaterThanEqual(room, startDate, endDate).isPresent()){
-            
-        return false;
-        } else {
-        return true;
-        }
-
-        // if (reservationRepository.findByRoomsInDateRange(Arrays.asList(roomId)).isPresent()) {
-        //     return false;
-        // } else {
-        //     return true;
+        // try {
+        //     reservationRepository.findByRoomAndStartDateLessThanEqualAndEndDateGreaterThanEqual(room, startDate,
+        //             endDate);
+        // } catch (Exception e) {
+        //     System.out.println(e);
         // }
+
+        if (reservationRepository
+                .findByRoomAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndIsCancelledFalse(room, startDate, endDate).isPresent()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public boolean getRoomHasCapacity(int roomId, int numGuests) {

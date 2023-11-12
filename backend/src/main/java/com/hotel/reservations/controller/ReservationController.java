@@ -2,11 +2,7 @@ package com.hotel.reservations.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +33,7 @@ public class ReservationController {
     private PreferenceService preferenceService;
 
     @GetMapping("/reservation/{reservationRef}")
-    public ResponseEntity<ReservationEntity> getReservationByRef(String reservationRef) {
+    public ResponseEntity<ReservationEntity> getReservationByRef(@PathVariable String reservationRef) {
         return ResponseEntity.ok(reservationService.getReservation(reservationRef));
     }
 
@@ -79,27 +75,12 @@ public class ReservationController {
         return ResponseEntity.ok(reservation);
     }
 
-    // @PostMapping("/reservation/make-reservations")
-    // public ResponseEntity<List<ReservationEntity>> makeReservation(int guestId,
-    // List<Integer> roomId, LocalDate startDate, LocalDate endDate, int numGuests)
-    // {
-    // List<ReservationEntity> reservation =
-    // reservationService.makeReservation(guestId, roomId, startDate, endDate,
-    // numGuests);
-    // return ResponseEntity.ok(reservation);
-    // }
-
     @PostMapping("/make-reservations")
     public ResponseEntity<?> makeReservation(@RequestBody JsonNode payload) {
 
         System.out.println(payload.toString());
 
         int guestId = payload.get("guestId").asInt();
-
-        // ObjectMapper mapper = new ObjectMapper();
-
-        // List<Integer> myObjects = Arrays.asList(mapper.readValue(payload,
-        // Integer[].class));
 
         JsonNode roomListJson = payload.get("roomIds");
 

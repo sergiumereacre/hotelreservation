@@ -5,7 +5,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.hotel.loyalty.entity.LoyaltyEntity;
-// import com.hotel.payments.entity.ChargeableEntity;
 import com.hotel.payments.entity.PaymentEntity;
 
 // ConcreteDecorator (Decorator Pattern)

@@ -42,7 +42,8 @@ public class EngageReservationService implements IEngageReservation {
             return false;
         }
 
-        applyEarlyCheckInFee(reservation);
+        // applyEarlyCheckInFee(reservation);
+        applyEngagementFee(reservation, EngageFeeType.EARLY_CHECKIN);
 
         return setClaimedStatus(reservation, true);
     }
@@ -54,7 +55,8 @@ public class EngageReservationService implements IEngageReservation {
             return false;
         }
 
-        applyLateCheckOutFee(reservation);
+        // applyLateCheckOutFee(reservation);
+        applyEngagementFee(reservation, EngageFeeType.LATE_CHECKOUT);
 
         return setClaimedStatus(reservation, false);
     }
@@ -68,25 +70,49 @@ public class EngageReservationService implements IEngageReservation {
         return false;
     }
 
-    private void applyEarlyCheckInFee(ReservationEntity reservation) {
+    private void applyEngagementFee(ReservationEntity reservation, EngageFeeType feeType) {
         Calendar checkInTime = Calendar.getInstance();
         int hour = checkInTime.get(Calendar.HOUR_OF_DAY);
 
         int difference = CHECK_IN_HOUR - hour;
 
         if (difference > 0) {
-            reservation.setStayPrice(reservation.getPrice() + difference * EARLY_CHECKIN_HOURLY_RATE);
+            switch (feeType) {
+                case EARLY_CHECKIN:
+                    reservation.setStayPrice(reservation.getPrice() + difference * EARLY_CHECKIN_HOURLY_RATE);
+                    break;
+
+                case LATE_CHECKOUT:
+                    reservation.setStayPrice(reservation.getPrice() + difference * LATE_CHECKOUT_HOURLY_RATE);
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 
-    private void applyLateCheckOutFee(ReservationEntity reservation) {
-        Calendar checkInTime = Calendar.getInstance();
-        int hour = checkInTime.get(Calendar.HOUR_OF_DAY);
+    // private void applyEarlyCheckInFee(ReservationEntity reservation) {
 
-        int difference = hour - CHECK_OUT_HOUR;
+    // if (difference > 0) {
+    // reservation.setStayPrice(reservation.getPrice() + difference *
+    // EARLY_CHECKIN_HOURLY_RATE);
+    // }
+    // }
 
-        if (difference > 0) {
-            reservation.setStayPrice(reservation.getPrice() + difference * LATE_CHECKOUT_HOURLY_RATE);
-        }
-    }
+    // private void applyLateCheckOutFee(ReservationEntity reservation) {
+    // Calendar checkInTime = Calendar.getInstance();
+    // int hour = checkInTime.get(Calendar.HOUR_OF_DAY);
+
+    // int difference = hour - CHECK_OUT_HOUR;
+
+    // if (difference > 0) {
+    // reservation.setStayPrice(reservation.getPrice() + difference *
+    // LATE_CHECKOUT_HOURLY_RATE);
+    // }
+    // }
+}
+
+enum EngageFeeType {
+    EARLY_CHECKIN, LATE_CHECKOUT
 }
