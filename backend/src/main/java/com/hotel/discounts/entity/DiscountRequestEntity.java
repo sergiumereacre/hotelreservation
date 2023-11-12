@@ -1,6 +1,9 @@
 package com.hotel.discounts.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import com.hotel.loyalty.entity.LoyaltyEntity;
 import com.hotel.loyalty.service.LoyaltyService;
@@ -11,6 +14,10 @@ import com.hotel.payments.interfaces.IChargeable;
 // DiscountRequest.java (Hypothetical DTO class)
 @Entity
 public class DiscountRequestEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long discountId;
 
     private double flatDiscount;
     private double percentageDiscount;

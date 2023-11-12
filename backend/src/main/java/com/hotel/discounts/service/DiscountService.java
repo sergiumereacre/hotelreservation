@@ -12,8 +12,6 @@ import com.hotel.discounts.repository.DiscountRepository;
 import com.hotel.loyalty.entity.LoyaltyEntity;
 // import com.hotel.payments.entity.ChargeableEntity;
 import com.hotel.payments.entity.PaymentEntity;
-import com.hotel.payments.interfaces.IChargeable;
-import com.stripe.model.Account;
 import com.hotel.discounts.entity.DiscountDecoratorEntity;
 import com.hotel.discounts.entity.LoyaltyDiscountEntity;
 import com.hotel.discounts.entity.SimpleDiscountEntity;

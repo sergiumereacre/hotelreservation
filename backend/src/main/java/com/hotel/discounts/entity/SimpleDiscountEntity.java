@@ -19,9 +19,9 @@ import com.hotel.payments.entity.PaymentEntity;
 @Table(name = "simple_discount")
 public class SimpleDiscountEntity extends DiscountDecoratorEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long discountId;
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // private Long discountId;
 
     public SimpleDiscountEntity(PaymentEntity chargeable, double flatDiscount, double percentageDiscount) {
         super(chargeable);

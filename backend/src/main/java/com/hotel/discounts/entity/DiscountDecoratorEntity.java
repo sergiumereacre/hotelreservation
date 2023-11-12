@@ -20,13 +20,13 @@ import com.hotel.payments.entity.PaymentEntity;
 @Table(name = "discount_decorator_entity")
 public abstract class DiscountDecoratorEntity extends PaymentEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long discountId;
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // private Long discountId;
     
 
     @OneToOne(fetch = javax.persistence.FetchType.LAZY)
-    @JoinColumn(name = "payment_ref", referencedColumnName = "chargeable_id")
+    @JoinColumn(name = "payment_ref", referencedColumnName = "payment_ref")
     protected PaymentEntity chargeable;
 
     protected double flatDiscount;

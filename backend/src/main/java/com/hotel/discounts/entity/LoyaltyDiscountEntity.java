@@ -18,9 +18,9 @@ import com.hotel.payments.entity.PaymentEntity;
 @Table(name = "loyalty_discount")
 public class LoyaltyDiscountEntity extends DiscountDecoratorEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long discountId;
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // private Long discountId;
 
     private LoyaltyEntity loyaltyStatus;
 
