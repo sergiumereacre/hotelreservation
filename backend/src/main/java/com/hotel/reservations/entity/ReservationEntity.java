@@ -98,8 +98,6 @@ public class ReservationEntity extends PaymentEntity {
         return "";
     }
 
-    
-
     @Override
     public String getChargeDetails() {
         return "Reservation for " + numGuests + " guests from " + startDate + " to " + endDate + " at room "
