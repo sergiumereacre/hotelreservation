@@ -79,7 +79,7 @@ public class ReservationController {
     @PostMapping("/make-reservations")
     public ResponseEntity<?> makeReservation(@RequestBody JsonNode payload) {
 
-        System.out.println(payload.toString());
+        // System.out.println(payload.toString());
 
         int guestId = payload.get("guestId").asInt();
 

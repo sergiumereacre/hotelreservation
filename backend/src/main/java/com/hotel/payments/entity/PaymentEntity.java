@@ -21,11 +21,6 @@ public abstract class PaymentEntity implements IChargeable{
     @Column(name = "payment_ref", unique = true, nullable = false)
     private String paymentRef = UUID.randomUUID().toString();
 
-    public abstract double getPrice();
-    public abstract String getDiscountDetails();
-    public abstract String getChargeDetails();
-    public abstract void setIsPaid(boolean isPaid);
-    public abstract boolean getIsPaid();
 
     public PaymentEntity() {
     }

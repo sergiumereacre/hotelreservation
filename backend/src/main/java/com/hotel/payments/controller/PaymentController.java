@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +20,7 @@ import com.hotel.payments.entity.ChargeRequestEntity.Currency;
 import com.hotel.payments.service.PaymentService;
 import com.hotel.payments.service.StripeService;
 
-@RequestMapping("/payment")
+@RequestMapping("/payments")
 @RestController
 public class PaymentController {
 
@@ -35,6 +36,8 @@ public class PaymentController {
     public ResponseEntity<Iterable<PaymentEntity>> getAllPayments() {
         return ResponseEntity.ok(service.getAllPayments());
     }
+
+   
 
     @PostMapping("/charge")
     public String charge(ChargeRequestEntity chargeRequest, Model model)
@@ -53,6 +56,11 @@ public class PaymentController {
     public String handleError(Model model, StripeException ex) {
         model.addAttribute("error", ex.getMessage());
         return "result";
+    }
+
+     @GetMapping("/payment/{paymentRef}")
+    public ResponseEntity<PaymentEntity> getPaymentByRef(@PathVariable String paymentRef) {
+        return ResponseEntity.ok(service.getPaymentByRef(paymentRef));
     }
 
 }

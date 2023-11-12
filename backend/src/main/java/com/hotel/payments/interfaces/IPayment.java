@@ -5,6 +5,6 @@ import java.util.List;
 public interface IPayment {
  boolean processPayment(int invoiceId, String paymentType);
 
- IInvoice generateIInvoice(List<IBilling> billings);
+//  IInvoice generateIInvoice(List<IBilling> billings);
     
 }
