@@ -1,7 +1,7 @@
 package com.hotel.reservations.service;
 
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.hotel.reservations.entity.RoomEntity;
 import com.hotel.reservations.entity.RoomTheme;
 import com.hotel.reservations.interfaces.IHotelDetails;
+import com.hotel.reservations.repository.ReservationRepository;
 import com.hotel.reservations.repository.RoomRepository;
 import com.hotel.reservations.entity.HotelEntity;
 
@@ -18,6 +19,9 @@ public class HotelService implements IHotelDetails {
 
     @Autowired
     private RoomRepository roomRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     @Override
     public String getHotelDetails() {
@@ -28,7 +32,15 @@ public class HotelService implements IHotelDetails {
     public List<RoomEntity> getRooms() {
 
         // Get all rooms from the database
-        return roomRepository.findAll();
+        List<RoomEntity> rooms = null;
+
+        try {
+            rooms = roomRepository.findAll();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return rooms;
     }
 
     public List<RoomTheme> getAllRoomThemes() {
@@ -47,16 +59,40 @@ public class HotelService implements IHotelDetails {
     }
 
     @Override
-    public boolean getRoomIsAvailable(int roomId, Date startDate, Date endDate) {
+    public boolean getRoomIsAvailable(int roomId, LocalDate startDate, LocalDate endDate) {
 
-        if (startDate.after(endDate)) {
+        if (startDate.isAfter(endDate)) {
             return false;
         }
+
+        RoomEntity room = getRoomById(roomId);
 
         // Go through list of reservations and check if the room is available
         // If the room is available, return true
         // If the room is not available, return false
+
+        // if(reservationRepository.findByRoomsInDateRange(roomId, startDate, endDate).isPresent()){
+
+
+            try {
+                reservationRepository.findByRoomAndStartDateLessThanEqualAndEndDateGreaterThanEqual(room, startDate, endDate);
+            }
+            catch (Exception e) {
+                System.out.println(e);
+            }
+        
+               if(reservationRepository.findByRoomAndStartDateLessThanEqualAndEndDateGreaterThanEqual(room, startDate, endDate).isPresent()){
+            
         return false;
+        } else {
+        return true;
+        }
+
+        // if (reservationRepository.findByRoomsInDateRange(Arrays.asList(roomId)).isPresent()) {
+        //     return false;
+        // } else {
+        //     return true;
+        // }
     }
 
     public boolean getRoomHasCapacity(int roomId, int numGuests) {
@@ -71,13 +107,14 @@ public class HotelService implements IHotelDetails {
     }
 
     @Override
-    public List<RoomEntity> getAvailableRooms(Date startDate, Date endDate, int numGuests) {
-        // List<RoomEntity> rooms = roomRepository.getAvailableRooms(startDate, endDate);
+    public List<RoomEntity> getAvailableRooms(LocalDate startDate, LocalDate endDate, int numGuests) {
+        // List<RoomEntity> rooms = roomRepository.getAvailableRooms(startDate,
+        // endDate);
         List<RoomEntity> rooms = null;
 
         int totalCapacity = getRoomListCapacity(rooms);
 
-        if(totalCapacity >= numGuests){
+        if (totalCapacity >= numGuests) {
             return rooms;
         } else {
             return null;

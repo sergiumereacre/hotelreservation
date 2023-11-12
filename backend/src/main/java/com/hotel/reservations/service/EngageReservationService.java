@@ -1,7 +1,6 @@
 package com.hotel.reservations.service;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +27,14 @@ public class EngageReservationService implements IEngageReservation {
     @Autowired
     private ReservationService reservationService;
 
+    // Can possibly add Command pattern here
+    // We can do this by creating a CheckInCommand and CheckOutCommand
+    // and passing the reservation to the constructor
+    // and then calling the execute method
+    // This will allow us to undo the check in and check out
+    // by calling the undo method
+    // This will also allow us to add more commands in the future
+    // without having to change the code here
     public boolean doCheckIn(String reservationRef) {
         ReservationEntity reservation = reservationService.getReservation(reservationRef);
 
@@ -52,7 +59,6 @@ public class EngageReservationService implements IEngageReservation {
         return setClaimedStatus(reservation, false);
     }
 
-    // Function that Toggle the claimed status of the reservation
     private boolean setClaimedStatus(ReservationEntity res, boolean claimed) {
         if (res != null) {
             res.setClaimed(claimed);
@@ -69,7 +75,7 @@ public class EngageReservationService implements IEngageReservation {
         int difference = CHECK_IN_HOUR - hour;
 
         if (difference > 0) {
-            reservation.setStayPrice(reservation.getStayPrice() + difference * EARLY_CHECKIN_HOURLY_RATE);
+            reservation.setStayPrice(reservation.getPrice() + difference * EARLY_CHECKIN_HOURLY_RATE);
         }
     }
 
@@ -80,7 +86,7 @@ public class EngageReservationService implements IEngageReservation {
         int difference = hour - CHECK_OUT_HOUR;
 
         if (difference > 0) {
-            reservation.setStayPrice(reservation.getStayPrice() + difference * LATE_CHECKOUT_HOURLY_RATE);
+            reservation.setStayPrice(reservation.getPrice() + difference * LATE_CHECKOUT_HOURLY_RATE);
         }
     }
 }
