@@ -29,4 +29,8 @@ public abstract class PaymentEntity implements IChargeable{
 
     public PaymentEntity() {
     }
+
+    public PaymentEntity(String paymentRef) {
+        this.paymentRef = paymentRef;
+    }
 }
