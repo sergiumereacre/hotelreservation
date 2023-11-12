@@ -10,7 +10,6 @@ import com.hotel.accounts.repository.AccountRepository;
 import com.hotel.discounts.interfaces.IDiscountMgt;
 import com.hotel.discounts.repository.DiscountRepository;
 import com.hotel.loyalty.entity.LoyaltyEntity;
-// import com.hotel.payments.entity.ChargeableEntity;
 import com.hotel.payments.entity.PaymentEntity;
 import com.hotel.discounts.entity.DiscountDecoratorEntity;
 import com.hotel.discounts.entity.LoyaltyDiscountEntity;

@@ -1,15 +1,8 @@
 package com.hotel.discounts.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import com.hotel.loyalty.entity.LoyaltyEntity;
-import com.hotel.loyalty.service.LoyaltyService;
 // import com.hotel.payments.entity.ChargeableEntity;
 import com.hotel.payments.entity.PaymentEntity;
-import com.hotel.payments.interfaces.IChargeable;
 
 // DiscountRequest.java (Hypothetical DTO class)
 // @Entity

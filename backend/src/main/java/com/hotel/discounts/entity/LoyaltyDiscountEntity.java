@@ -1,27 +1,17 @@
 package com.hotel.discounts.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.springframework.stereotype.Component;
 
 import com.hotel.loyalty.entity.LoyaltyEntity;
 // import com.hotel.payments.entity.ChargeableEntity;
 import com.hotel.payments.entity.PaymentEntity;
 
 // ConcreteDecorator (Decorator Pattern)
-// @Component
 @Entity
 @Table(name = "loyalty_discount")
 public class LoyaltyDiscountEntity extends DiscountDecoratorEntity {
-
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // private Long discountId;
 
     @OneToOne(fetch = javax.persistence.FetchType.LAZY)
     private LoyaltyEntity loyaltyStatus;

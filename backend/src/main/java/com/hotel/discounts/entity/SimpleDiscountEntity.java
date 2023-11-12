@@ -1,20 +1,11 @@
 package com.hotel.discounts.entity;
 
-import java.util.UUID;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.stereotype.Component;
-
-// import com.hotel.payments.entity.ChargeableEntity;
 import com.hotel.payments.entity.PaymentEntity;
 
 // ConcreteDecorator (Decorator Pattern)
-// @Component
 @Entity
 @Table(name = "simple_discount")
 public class SimpleDiscountEntity extends DiscountDecoratorEntity {

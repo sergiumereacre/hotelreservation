@@ -1,9 +1,7 @@
 package com.hotel.reservations.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -11,14 +9,10 @@ import javax.persistence.Table;
 
 import com.hotel.payments.entity.PaymentEntity;
 
-// import com.hotel.payments.entity.ChargeableEntity;
-// import com.hotel.payments.entity.PaymentEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.UUID;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -31,8 +25,6 @@ public class ReservationEntity extends PaymentEntity {
     // Might create Idclass later
     private String reservationRef = UUID.randomUUID().toString();
 
-    // @OneToOne
-    // @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     private RoomEntity room;
