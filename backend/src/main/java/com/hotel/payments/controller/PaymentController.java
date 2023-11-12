@@ -1,8 +1,11 @@
 package com.hotel.payments.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +14,7 @@ import org.springframework.ui.Model;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import com.hotel.payments.entity.ChargeRequestEntity;
+import com.hotel.payments.entity.PaymentEntity;
 import com.hotel.payments.entity.ChargeRequestEntity.Currency;
 import com.hotel.payments.service.PaymentService;
 import com.hotel.payments.service.StripeService;
@@ -25,6 +29,11 @@ public class PaymentController {
     @PostMapping("/pay")
     public ResponseEntity<Boolean> makePayment(int invoiceId, String paymentType) {
         return ResponseEntity.ok(service.processPayment(invoiceId, paymentType));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<Iterable<PaymentEntity>> getAllPayments() {
+        return ResponseEntity.ok(service.getAllPayments());
     }
 
     @PostMapping("/charge")
