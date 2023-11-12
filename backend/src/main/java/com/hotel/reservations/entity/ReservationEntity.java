@@ -9,7 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.hotel.payments.interfaces.IChargeable;
+// import com.hotel.payments.entity.ChargeableEntity;
+import com.hotel.payments.entity.PaymentEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +23,7 @@ import java.time.temporal.ChronoUnit;
 @Table(name = "reservations")
 @AllArgsConstructor
 @Data
-public class ReservationEntity implements IChargeable {
+public class ReservationEntity extends PaymentEntity {
     @Id
     @Column(name = "reservation_ref", unique = true, nullable = false)
     private String reservationRef = UUID.randomUUID().toString();

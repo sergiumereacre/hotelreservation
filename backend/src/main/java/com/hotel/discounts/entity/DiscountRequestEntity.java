@@ -1,25 +1,40 @@
 package com.hotel.discounts.entity;
 
+import javax.persistence.Entity;
+
+import com.hotel.loyalty.entity.LoyaltyEntity;
 import com.hotel.loyalty.service.LoyaltyService;
+// import com.hotel.payments.entity.ChargeableEntity;
+import com.hotel.payments.entity.PaymentEntity;
 import com.hotel.payments.interfaces.IChargeable;
 
 // DiscountRequest.java (Hypothetical DTO class)
-public class DiscountRequest {
+@Entity
+public class DiscountRequestEntity {
 
     private double flatDiscount;
     private double percentageDiscount;
     private int applierId;
     // Assuming that chargeable and loyaltyStatus are simple enough to be serialized directly;
     // otherwise, you would use some form of identifier to look up the relevant objects.
-    private IChargeable chargeable;
-    private LoyaltyService loyaltyStatus;
+    private PaymentEntity chargeable;
+    // private LoyaltyService loyaltyStatus;
+    private LoyaltyEntity loyaltyStatus;
 
     // Default constructor for JSON deserialization
-    public DiscountRequest() {
+    public DiscountRequestEntity() {
     }
 
     // Full constructor for all fields
-    public DiscountRequest(IChargeable chargeable, double flatDiscount, double percentageDiscount, int applierId, LoyaltyService loyaltyStatus) {
+    // public DiscountRequest(IChargeable chargeable, double flatDiscount, double percentageDiscount, int applierId, LoyaltyService loyaltyStatus) {
+    //     this.chargeable = chargeable;
+    //     this.flatDiscount = flatDiscount;
+    //     this.percentageDiscount = percentageDiscount;
+    //     this.applierId = applierId;
+    //     this.loyaltyStatus = loyaltyStatus;
+    // }
+
+     public DiscountRequestEntity(PaymentEntity chargeable, double flatDiscount, double percentageDiscount, int applierId, LoyaltyEntity loyaltyStatus) {
         this.chargeable = chargeable;
         this.flatDiscount = flatDiscount;
         this.percentageDiscount = percentageDiscount;
@@ -28,11 +43,11 @@ public class DiscountRequest {
     }
 
     // Getters and setters
-    public IChargeable getChargeable() {
+    public PaymentEntity getChargeable() {
         return chargeable;
     }
 
-    public void setChargeable(IChargeable chargeable) {
+    public void setChargeable(PaymentEntity chargeable) {
         this.chargeable = chargeable;
     }
 
@@ -60,11 +75,19 @@ public class DiscountRequest {
         this.applierId = applierId;
     }
 
-    public LoyaltyService getLoyaltyStatus() {
+    // public LoyaltyService getLoyaltyStatus() {
+    //     return loyaltyStatus;
+    // }
+
+     public LoyaltyEntity getLoyaltyStatus() {
         return loyaltyStatus;
     }
 
-    public void setLoyaltyStatus(LoyaltyService loyaltyStatus) {
+    // public void setLoyaltyStatus(LoyaltyService loyaltyStatus) {
+    //     this.loyaltyStatus = loyaltyStatus;
+    // }
+
+      public void setLoyaltyStatus(LoyaltyEntity loyaltyStatus) {
         this.loyaltyStatus = loyaltyStatus;
     }
 

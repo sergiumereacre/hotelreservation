@@ -1,18 +1,38 @@
 package com.hotel.discounts.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-import com.hotel.payments.interfaces.IChargeable;
+// import com.hotel.payments.entity.ChargeableEntity;
+import com.hotel.payments.entity.PaymentEntity;
 
 // BaseDecorator (Decorator Pattern)
+// @Entity
+// @Table(name = "discount_decorator_entity")
+// @MappedSuperclass   
 @Entity
-public abstract class DiscountDecoratorEntity implements IChargeable {
+@Table(name = "discount_decorator_entity")
+public abstract class DiscountDecoratorEntity extends PaymentEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long discountId;
     
-    protected IChargeable chargeable;
+
+    @OneToOne(fetch = javax.persistence.FetchType.LAZY)
+    @JoinColumn(name = "payment_ref", referencedColumnName = "chargeable_id")
+    protected PaymentEntity chargeable;
+
     protected double flatDiscount;
     protected double percentageDiscount;
 
-    public DiscountDecoratorEntity(IChargeable chargeable) {
+    public DiscountDecoratorEntity(PaymentEntity chargeable) {
         this.chargeable = chargeable;
     }
 

@@ -19,16 +19,20 @@ import com.hotel.payments.interfaces.IChargeable;
 import lombok.Data;
 
 
+
+// @Inheritance(strategy = InheritanceType.JOINED)
+// @MappedSuperclass
+
 @Entity
 @Table(name = "payments")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class PaymentEntity implements IChargeable{
 
     // @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
     // private int paymentId;
 
-        @Id
+    @Id
     @Column(name = "payment_ref", unique = true, nullable = false)
     private String paymentRef = UUID.randomUUID().toString();
 
