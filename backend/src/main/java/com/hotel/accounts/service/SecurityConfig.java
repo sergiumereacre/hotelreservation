@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .httpBasic().disable();
+                http.headers().frameOptions().sameOrigin();
     }
 
 }
