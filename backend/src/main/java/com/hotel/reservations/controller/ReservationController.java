@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.hotel.payments.entity.PaymentEntity;
 import com.hotel.reservations.entity.ReservationEntity;
 import com.hotel.reservations.service.ReservationService;
 import com.hotel.reservations.service.EngageReservationService;
