@@ -9,21 +9,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.hotel.payments.interfaces.IChargeable;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import java.util.UUID;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 @Entity
-@Data
 @Table(name = "reservations")
-@NoArgsConstructor
-public class ReservationEntity {
+@AllArgsConstructor
+public class ReservationEntity implements IChargeable {
     @Id
     @Column(name = "reservation_ref", unique = true, nullable = false)
     private String reservationRef = UUID.randomUUID().toString();
@@ -53,6 +50,9 @@ public class ReservationEntity {
 
     private boolean isPaid;
 
+    public ReservationEntity() {
+    }
+
     public ReservationEntity(RoomEntity room, RoomSettingEntity roomSetting, int guestID, Integer numGuests,
             LocalDate startDate, LocalDate endDate) {
         this.room = room;
@@ -64,11 +64,12 @@ public class ReservationEntity {
         this.isClaimed = false;
         this.isCancelled = false;
         this.isPaid = false;
-        this.stayPrice = calculatePrice();
+        this.stayPrice = getPrice();
     }
 
     // Implement IChargeable soon
-    private double calculatePrice() {
+    @Override
+    public double getPrice() {
 
         // Room already has a price. We just need to calculate the number of days and
         // multiply by the price
@@ -76,6 +77,29 @@ public class ReservationEntity {
         long daysDiff = ChronoUnit.DAYS.between(startDate, endDate);
 
         return daysDiff * room.getPrice();
+    }
+
+    @Override
+    public void setIsPaid(boolean isPaid) {
+        this.isPaid = isPaid;
+    }
+
+    @Override
+    public boolean getIsPaid() {
+        return this.isPaid;
+    }
+
+    @Override
+    public String getDiscountDetails() {
+        return "";
+    }
+
+    
+
+    @Override
+    public String getChargeDetails() {
+        return "Reservation for " + numGuests + " guests from " + startDate + " to " + endDate + " at room "
+                + room.getRoomId() + " for " + getPrice() + "";
     }
 
 }
