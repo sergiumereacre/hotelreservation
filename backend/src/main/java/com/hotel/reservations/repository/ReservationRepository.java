@@ -14,21 +14,27 @@ import java.util.Optional;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<ReservationEntity, String> {
-    Optional<ReservationEntity> findByReservationRef(String reservationRef);
+        Optional<ReservationEntity> findByReservationRef(String reservationRef);
 
-    // // Find by list of room ids, start date, and end date
-    // @Query("SELECT r FROM ReservationEntity r WHERE r.room IN :roomIds")
-    @Query("SELECT r FROM ReservationEntity r WHERE r.room = :roomId AND  r.startDate <= :endDate AND r.endDate >= :startDate")
-    Optional<ReservationEntity> findByRoomsInDateRange(@Param("roomId") Integer roomId,
-            @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+        // // Find by list of room ids, start date, and end date
+        // @Query("SELECT r FROM ReservationEntity r WHERE r.room IN :roomIds")
+        @Query("SELECT r FROM ReservationEntity r WHERE r.room = :roomId AND  r.startDate <= :endDate AND r.endDate >= :startDate")
+        Optional<ReservationEntity> findByRoomsInDateRange(@Param("roomId") Integer roomId,
+                        @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
-    Optional<ReservationEntity> findByRoomAndStartDateLessThanEqualAndEndDateGreaterThanEqual(RoomEntity room,
-            LocalDate startDate, LocalDate endDate);
+        Optional<ReservationEntity> findByRoomAndStartDateLessThanEqualAndEndDateGreaterThanEqual(RoomEntity room,
+                        LocalDate startDate, LocalDate endDate);
 
-    Optional<ReservationEntity> findByRoom(RoomEntity room);
+        Optional<ReservationEntity> findByRoomAndStartDateLessThanEqualAndEndDateGreaterThanEqualAndIsCancelledFalse(
+                        RoomEntity room,
+                        LocalDate startDate, LocalDate endDate);
 
-    // Find by list of room ids, start date, and end date
-    // Optional<ReservationEntity>
-    // findByStartDateLessThanEqualAndEndDateGreaterThanEqual(LocalDate startDate,
-    // LocalDate endDate);
+        // Also checks if the reservation is cancelled.
+
+        Optional<ReservationEntity> findByRoom(RoomEntity room);
+
+        // Find by list of room ids, start date, and end date
+        // Optional<ReservationEntity>
+        // findByStartDateLessThanEqualAndEndDateGreaterThanEqual(LocalDate startDate,
+        // LocalDate endDate);
 }

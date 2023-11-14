@@ -37,7 +37,7 @@ public class ReservationController {
     private PreferenceService preferenceService;
 
     @GetMapping("/reservation/{reservationRef}")
-    public ResponseEntity<ReservationEntity> getReservationByRef(String reservationRef) {
+    public ResponseEntity<ReservationEntity> getReservationByRef(@PathVariable String reservationRef) {
         return ResponseEntity.ok(reservationService.getReservation(reservationRef));
     }
 
@@ -116,12 +116,15 @@ public class ReservationController {
 
         List<ReservationEntity> reservation = null;
 
-        try {
-            reservation = reservationService.makeReservation(guestId, roomIdList, startDate, endDate,
+        // try {
+           
+        // } catch (Exception e) {
+        //     System.out.println(e);
+        // }
+
+         reservation = reservationService.makeReservation(guestId, roomIdList, startDate, endDate,
                     numGuests);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+
         return ResponseEntity.ok(reservation);
     }
 }
