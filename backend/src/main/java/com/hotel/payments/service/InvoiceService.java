@@ -13,11 +13,12 @@ import com.hotel.payments.entity.BillEntity;
 import com.hotel.payments.entity.HotelInvoiceEntity;
 import com.hotel.payments.entity.InvoiceEntity;
 import com.hotel.payments.entity.PaymentEntity;
+import com.hotel.payments.interfaces.IPayment;
 import com.hotel.payments.repository.BillRepository;
 import com.hotel.payments.repository.InvoiceRepository;
 
 @Service
-public class InvoiceService {
+public class InvoiceService implements IPayment {
 
     @Autowired
     private PaymentService paymentService;
@@ -47,14 +48,22 @@ public class InvoiceService {
         for (String paymentRef : paymentRefs) {
             PaymentEntity payment = paymentService.getPaymentByRef(paymentRef);
 
+            if(payment == null){
+                continue;
+            }
+
             BillEntity bill = new BillEntity(payment);
             billRepository.save(bill);
 
             billList.add(bill);
         }
 
-        InvoiceEntity invoice = new HotelInvoiceEntity(billList);
-        invoice.setGuest(guest);
+        if(billList.size() == 0){
+            return null;
+        }
+
+        InvoiceEntity invoice = new HotelInvoiceEntity(guest, billList);
+        // invoice.setGuest(guest);
 
         return saveInvoice(invoice);
     }
@@ -74,4 +83,46 @@ public class InvoiceService {
         return savedInvoice;
     }
 
+    public List<InvoiceEntity> getInvoicesByIsPaid(Long userId, boolean isPaid) {
+        GuestAccountEntity guest = accountService.getGuestById(userId);
+
+        List<InvoiceEntity> invoices = null;
+
+        // return invoiceRepository.findAllByGuestAndIsPaid(guest, isPaid);
+
+        try{
+            invoices = invoiceRepository.findAllByGuestAndIsPaid(guest, isPaid);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return invoices;
+    }
+
+    public InvoiceEntity getInvoiceById(Long invoiceId) {
+        return invoiceRepository.findById(invoiceId).orElse(null);
+    }
+
+    @Override
+    public boolean processPayment(Long invoiceId, String paymentType) {
+
+        InvoiceEntity invoice = null;
+
+        try {
+            invoice = invoiceRepository.findById(invoiceId).orElse(null);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        if (invoice == null) {
+            return false;
+        }
+
+        invoice.setPaid(true);
+        invoice.setPaymentType(paymentType);
+
+        saveInvoice(invoice);
+        
+        return true;
+    }
 }

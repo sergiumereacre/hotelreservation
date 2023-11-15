@@ -6,31 +6,42 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.hotel.payments.interfaces.IInvoice;
 import com.hotel.payments.service.InvoiceService;
-import com.hotel.payments.service.PaymentService;
+
 
 @RequestMapping("/invoice")
 @RestController
 public class InvoiceController {
-
-    // @Autowired
-    // PaymentService paymentService;
+    
 
     @Autowired
     InvoiceService invoiceService;
 
+    @GetMapping("/pending/{userId}")
+    public ResponseEntity<?> getPendingInvoices(@PathVariable Long userId) {
+        return ResponseEntity.ok(invoiceService.getInvoicesByIsPaid(userId, false));
+    }
+
     // Get invoice history
     @GetMapping("/history/{userId}")
-    public ResponseEntity<List<IInvoice>> getInvoiceHistory(int userId) {
-        // return ResponseEntity.ok(invoiceService.getInvoiceHistory(userId));
-        return null;
+    public ResponseEntity<?> getInvoiceHistory(@PathVariable Long userId) {
+        return ResponseEntity.ok(invoiceService.getInvoicesByIsPaid(userId, true));
+    }
+
+    @PostMapping("/pay")
+    public ResponseEntity<Boolean> makePayment(@RequestBody JsonNode payload) {
+
+        Long invoiceId = payload.get("invoiceId").asLong();
+        String paymentType = payload.get("paymentType").asText();
+
+        return ResponseEntity.ok(invoiceService.processPayment(invoiceId, paymentType));
     }
 
     @PostMapping("/generate-invoice")

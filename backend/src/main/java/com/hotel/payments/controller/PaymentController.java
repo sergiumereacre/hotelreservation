@@ -26,11 +26,7 @@ public class PaymentController {
 
     @Autowired PaymentService service;
     @Autowired StripeService stripeService;
-
-    @PostMapping("/pay")
-    public ResponseEntity<Boolean> makePayment(int invoiceId, String paymentType) {
-        return ResponseEntity.ok(service.processPayment(invoiceId, paymentType));
-    }
+    
 
     @GetMapping("/all")
     public ResponseEntity<Iterable<PaymentEntity>> getAllPayments() {

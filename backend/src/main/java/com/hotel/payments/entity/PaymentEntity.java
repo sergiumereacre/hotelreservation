@@ -11,12 +11,14 @@ import javax.persistence.Table;
 
 import com.hotel.payments.interfaces.IChargeable;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "payments")
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
+@Data
 // @MappedSuperclass
 public abstract class PaymentEntity implements IChargeable{
 
