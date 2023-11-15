@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 import com.hotel.accounts.entity.AccountEntity;
 import com.hotel.payments.interfaces.IBilling;
 import com.hotel.payments.interfaces.IInvoice;
-import com.hotel.payments.interfaces.IInvoiceFormat;
+import com.hotel.payments.service.InvoiceFormat;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -51,7 +51,7 @@ public abstract class InvoiceEntity implements IInvoice {
     }
 
      @Override
-    public String printInvoice(IInvoiceFormat format) {
+    public String printInvoice(InvoiceFormat format) {
         return "";
     }
 
