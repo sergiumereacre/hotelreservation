@@ -60,4 +60,11 @@ public class InvoiceController {
 
         return ResponseEntity.ok(invoiceService.generateInvoice(userId, paymentRefList));
     }
+
+    @GetMapping("/{invoiceId}/formatted/{format}")
+    public ResponseEntity<?> getFormattedInvoice(@PathVariable Long invoiceId, @PathVariable String format) {
+        // return ResponseEntity.ok(invoiceService.getFormattedInvoice(invoiceId, format));
+
+        return null;
+    }
 }
