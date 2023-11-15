@@ -1,7 +1,6 @@
 package com.hotel.reservations.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -11,8 +10,6 @@ import com.hotel.payments.entity.PaymentEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.UUID;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -81,16 +78,6 @@ public class ReservationEntity extends PaymentEntity {
         long daysDiff = ChronoUnit.DAYS.between(startDate, endDate);
 
         return daysDiff * room.getPrice();
-    }
-
-    @Override
-    public void setIsPaid(boolean isPaid) {
-        this.isPaid = isPaid;
-    }
-
-    @Override
-    public boolean getIsPaid() {
-        return this.isPaid;
     }
 
     @Override

@@ -13,11 +13,13 @@ import javax.persistence.OneToOne;
 import com.hotel.accounts.entity.AccountEntity;
 import com.hotel.payments.interfaces.IInvoice;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
+@Data
 public abstract class InvoiceEntity implements IInvoice {
 
     @Id
@@ -28,11 +30,9 @@ public abstract class InvoiceEntity implements IInvoice {
     @JoinColumn(name = "guest_id")
     private AccountEntity guest;
 
-    public InvoiceEntity(AccountEntity guest) {
-        this.guest = guest;
-    }
+    private boolean isPaid;
 
-    public void setGuest(AccountEntity guest) {
+    public InvoiceEntity(AccountEntity guest) {
         this.guest = guest;
     }
 }

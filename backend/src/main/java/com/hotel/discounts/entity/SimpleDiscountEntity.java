@@ -38,16 +38,4 @@ public class SimpleDiscountEntity extends DiscountDecoratorEntity {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getChargeDetails'");
     }
-
-    @Override
-    public void setIsPaid(boolean isPaid) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setIsPaid'");
-    }
-
-    @Override
-    public boolean getIsPaid() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getIsPaid'");
-    }
 }
