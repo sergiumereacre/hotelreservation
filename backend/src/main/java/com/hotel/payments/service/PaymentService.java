@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hotel.payments.entity.PaymentEntity;
-import com.hotel.payments.interfaces.IBilling;
 import com.hotel.payments.interfaces.IInvoice;
 import com.hotel.payments.interfaces.IPayment;
 import com.hotel.payments.repository.PaymentRepository;

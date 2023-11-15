@@ -35,7 +35,6 @@ public class InvoiceController {
 
     @PostMapping("/generate-invoice")
     public ResponseEntity<?> generateInvoice(@RequestBody JsonNode payload) {
-        // String paymentRef = payload.get("paymentRef").asText();
 
         JsonNode roomListJson = payload.get("paymentRefs");
 
@@ -46,7 +45,8 @@ public class InvoiceController {
             }
         }
 
-        return ResponseEntity.ok(invoiceService.generateInvoice(paymentRefList));
-        // return null;
+        Long userId = payload.get("userId").asLong();
+
+        return ResponseEntity.ok(invoiceService.generateInvoice(userId, paymentRefList));
     }
 }

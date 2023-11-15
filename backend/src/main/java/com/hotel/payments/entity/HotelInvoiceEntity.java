@@ -3,27 +3,15 @@ package com.hotel.payments.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.hotel.payments.interfaces.IBilling;
-import com.hotel.payments.interfaces.IInvoice;
 import com.hotel.payments.interfaces.IInvoiceFormat;
-import com.hotel.reservations.entity.ReservationEntity;
-
 import lombok.Data;
 
 @Entity
 @Data
 public class HotelInvoiceEntity extends InvoiceEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int invoiceID;
-
-    private int guestID;
 
     @OneToMany
     private List<BillEntity> bills;

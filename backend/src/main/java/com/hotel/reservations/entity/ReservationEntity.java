@@ -25,8 +25,7 @@ public class ReservationEntity extends PaymentEntity {
     
     // Might create Idclass later
     private String reservationRef = UUID.randomUUID().toString();
-
-// (fetch = FetchType.LAZY)
+    
 
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "room_id")

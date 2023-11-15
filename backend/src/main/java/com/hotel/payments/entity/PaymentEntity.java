@@ -11,20 +11,19 @@ import javax.persistence.Table;
 
 import com.hotel.payments.interfaces.IChargeable;
 
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "payments")
 @Inheritance(strategy = InheritanceType.JOINED)
+@NoArgsConstructor
 // @MappedSuperclass
 public abstract class PaymentEntity implements IChargeable{
 
     @Id
     @Column(name = "payment_ref", unique = true, nullable = false)
     private String paymentRef = UUID.randomUUID().toString();
-
-
-    public PaymentEntity() {
-    }
-
+    
     public PaymentEntity(String paymentRef) {
         this.paymentRef = paymentRef;
     }
