@@ -2,7 +2,11 @@ package com.hotel.reservations.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.hotel.payments.entity.PaymentEntity;
 import com.hotel.reservations.entity.ReservationEntity;
 import com.hotel.reservations.service.ReservationService;
 import com.hotel.reservations.service.EngageReservationService;
@@ -76,12 +79,27 @@ public class ReservationController {
         return ResponseEntity.ok(reservation);
     }
 
+    // @PostMapping("/reservation/make-reservations")
+    // public ResponseEntity<List<ReservationEntity>> makeReservation(int guestId,
+    // List<Integer> roomId, LocalDate startDate, LocalDate endDate, int numGuests)
+    // {
+    // List<ReservationEntity> reservation =
+    // reservationService.makeReservation(guestId, roomId, startDate, endDate,
+    // numGuests);
+    // return ResponseEntity.ok(reservation);
+    // }
+
     @PostMapping("/make-reservations")
     public ResponseEntity<?> makeReservation(@RequestBody JsonNode payload) {
 
         // System.out.println(payload.toString());
 
         int guestId = payload.get("guestId").asInt();
+
+        // ObjectMapper mapper = new ObjectMapper();
+
+        // List<Integer> myObjects = Arrays.asList(mapper.readValue(payload,
+        // Integer[].class));
 
         JsonNode roomListJson = payload.get("roomIds");
 
