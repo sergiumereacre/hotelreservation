@@ -34,7 +34,7 @@ public class DiscountRequestEntity {
     //     this.loyaltyStatus = loyaltyStatus;
     // }
 
-     public DiscountRequestEntity(PaymentEntity chargeable, double flatDiscount, double percentageDiscount, int applierId, LoyaltyEntity loyaltyStatus) {
+    public DiscountRequestEntity(PaymentEntity chargeable, double flatDiscount, double percentageDiscount, int applierId, LoyaltyEntity loyaltyStatus) {
         this.chargeable = chargeable;
         this.flatDiscount = flatDiscount;
         this.percentageDiscount = percentageDiscount;
@@ -79,7 +79,7 @@ public class DiscountRequestEntity {
     //     return loyaltyStatus;
     // }
 
-     public LoyaltyEntity getLoyaltyStatus() {
+    public LoyaltyEntity getLoyaltyStatus() {
         return loyaltyStatus;
     }
 

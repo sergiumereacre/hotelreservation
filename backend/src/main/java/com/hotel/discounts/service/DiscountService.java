@@ -7,17 +7,16 @@ import org.springframework.stereotype.Service;
 
 import com.hotel.accounts.entity.AccountEntity;
 import com.hotel.accounts.repository.AccountRepository;
+import com.hotel.discounts.entity.DiscountDecoratorEntity;
+import com.hotel.discounts.entity.LoyaltyDiscountEntity;
+import com.hotel.discounts.entity.SimpleDiscountEntity;
 import com.hotel.discounts.interfaces.IDiscountMgt;
 import com.hotel.discounts.repository.DiscountRepository;
 import com.hotel.loyalty.entity.LoyaltyEntity;
 import com.hotel.payments.entity.PaymentEntity;
-import com.hotel.discounts.entity.DiscountDecoratorEntity;
-import com.hotel.discounts.entity.LoyaltyDiscountEntity;
-import com.hotel.discounts.entity.SimpleDiscountEntity;
 
 // Note: Creation of percentage discounts by staff (limited to a certain percentage off) for bookings. Only one discount can be applied per reservation. 
 
-// ConcreteComponent (Decorator Pattern)
 @Service
 public class DiscountService implements IDiscountMgt {
     // Sort out account stuff here
@@ -30,7 +29,6 @@ public class DiscountService implements IDiscountMgt {
     @Autowired
     private DiscountRepository discountRepository;
 
-    // Note update account stuff, currently wrong
     @Override
     public void applySimpleDiscount(PaymentEntity chargeable, double flatDiscount, double percentageDiscount, int applierId) {
         Optional<AccountEntity> accountOptional = accountRepository.findById((long) applierId);
