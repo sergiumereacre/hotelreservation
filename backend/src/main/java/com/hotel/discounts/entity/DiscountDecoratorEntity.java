@@ -9,6 +9,7 @@ import com.hotel.payments.entity.PaymentEntity;
 
 @Entity
 @Table(name = "discount_decorator_entity")
+// Discount Decorator Design Pattern - BaseDecorator
 public abstract class DiscountDecoratorEntity extends PaymentEntity {
     
     // (fetch = javax.persistence.FetchType.LAZY)

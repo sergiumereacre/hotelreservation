@@ -1,5 +1,9 @@
 package com.hotel.reservations.entity;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -10,14 +14,12 @@ import com.hotel.payments.entity.PaymentEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import java.util.UUID;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "reservations")
 @AllArgsConstructor
 @Data
+// Discount Decorator Design Pattern - ConcreteComponent
 public class ReservationEntity extends PaymentEntity {
     
     // Might create Idclass later

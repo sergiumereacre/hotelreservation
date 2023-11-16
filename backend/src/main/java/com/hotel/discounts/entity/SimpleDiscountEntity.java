@@ -5,9 +5,9 @@ import javax.persistence.Table;
 
 import com.hotel.payments.entity.PaymentEntity;
 
-// ConcreteDecorator (Decorator Pattern)
 @Entity
 @Table(name = "simple_discount")
+// Discount Decorator Design Pattern - ConcreteDecorator
 public class SimpleDiscountEntity extends DiscountDecoratorEntity {
 
     // @Id

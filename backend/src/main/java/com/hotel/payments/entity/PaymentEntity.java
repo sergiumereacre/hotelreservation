@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
 @Data
-// @MappedSuperclass
+// Discount Decorator Design Pattern - Component // @MappedSuperclass
 public abstract class PaymentEntity implements IChargeable{
 
     @Id

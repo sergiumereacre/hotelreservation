@@ -7,9 +7,9 @@ import javax.persistence.Table;
 import com.hotel.loyalty.entity.LoyaltyEntity;
 import com.hotel.payments.entity.PaymentEntity;
 
-// ConcreteDecorator (Decorator Pattern)
 @Entity
 @Table(name = "loyalty_discount")
+// Discount Decorator Design Pattern - ConcreteDecorator
 public class LoyaltyDiscountEntity extends DiscountDecoratorEntity {
 
     // (fetch = javax.persistence.FetchType.LAZY)
