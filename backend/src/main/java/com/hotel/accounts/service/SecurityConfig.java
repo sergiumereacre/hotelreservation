@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     private final UserDetailsServiceImpl userDetailsService;
     private final BCryptPasswordEncoder passwordEncoder;
 
@@ -33,8 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("admin")
                 .password(passwordEncoder.encode("adminpassword"))
                 .roles("ADMIN");
+
     }
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

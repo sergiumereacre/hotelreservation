@@ -11,8 +11,9 @@ import com.hotel.payments.entity.PaymentEntity;
 @Table(name = "discount_decorator_entity")
 public abstract class DiscountDecoratorEntity extends PaymentEntity {
     
+    // (fetch = javax.persistence.FetchType.LAZY)
 
-    @OneToOne(fetch = javax.persistence.FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "payment_ref", referencedColumnName = "payment_ref")
     protected PaymentEntity chargeable;
 

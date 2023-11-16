@@ -4,24 +4,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import com.hotel.payments.interfaces.IBilling;
-import com.hotel.payments.interfaces.IChargeable;
 import com.hotel.payments.interfaces.IRefundable;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class BillEntity implements IRefundable, IBilling {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int billId;
+    private Long billId;
 
     @OneToOne
     private PaymentEntity payment;
@@ -70,5 +68,8 @@ public class BillEntity implements IRefundable, IBilling {
         return payment.getDiscountDetails();
     }
 
+    public BillEntity(PaymentEntity payment) {
+        this.payment = payment;
+    }
 
 }
