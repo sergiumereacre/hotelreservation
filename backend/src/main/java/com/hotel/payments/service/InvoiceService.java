@@ -32,6 +32,9 @@ public class InvoiceService implements IPayment {
     @Autowired
     private BillRepository billRepository;
 
+    @Autowired
+    private InvoiceFormatFactory invoiceFormatFactory;
+
     // We must make sure that all the payments don't already belong to an invoice
     public InvoiceEntity generateInvoice(Long userId, List<String> paymentRefs) {
         List<BillEntity> billList = new ArrayList<>();
@@ -124,5 +127,18 @@ public class InvoiceService implements IPayment {
         saveInvoice(invoice);
         
         return true;
+    }
+
+    public String getFormattedInvoice(Long invoiceId, String format){
+        InvoiceFormat invoiceFormat = invoiceFormatFactory.createFormat(format);
+
+        InvoiceEntity invoice = getInvoiceById(invoiceId);
+
+        if(invoice == null){
+            return "";
+        }
+
+        invoiceFormat.setInvoice(invoice);
+        return invoiceFormat.format();
     }
 }

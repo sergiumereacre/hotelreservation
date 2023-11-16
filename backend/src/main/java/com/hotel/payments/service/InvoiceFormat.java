@@ -5,7 +5,7 @@ import com.hotel.payments.interfaces.IFormat;
 
 public abstract class InvoiceFormat implements IFormat {
 
-    InvoiceEntity invoice;
+    private InvoiceEntity invoice;
 
     public InvoiceFormat(InvoiceEntity invoice) {
         this.invoice = invoice;

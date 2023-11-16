@@ -1,11 +1,12 @@
 package com.hotel.payments.service;
 
+import org.springframework.stereotype.Component;
+
 import com.hotel.payments.entity.HTMLInvoiceFormat;
-import com.hotel.payments.entity.InvoiceEntity;
 import com.hotel.payments.entity.PlainTextInvoiceFormat;
-import com.hotel.payments.interfaces.IFormat;
 import com.hotel.payments.interfaces.IFormatFactory;
 
+@Component
 public class InvoiceFormatFactory implements IFormatFactory {
 
     @Override

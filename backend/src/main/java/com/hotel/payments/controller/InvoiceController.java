@@ -63,8 +63,6 @@ public class InvoiceController {
 
     @GetMapping("/{invoiceId}/formatted/{format}")
     public ResponseEntity<?> getFormattedInvoice(@PathVariable Long invoiceId, @PathVariable String format) {
-        // return ResponseEntity.ok(invoiceService.getFormattedInvoice(invoiceId, format));
-
-        return null;
+        return ResponseEntity.ok(invoiceService.getFormattedInvoice(invoiceId, format));
     }
 }

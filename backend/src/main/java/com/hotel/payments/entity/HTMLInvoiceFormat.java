@@ -6,10 +6,25 @@ public class HTMLInvoiceFormat extends InvoiceFormat {
 
     @Override
     public String format() {
+        return format(this.getInvoice());
+
+    }
+
+    @Override
+    public String format(InvoiceEntity invoice) {
+
+        try{
+            double total = invoice.getTotal();
+        }
+        catch(Exception e){
+            System.out.println("Error: " + e.getMessage());
+        }
+
+
         return "<html><body><h1>Invoice</h1>" +
-        "<p>Invoice ID: " + getInvoice().getInvoiceID() + "</p>" +
-        "<p>Paid by: " + getInvoice().getGuest().getName() + "</p>" +
-        "<p>Invoice Total: " + getInvoice().getTotal() + "</p></body></html>";
+                "<p>Invoice ID: " + invoice.getInvoiceID() + "</p>" +
+                "<p>Paid by: " + invoice.getGuest().getName() + "</p>" +
+                "<p>Invoice Total: " + invoice.getTotal() + "</p></body></html>";
 
     }
 

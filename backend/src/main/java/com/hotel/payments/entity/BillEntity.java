@@ -10,9 +10,11 @@ import com.hotel.payments.interfaces.IBilling;
 import com.hotel.payments.interfaces.IRefundable;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class BillEntity implements IRefundable, IBilling {
 
     @Id
