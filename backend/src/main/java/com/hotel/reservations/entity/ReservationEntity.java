@@ -6,6 +6,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.hotel.accounts.entity.AccountEntity;
 import com.hotel.payments.entity.PaymentEntity;
 
 import lombok.AllArgsConstructor;
@@ -31,8 +32,6 @@ public class ReservationEntity extends PaymentEntity {
     @OneToOne
     private RoomSettingEntity roomSetting;
 
-    private int guestID;
-
     private Integer numGuests;
 
     private LocalDate startDate;
@@ -54,11 +53,11 @@ public class ReservationEntity extends PaymentEntity {
         super(paymentRef);
     }
 
-    public ReservationEntity(RoomEntity room, RoomSettingEntity roomSetting, int guestID, Integer numGuests,
+    public ReservationEntity(RoomEntity room, RoomSettingEntity roomSetting, AccountEntity guest, Integer numGuests,
             LocalDate startDate, LocalDate endDate) {
         this.room = room;
         this.roomSetting = roomSetting;
-        this.guestID = guestID;
+        super.setClient(guest);
         this.numGuests = numGuests;
         this.startDate = startDate;
         this.endDate = endDate;

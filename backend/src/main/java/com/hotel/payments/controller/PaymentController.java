@@ -27,10 +27,9 @@ public class PaymentController {
     @Autowired PaymentService service;
     @Autowired StripeService stripeService;
     
-
-    @GetMapping("/all")
-    public ResponseEntity<Iterable<PaymentEntity>> getAllPayments() {
-        return ResponseEntity.ok(service.getAllPayments());
+    @GetMapping("/{userId}/all")
+    public ResponseEntity<?> getAllPayments(@PathVariable long userId) {
+        return ResponseEntity.ok(service.getAllPayments(userId));
     }
 
    

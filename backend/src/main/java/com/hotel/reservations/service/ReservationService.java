@@ -2,6 +2,9 @@ package com.hotel.reservations.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.hotel.accounts.entity.AccountEntity;
+import com.hotel.accounts.service.AccountService;
 import com.hotel.reservations.entity.ReservationEntity;
 import com.hotel.reservations.entity.RoomEntity;
 import com.hotel.reservations.entity.RoomSettingEntity;
@@ -23,8 +26,11 @@ public class ReservationService implements IReservationMgt {
     @Autowired
     private ReservationRepository repository;
 
+    @Autowired
+    private RoomSettingRepository roomSettingRepository;
 
-    private final RoomSettingRepository roomSettingRepository;
+    @Autowired
+    private AccountService accountService;
 
     // Autowire hotelservice
     @Autowired
@@ -35,8 +41,9 @@ public class ReservationService implements IReservationMgt {
     }
 
     @Override
-    public List<ReservationEntity> getAllReservations() {
-        return repository.findAll();
+    public List<ReservationEntity> getAllReservations(long userId) {
+        AccountEntity guest = accountService.getGuestById(userId);
+        return repository.findAllByClient(guest);
     }
 
     public ReservationEntity getGuestById(String reservationRef) {
@@ -68,17 +75,18 @@ public class ReservationService implements IReservationMgt {
     }
 
     @Override
-    public List<ReservationEntity> makeReservation(int guestId, List<Integer> roomIds, LocalDate startDate, LocalDate endDate,
+    public List<ReservationEntity> makeReservation(long guestId, List<Integer> roomIds, LocalDate startDate, LocalDate endDate,
             int numGuests) {
 
         List<ReservationEntity> reservations = new ArrayList<>();
+        AccountEntity guest = accountService.getGuestById(guestId);
 
         for (Integer i : roomIds) {
             RoomEntity room = hotelService.getRoomById(i);
             RoomSettingEntity roomSetting = new RoomSettingEntity();
             roomSettingRepository.save(roomSetting);
             // Create reservation
-            ReservationEntity reservation = new ReservationEntity(room, roomSetting, guestId, numGuests,
+            ReservationEntity reservation = new ReservationEntity(room, roomSetting, guest, numGuests,
                     startDate, endDate);
 
             // Save reservation
@@ -101,16 +109,16 @@ public class ReservationService implements IReservationMgt {
             int numGuests) {
         // TODO Auto-generated method stub
         ReservationEntity reservation = getReservation(reservationRef);
-        int guestId = reservation.getGuestID();
+        AccountEntity guest = reservation.getClient();
 
-        if (!validateReservation(guestId, roomId, startDate, endDate, numGuests)) {
+        if (!validateReservation(guest, roomId, startDate, endDate, numGuests)) {
             return null;
         }
 
         return null;
     }
 
-    private boolean validateReservation(int guestId, int roomId, LocalDate startDate, LocalDate endDate, int numGuests) {
+    private boolean validateReservation(AccountEntity guest, int roomId, LocalDate startDate, LocalDate endDate, int numGuests) {
         return hotelService.getRoomHasCapacity(numGuests, roomId)
                 && hotelService.getRoomIsAvailable(roomId, startDate, endDate);
     }
