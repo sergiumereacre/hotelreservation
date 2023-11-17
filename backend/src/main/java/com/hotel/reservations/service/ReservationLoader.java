@@ -1,9 +1,8 @@
 package com.hotel.reservations.service;
 
 import com.hotel.reservations.controller.HotelController;
-import com.hotel.reservations.entity.RoomEntity;
-
-import java.util.Random;
+import com.hotel.reservations.controller.ReservationController;
+import com.hotel.reservations.entity.ReservationEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,43 +15,24 @@ public class ReservationLoader implements CommandLineRunner {
     @Autowired
     private HotelController hotelController;
 
+    @Autowired
+    private ReservationService reservationService;
+
+
     @Override
     public void run(String... args) throws Exception {
-        loadRoomData(20);
+        loadReservationData();
     }
 
     private void loadReservationData() {
+        ReservationEntity reservation1 = new ReservationEntity();
+        reservation1.setReservationRef("123456789");
+        reservation1.setGuestID(1);
+        reservation1.setStartDate("2021-04-01");
+        reservation1.setEndDate("2021-04-05");
+        reservation1.setNumGuests(2);
+        reservation1.setCancelled(false);
 
-    }
-
-    private void loadRoomData(int numRooms) {
-        for(int i = 0; i < numRooms; i++) {
-            RoomEntity room = createRandomRoom();
-            hotelController.createRoom(room);
-        }
-    }
-
-    private RoomEntity createRandomRoom() {
-        Random random = new Random();
-        RoomEntity room = new RoomEntity();
-        room.setRoomType(getRandomRoomType(random));
-        room.setAvailable(true);
-        room.setRoomNumber(getRandomNumber(random, 1, 999));
-        room.setCapacity(getRandomNumber(random, 1, 6));
-        room.setPrice(getRandomDouble(random, 100, 2000));
-        return room;
-    }
-
-    private String getRandomRoomType(Random random) {
-        String[] roomTypes = { "Single", "Double", "Twin", "Suite" };
-        return roomTypes[random.nextInt(roomTypes.length)];
-    }
-
-    private int getRandomNumber(Random random, int min, int max) {
-        return random.nextInt(max - min) + min;
-    }
-
-    private double getRandomDouble(Random random, double min, double max) {
-        return (random.nextDouble(max - min) + min) * 1.0;
+        reservationService.saveReservation(reservation1);
     }
 }

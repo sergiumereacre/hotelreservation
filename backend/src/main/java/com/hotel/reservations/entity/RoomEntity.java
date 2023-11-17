@@ -1,19 +1,23 @@
 package com.hotel.reservations.entity;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "room_entity")
 @Data
-public class RoomEntity {
+@NoArgsConstructor
+public abstract class RoomEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "room_id")
     private int roomId;
 
     private int roomNumber;
@@ -22,12 +26,25 @@ public class RoomEntity {
     
     private String roomType;
     
-    private boolean isAvailable;
+    private boolean isAvailable = true;
 
     private Double price;
 
-    // public boolean getIsAvailable(){
-    //     return isAvailable;
-    // }
 
+    public abstract RoomEntity clone();
+    
+    public RoomEntity(RoomEntity room){
+        this.roomId = room.roomId;
+        this.roomNumber = room.roomNumber;
+        this.capacity = room.capacity;
+        this.roomType = room.roomType;
+        this.isAvailable = room.isAvailable;
+        this.price = room.price;
+    }
+
+    public void setPrice(Double price) {
+        if(price > 0){
+            this.price = price;
+        }
+    }
 }

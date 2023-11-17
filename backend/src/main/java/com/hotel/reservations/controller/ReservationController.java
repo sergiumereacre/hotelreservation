@@ -1,20 +1,22 @@
 package com.hotel.reservations.controller;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.hotel.payments.entity.PaymentEntity;
 import com.hotel.reservations.entity.ReservationEntity;
 import com.hotel.reservations.service.ReservationService;
-import com.hotel.reservations.service.RoomSettingService;
 import com.hotel.reservations.service.EngageReservationService;
 import com.hotel.reservations.service.PreferenceService;
 
@@ -26,37 +28,31 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @Autowired
-    private RoomSettingService roomSettingService;
-
-    @Autowired
     private EngageReservationService engageReservationService;
 
     @Autowired
     private PreferenceService preferenceService;
 
     @GetMapping("/reservation/{reservationRef}")
-    public ResponseEntity<ReservationEntity> getReservationByRef(String reservationRef) {
+    public ResponseEntity<ReservationEntity> getReservationByRef(@PathVariable String reservationRef) {
         return ResponseEntity.ok(reservationService.getReservation(reservationRef));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<ReservationEntity>> getAllReservations() {
         return ResponseEntity.ok(reservationService.getAllReservations());
     }
 
     @PutMapping("/reservation/{reservationRef}/preferences")
-    public ResponseEntity<ReservationEntity> updatePreferences(String reservationRef, String theme, double temperature,
+    public void updatePreferences(String reservationRef, String theme, double temperature,
             int lighting) {
-        ReservationEntity reservation = reservationService.getReservation(reservationRef);
-        preferenceService.setPreference(reservation, theme, temperature, lighting);
-        return ResponseEntity.ok(reservation);
+        preferenceService.setPreference(reservationRef, theme, temperature, lighting);
     }
 
     @PutMapping("/reservation/{reservationRef}/check-in")
     public ResponseEntity<Boolean> checkIn(@PathVariable String reservationRef) {
         boolean ok = engageReservationService.doCheckIn(reservationRef);
         return ResponseEntity.ok(ok);
-
     }
 
     @PutMapping("/reservation/{reservationRef}/check-out")
@@ -74,14 +70,43 @@ public class ReservationController {
     // Request to update reservation
     @PutMapping("/reservation/{reservationRef}")
     public ResponseEntity<ReservationEntity> updateReservation(@PathVariable String reservationRef, int roomId,
-            Date startDate, Date endDate, int numGuests) {
-        ReservationEntity reservation = reservationService.updateReservation(reservationRef, roomId, startDate, endDate, numGuests);
+            LocalDate startDate, LocalDate endDate, int numGuests) {
+        ReservationEntity reservation = reservationService.updateReservation(reservationRef, roomId, startDate, endDate,
+                numGuests);
         return ResponseEntity.ok(reservation);
     }
 
-    @PostMapping("/reservation")
-    public ResponseEntity<List<ReservationEntity>> makeReservation(int guestId, List<Integer> roomId, Date startDate, Date endDate, int numGuests) {
-        List<ReservationEntity> reservation = reservationService.makeReservation(guestId, roomId, startDate, endDate, numGuests);
+    @PostMapping("/make-reservations")
+    public ResponseEntity<?> makeReservation(@RequestBody JsonNode payload) {
+
+        // System.out.println(payload.toString());
+
+        int guestId = payload.get("guestId").asInt();
+
+        JsonNode roomListJson = payload.get("roomIds");
+
+        List<Integer> roomIdList = new ArrayList<>();
+        if (roomListJson.isArray()) {
+            for (JsonNode roomIdJson : roomListJson) {
+                roomIdList.add(roomIdJson.asInt());
+            }
+        }
+
+        LocalDate startDate = LocalDate.parse(payload.get("startDate").asText());
+        LocalDate endDate = LocalDate.parse(payload.get("endDate").asText());
+        int numGuests = payload.get("numGuests").asInt();
+
+        List<ReservationEntity> reservation = null;
+
+        // try {
+           
+        // } catch (Exception e) {
+        //     System.out.println(e);
+        // }
+
+         reservation = reservationService.makeReservation(guestId, roomIdList, startDate, endDate,
+                    numGuests);
+
         return ResponseEntity.ok(reservation);
     }
 }
