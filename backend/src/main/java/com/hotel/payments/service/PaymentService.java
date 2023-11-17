@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.regex.Pattern;
 
 import com.hotel.payments.entity.PaymentEntity;
-import com.hotel.payments.interfaces.IPaymentCommand;
+import com.hotel.accounts.service.AccountService;
 import com.hotel.payments.entity.CardEntity;
+import com.hotel.payments.entity.InvoiceEntity;
+import com.hotel.payments.repository.PaymentCommandRepository;
 import com.hotel.payments.repository.PaymentRepository;
 
 @Service
@@ -16,6 +17,15 @@ public class PaymentService {
 
     @Autowired
     private PaymentRepository paymentRepository;
+
+    @Autowired
+    private PaymentCommandRepository paymentCommandRepository;
+
+    @Autowired
+    private InvoiceService invoiceService;
+
+    @Autowired
+    private AccountService accountService;
 
     public List<PaymentEntity> getAllPayments() {
         return paymentRepository.findAll();
@@ -26,60 +36,37 @@ public class PaymentService {
     }
 
     // Process payment with card.
-    public void processPaymentWithCard(CardEntity cardDetails) {
-        IPaymentCommand cardPaymentCommand = new CardPaymentCommand(cardDetails, this);
+    public void processPaymentWithCard(CardEntity cardDetails, long invoiceID) {
+        InvoiceEntity invoiceEntity = invoiceService.getInvoiceById(invoiceID);
+        PaymentCommand cardPaymentCommand = new CardPaymentCommand(cardDetails, invoiceEntity);
         PaymentInvoker paymentInvoker = new PaymentInvoker();
         paymentInvoker.setPaymentCommand(cardPaymentCommand);
         paymentInvoker.processPayment();
     }
 
     // Process payment with cash.
-    public void processPaymentWithCash() {
-        IPaymentCommand cashPaymentCommand = new CashPaymentCommand(this);
+    public void processPaymentWithCash(long invoiceID) {
+        InvoiceEntity invoiceEntity = invoiceService.getInvoiceById(invoiceID);
+        PaymentCommand cashPaymentCommand = new CashPaymentCommand(invoiceEntity);
         PaymentInvoker paymentInvoker = new PaymentInvoker();
         paymentInvoker.setPaymentCommand(cashPaymentCommand);
         paymentInvoker.processPayment();
     }
 
-    public void validateCardDetails(CardEntity cardEntity) {
-        // Validate card number
-        if (!isValidCardNumber(cardEntity.getCardNumber())) {
-            throw new IllegalArgumentException("Invalid card number");
+    // Only callable by staff/admin
+    public void validateCashPayment(long invoiceID, long callerID) {
+        if(!(accountService.isStaff(callerID) || accountService.isAdmin(callerID))){
+            throw new IllegalArgumentException("Only staff and admin can validate cash payments");
         }
 
-        // Validate card holder name
-        if (cardEntity.getCardHolderName() == null || cardEntity.getCardHolderName().isEmpty()) {
-            throw new IllegalArgumentException("Card holder name is required");
-        }
-
-        // Validate expiry date
-        if (!isValidExpiryDate(cardEntity.getExpiryDate())) {
-            throw new IllegalArgumentException("Invalid expiry date");
-        }
-
-        // Validate CVV
-        if (!isValidCvv(cardEntity.getCvv())) {
-            throw new IllegalArgumentException("Invalid CVV");
-        }
+        InvoiceEntity invoiceEntity = invoiceService.getInvoiceById(invoiceID);
+        PaymentCommand cashValidateCommand = new CashValidateCommand(invoiceEntity);
+        PaymentInvoker paymentInvoker = new PaymentInvoker();
+        paymentInvoker.setPaymentCommand(cashValidateCommand);
+        paymentInvoker.processPayment();
     }
 
-    private boolean isValidCardNumber(int cardNumber) {
-        // Implement your card number validation logic (length, format, etc.)
-        // For simplicity, let's assume the card number is valid if it's a 16-digit number.
-        String cardNumberString = String.valueOf(cardNumber);
-        return Pattern.matches("\\d{16}", cardNumberString);
-    }
-
-    private boolean isValidExpiryDate(String expiryDate) {
-        // Implement your expiry date validation logic (format, future date, etc.)
-        // For simplicity, let's assume the expiry date is valid if it's in the format MM/YY.
-        return Pattern.matches("\\d{2}/\\d{2}", expiryDate);
-    }
-
-    private boolean isValidCvv(int cvv) {
-        // Implement your CVV validation logic (length, format, etc.)
-        // For simplicity, let's assume the CVV is valid if it's a 3-digit number.
-        String cvvString = String.valueOf(cvv);
-        return Pattern.matches("\\d{3}", cvvString);
+    public PaymentCommand savPaymentCommand(PaymentCommand paymentCommand) {
+        return paymentCommandRepository.save(paymentCommand);
     }
 }

@@ -102,7 +102,7 @@ public class InvoiceService implements IPayment {
         return invoices;
     }
 
-    public InvoiceEntity getInvoiceById(Long invoiceId) {
+    public InvoiceEntity getInvoiceById(long invoiceId) {
         return invoiceRepository.findById(invoiceId).orElse(null);
     }
 
