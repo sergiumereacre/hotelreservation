@@ -1,7 +1,6 @@
 package com.hotel.payments.service;
 
 import com.hotel.payments.entity.CardEntity;
-import com.hotel.payments.entity.PaymentEntity;
 import com.hotel.payments.interfaces.IPaymentCommand;
 
 public class CardPaymentCommand implements IPaymentCommand {
@@ -17,11 +16,10 @@ public class CardPaymentCommand implements IPaymentCommand {
 
     // Execute the command.
     @Override
-    public PaymentEntity execute() {
+    public void execute() {
         // Validation logic
         service.validateCardDetails(card);
-
-        // Process the payment.
-        return service.processPaymentWithCard(card);
+        // Process card payment.
+        service.processPaymentWithCard(card);
     }
 }

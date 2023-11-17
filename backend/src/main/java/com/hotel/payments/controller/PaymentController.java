@@ -39,9 +39,9 @@ public class PaymentController {
         paymentInvoker.setPaymentCommand(new CardPaymentCommand(cardEntity, service));
         
         try {
-            PaymentEntity payment = paymentInvoker.processPayment();
+            paymentInvoker.processPayment();
             // Additional logic if needed
-            return ResponseEntity.ok("Card payment processed successfully. Payment ID: " + payment.getPaymentRef());
+            return ResponseEntity.ok("Card payment processed successfully.");
         } catch (IllegalArgumentException e) {
             // Handle validation errors
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -57,9 +57,9 @@ public class PaymentController {
         paymentInvoker.setPaymentCommand(new CashPaymentCommand(service));
 
         try {
-            PaymentEntity payment = paymentInvoker.processPayment();
+            paymentInvoker.processPayment();
             // Additional logic if needed
-            return ResponseEntity.ok("Cash payment processed successfully. Payment ID: " + payment.getPaymentRef());
+            return ResponseEntity.ok("Cash payment processed successfully.");
         } catch (Exception e) {
             // Handle other exceptions
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
