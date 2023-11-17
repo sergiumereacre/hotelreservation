@@ -14,6 +14,7 @@ import com.hotel.payments.entity.CardEntity;
 import com.hotel.payments.entity.PaymentEntity;
 import com.hotel.payments.service.CardPaymentCommand;
 import com.hotel.payments.service.CashPaymentCommand;
+import com.hotel.payments.service.InvoiceService;
 import com.hotel.payments.service.PaymentInvoker;
 import com.hotel.payments.service.PaymentService;
 
@@ -21,25 +22,29 @@ import com.hotel.payments.service.PaymentService;
 @RestController
 public class PaymentController {
 
-    @Autowired PaymentService service;
+    @Autowired
+    private PaymentService paymentService;
+
+    @Autowired
+    private InvoiceService invoiceService;
 
     @GetMapping("/all")
     public ResponseEntity<Iterable<PaymentEntity>> getAllPayments() {
-        return ResponseEntity.ok(service.getAllPayments());
+        return ResponseEntity.ok(paymentService.getAllPayments());
     }
 
     @GetMapping("/payment/{paymentRef}")
     public ResponseEntity<PaymentEntity> getPaymentByRef(@PathVariable String paymentRef) {
-        return ResponseEntity.ok(service.getPaymentByRef(paymentRef));
+        return ResponseEntity.ok(paymentService.getPaymentByRef(paymentRef));
     }
 
-    @PostMapping("/processCardPayment")
-    public ResponseEntity<String> processCardPayment(@RequestBody CardEntity cardEntity) {
-        PaymentInvoker paymentInvoker = new PaymentInvoker();
-        paymentInvoker.setPaymentCommand(new CardPaymentCommand(cardEntity, service));
+    @PostMapping("/processCardPayment/{invoiceID}")
+    public ResponseEntity<String> processCardPayment(@RequestBody CardEntity cardEntity, @PathVariable long invoiceID) {
         
         try {
-            paymentInvoker.processPayment();
+            // paymentInvoker.processPayment();
+
+            invoiceService.processPaymentWithCard(cardEntity, invoiceID);
             // Additional logic if needed
             return ResponseEntity.ok("Card payment processed successfully.");
         } catch (IllegalArgumentException e) {
@@ -51,13 +56,14 @@ public class PaymentController {
         }
     }
 
-    @PostMapping("/processCashPayment")
-    public ResponseEntity<String> processCashPayment() {
-        PaymentInvoker paymentInvoker = new PaymentInvoker();
-        paymentInvoker.setPaymentCommand(new CashPaymentCommand(service));
+    @PostMapping("/processCashPayment/{invoiceID}")
+    public ResponseEntity<String> processCashPayment(@PathVariable long invoiceID) {
+        // PaymentInvoker paymentInvoker = new PaymentInvoker();
+        // paymentInvoker.setPaymentCommand(new CashPaymentCommand(service));
 
         try {
-            paymentInvoker.processPayment();
+            // paymentInvoker.processPayment();
+            invoiceService.processPaymentWithCash(invoiceID);
             // Additional logic if needed
             return ResponseEntity.ok("Cash payment processed successfully.");
         } catch (Exception e) {

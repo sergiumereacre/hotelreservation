@@ -11,6 +11,7 @@ import com.hotel.payments.entity.InvoiceEntity;
 @Entity
 public class CardPaymentCommand extends PaymentCommand {
     // Declare the required fields.
+    @OneToOne
     private CardEntity card;
 
     @OneToOne
