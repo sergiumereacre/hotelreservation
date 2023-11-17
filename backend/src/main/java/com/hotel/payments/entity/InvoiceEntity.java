@@ -50,7 +50,7 @@ public abstract class InvoiceEntity implements IInvoice {
         this.guest = guest;
     }
 
-     @Override
+    @Override
     public String printInvoice(InvoiceFormat format) {
         return "";
     }
