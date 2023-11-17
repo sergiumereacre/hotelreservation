@@ -76,9 +76,10 @@ public class PaymentService {
         return Pattern.matches("\\d{2}/\\d{2}", expiryDate);
     }
 
-    private boolean isValidCvv(String cvv) {
+    private boolean isValidCvv(int cvv) {
         // Implement your CVV validation logic (length, format, etc.)
         // For simplicity, let's assume the CVV is valid if it's a 3-digit number.
-        return Pattern.matches("\\d{3}", cvv);
+        String cvvString = String.valueOf(cvv);
+        return Pattern.matches("\\d{3}", cvvString);
     }
 }
