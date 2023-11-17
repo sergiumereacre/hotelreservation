@@ -28,18 +28,18 @@ public class ReviewController {
 
     @PostMapping
     public ResponseEntity<Boolean> writeReview(@RequestParam int userId,
-                                               @RequestParam String resRef,
-                                               @RequestParam String reviewText,
-                                               @RequestParam int rating) {
+                                                @RequestParam String resRef,
+                                                @RequestParam String reviewText,
+                                                @RequestParam int rating) {
         boolean success = reviewService.writeReview(userId, resRef, reviewText, rating);
         return ResponseEntity.ok(success);
     }
 
     @PutMapping("/{reviewId}")
     public ResponseEntity<Boolean> editReview(@PathVariable int reviewId,
-                                              @RequestParam int userId,
-                                              @RequestParam String reviewText,
-                                              @RequestParam int rating) {
+                                                @RequestParam int userId,
+                                                @RequestParam String reviewText,
+                                                @RequestParam int rating) {
         boolean success = reviewService.editReview(reviewId, userId, reviewText, rating);
         return ResponseEntity.ok(success);
     }
