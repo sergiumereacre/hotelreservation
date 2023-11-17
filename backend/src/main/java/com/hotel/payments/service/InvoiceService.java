@@ -16,6 +16,7 @@ import com.hotel.payments.entity.InvoiceEntity;
 import com.hotel.payments.entity.PaymentEntity;
 import com.hotel.payments.interfaces.IPayment;
 import com.hotel.payments.repository.BillRepository;
+import com.hotel.payments.repository.CardRepository;
 import com.hotel.payments.repository.InvoiceRepository;
 import com.hotel.payments.repository.PaymentCommandRepository;
 
@@ -39,6 +40,9 @@ public class InvoiceService implements IPayment {
 
     @Autowired
     private PaymentCommandRepository paymentCommandRepository;
+
+    @Autowired
+    private CardRepository cardRepository;
 
     // We must make sure that all the payments don't already belong to an invoice
     public InvoiceEntity generateInvoice(Long userId, List<String> paymentRefs) {
@@ -160,6 +164,7 @@ public class InvoiceService implements IPayment {
             throw new IllegalArgumentException(e.getMessage());
         }
 
+        saveInvoice(invoiceEntity);
         savePaymentCommand(cashPaymentCommand);
     }
 
@@ -180,6 +185,7 @@ public class InvoiceService implements IPayment {
             throw new IllegalArgumentException(e.getMessage());
         }
 
+        saveInvoice(invoiceEntity);
         savePaymentCommand(cashValidateCommand);
     }
 
@@ -196,11 +202,17 @@ public class InvoiceService implements IPayment {
             throw new IllegalArgumentException(e.getMessage());
         }
 
+        saveCardEntity(cardDetails);
+        saveInvoice(invoiceEntity);
         savePaymentCommand(cardPaymentCommand);
     }
 
     public PaymentCommand savePaymentCommand(PaymentCommand paymentCommand) {
         return paymentCommandRepository.save(paymentCommand);
+    }
+
+    public CardEntity saveCardEntity(CardEntity cardEntity) {
+        return cardRepository.save(cardEntity);
     }
 
 }

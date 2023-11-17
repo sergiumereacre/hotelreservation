@@ -1,5 +1,7 @@
 package com.hotel.reservations.service;
 
+import com.hotel.accounts.entity.AccountEntity;
+import com.hotel.accounts.entity.GuestAccountEntity;
 import com.hotel.reservations.entity.DoubleRoomEntity;
 import com.hotel.reservations.entity.ReservationEntity;
 import com.hotel.reservations.entity.RoomSettingEntity;
@@ -15,6 +17,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 class ReservationServiceTest {
@@ -40,7 +43,7 @@ class ReservationServiceTest {
         roomEntity.setPrice(150.0); // Set a price for the room
 
         RoomSettingEntity roomSettingEntity = new RoomSettingEntity();
-        int guestId = 1; // Example guest ID
+        AccountEntity guestEntity = new GuestAccountEntity();
         Integer numberOfGuests = 2; // Example number of guests
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = LocalDate.now().plusDays(1);
@@ -49,7 +52,7 @@ class ReservationServiceTest {
         reservationEntity = new ReservationEntity(
                 roomEntity,
                 roomSettingEntity,
-                guestId,
+                guestEntity,
                 numberOfGuests,
                 startDate,
                 endDate

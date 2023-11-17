@@ -62,11 +62,11 @@ public class CardPaymentCommand extends PaymentCommand {
         }
     }
 
-    private boolean isValidCardNumber(int cardNumber) {
+    private boolean isValidCardNumber(String cardNumber) {
         // For simplicity, let's assume the card number is valid if it's a 16-digit
         // number.
-        String cardNumberString = String.valueOf(cardNumber);
-        return Pattern.matches("\\d{16}", cardNumberString);
+        // String cardNumberString = String.valueOf(cardNumber);
+        return Pattern.matches("\\d{16}", cardNumber);
     }
 
     private boolean isValidExpiryDate(String expiryDate) {
