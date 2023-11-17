@@ -2,8 +2,11 @@ package com.hotel.reviews.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.hotel.reviews.entity.ReviewEntity;
 
+@Service
 // Reciever (Command Design Pattern)
 public class ReviewMgt {
 

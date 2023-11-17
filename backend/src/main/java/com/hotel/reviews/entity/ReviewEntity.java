@@ -2,6 +2,9 @@ package com.hotel.reviews.entity;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+
+@Entity
 // Concrete Command (Command Design Pattern)
 public class ReviewEntity {
     private int reviewId;
