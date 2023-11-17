@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.hotel.payments.entity.CardEntity;
 import com.hotel.payments.entity.PaymentEntity;
-import com.hotel.payments.service.CardPaymentCommand;
-import com.hotel.payments.service.CashPaymentCommand;
 import com.hotel.payments.service.InvoiceService;
-import com.hotel.payments.service.PaymentInvoker;
 import com.hotel.payments.service.PaymentService;
 
 @RequestMapping("/payments")
@@ -42,8 +40,6 @@ public class PaymentController {
     public ResponseEntity<String> processCardPayment(@RequestBody CardEntity cardEntity, @PathVariable long invoiceID) {
         
         try {
-            // paymentInvoker.processPayment();
-
             invoiceService.processPaymentWithCard(cardEntity, invoiceID);
             // Additional logic if needed
             return ResponseEntity.ok("Card payment processed successfully.");
@@ -56,14 +52,27 @@ public class PaymentController {
         }
     }
 
-    @PostMapping("/processCashPayment/{invoiceID}")
-    public ResponseEntity<String> processCashPayment(@PathVariable long invoiceID) {
-        // PaymentInvoker paymentInvoker = new PaymentInvoker();
-        // paymentInvoker.setPaymentCommand(new CashPaymentCommand(service));
+    @PostMapping("/processCashPayment")
+    public ResponseEntity<String> processCashPayment(@RequestBody JsonNode payload) {
+        long invoiceID = payload.get("invoiceID").asLong();        
+        
+        try {
+            invoiceService.processPaymentWithCash(invoiceID);
+            // Additional logic if needed
+            return ResponseEntity.ok("Cash payment processed successfully.");
+        } catch (Exception e) {
+            // Handle other exceptions
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
+        }
+    }
+
+    @PostMapping("/validateCashPayment")
+    public ResponseEntity<String> validateCashPayment(@RequestBody JsonNode payload) {
+        long invoiceID = payload.get("invoiceID").asLong();
+        long guestID = payload.get("guestID").asLong();
 
         try {
-            // paymentInvoker.processPayment();
-            invoiceService.processPaymentWithCash(invoiceID);
+            invoiceService.validateCashPayment(invoiceID, guestID);
             // Additional logic if needed
             return ResponseEntity.ok("Cash payment processed successfully.");
         } catch (Exception e) {
