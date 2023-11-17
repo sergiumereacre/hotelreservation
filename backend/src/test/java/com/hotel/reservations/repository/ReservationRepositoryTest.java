@@ -1,5 +1,6 @@
 package com.hotel.reservations.repository;
 
+import com.hotel.reservations.entity.DoubleRoomEntity;
 import com.hotel.reservations.entity.ReservationEntity;
 import com.hotel.reservations.entity.RoomEntity;
 import com.hotel.reservations.entity.RoomSettingEntity;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 
@@ -31,18 +33,18 @@ public class ReservationRepositoryTest {
     @BeforeEach
     void setUp() {
         // Create the required entities and values to pass to the ReservationEntity constructor
-        RoomEntity roomEntity = new RoomEntity();
+        DoubleRoomEntity roomEntity = new DoubleRoomEntity();
         roomEntity.setPrice(150.0); // Set a price for the room
 
-        // Save the RoomEntity to the database first
+        // Save the RoomEntity to the database
         roomEntity = entityManager.persistAndFlush(roomEntity);
         RoomSettingEntity roomSettingEntity = new RoomSettingEntity();
         // Save the RoomSettingEntity to the database if it's a managed entity
         roomSettingEntity = entityManager.persistAndFlush(roomSettingEntity);
         int guestId = 1; // Example guest ID
         Integer numberOfGuests = 2; // Example number of guests
-        Date startDate = new Date(); // Use appropriate date
-        Date endDate = new Date(); // Use appropriate date
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = LocalDate.now().plusDays(1);
 
         // Initialize your test reservation entity with the required constructor parameters
         reservationEntity = new ReservationEntity(

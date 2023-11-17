@@ -1,7 +1,7 @@
 package com.hotel.reservations.service;
 
+import com.hotel.reservations.entity.DoubleRoomEntity;
 import com.hotel.reservations.entity.ReservationEntity;
-import com.hotel.reservations.entity.RoomEntity;
 import com.hotel.reservations.entity.RoomSettingEntity;
 import com.hotel.reservations.repository.ReservationRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,14 +10,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ReservationServiceTest {
 
@@ -37,17 +35,17 @@ class ReservationServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        // Create the required entities and values to pass to the ReservationEntity constructor
-        RoomEntity roomEntity = new RoomEntity();
+        // Use a concrete subclass of RoomEntity
+        DoubleRoomEntity roomEntity = new DoubleRoomEntity();
         roomEntity.setPrice(150.0); // Set a price for the room
 
-        RoomSettingEntity roomSettingEntity = new RoomSettingEntity(); // Assuming a no-arg constructor or set up as needed
+        RoomSettingEntity roomSettingEntity = new RoomSettingEntity();
         int guestId = 1; // Example guest ID
         Integer numberOfGuests = 2; // Example number of guests
-        Date startDate = new Date(); // Use appropriate date
-        Date endDate = new Date(); // Use appropriate date
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = LocalDate.now().plusDays(1);
 
-        // Initialize your test reservation entity with the required constructor parameters
+
         reservationEntity = new ReservationEntity(
                 roomEntity,
                 roomSettingEntity,
@@ -57,7 +55,6 @@ class ReservationServiceTest {
                 endDate
         );
 
-        // Stub the repository to return your test reservation when findById is called
         when(repository.findById(anyString())).thenReturn(java.util.Optional.of(reservationEntity));
     }
 
