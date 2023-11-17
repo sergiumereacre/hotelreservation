@@ -19,7 +19,6 @@ import com.stripe.service.ReviewService;
 @RestController
 @RequestMapping("/reviews")
 public class ReviewController {
-
     private final ReviewService reviewService;
 
     @Autowired
@@ -41,7 +40,7 @@ public class ReviewController {
                                               @RequestParam int userId,
                                               @RequestParam String reviewText,
                                               @RequestParam int rating) {
-        boolean success = reviewService.editReview(userId, reviewId, reviewText, rating);
+        boolean success = reviewService.editReview(reviewId, userId, reviewText, rating);
         return ResponseEntity.ok(success);
     }
 
