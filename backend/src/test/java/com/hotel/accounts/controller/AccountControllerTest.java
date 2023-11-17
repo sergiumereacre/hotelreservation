@@ -54,7 +54,7 @@ public class AccountControllerTest {
     @Test
     public void getAllGuests_ShouldReturnGuestsList() throws Exception {
         List<GuestAccountEntity> guests = Arrays.asList(
-                new GuestAccountEntity(), // Mock your GuestAccountEntity with some test data
+                new GuestAccountEntity(), // Mock GuestAccountEntity with some test data
                 new GuestAccountEntity()
         );
         when(service.getAllGuests()).thenReturn(guests);
@@ -67,7 +67,7 @@ public class AccountControllerTest {
     @Test
     public void getGuestById_ShouldReturnGuest() throws Exception {
         Long guestId = 1L;
-        GuestAccountEntity guest = new GuestAccountEntity(); // Mock your GuestAccountEntity with some test data
+        GuestAccountEntity guest = new GuestAccountEntity(); // Mock GuestAccountEntity with some test data
         when(service.getGuestById(guestId)).thenReturn(guest);
 
         mockMvc.perform(get("/guests/{id}", guestId))
@@ -97,7 +97,7 @@ public class AccountControllerTest {
     public void getAllStaff_ShouldReturnStaffList() throws Exception {
         // mock data
         List<AccountEntity> staffList = new ArrayList<>();
-        HotelStaffAccountEntity staff1 = new HotelStaffAccountEntity(); // Assuming AccountEntity has a default constructor and setters
+        HotelStaffAccountEntity staff1 = new HotelStaffAccountEntity();
         staff1.setName("John Doe");
         staff1.setEmail("john.doe@example.com");
         staffList.add(staff1);
@@ -121,7 +121,7 @@ public class AccountControllerTest {
     public void getStaffById_ShouldReturnStaff() throws Exception {
         // mock data
         long staffId = 1L;
-        HotelStaffAccountEntity staff = new HotelStaffAccountEntity(); // Assuming AccountEntity has a default constructor and setters
+        HotelStaffAccountEntity staff = new HotelStaffAccountEntity();
         staff.setId(staffId);
         staff.setName("John Doe");
         staff.setEmail("john.doe@example.com");

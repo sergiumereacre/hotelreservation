@@ -39,14 +39,14 @@ public class ReservationRepositoryTest {
         // Save the RoomEntity to the database
         roomEntity = entityManager.persistAndFlush(roomEntity);
         RoomSettingEntity roomSettingEntity = new RoomSettingEntity();
-        // Save the RoomSettingEntity to the database if it's a managed entity
+        // Save the RoomSettingEntity to the database
         roomSettingEntity = entityManager.persistAndFlush(roomSettingEntity);
         int guestId = 1; // Example guest ID
         Integer numberOfGuests = 2; // Example number of guests
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = LocalDate.now().plusDays(1);
 
-        // Initialize your test reservation entity with the required constructor parameters
+        // Initialize test reservation entity with the required constructor parameters
         reservationEntity = new ReservationEntity(
                 roomEntity,
                 roomSettingEntity,
