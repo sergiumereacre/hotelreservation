@@ -8,7 +8,7 @@ import com.hotel.reviews.entity.ReviewEntity;
 
 @Service
 // Reciever (Command Design Pattern)
-public class ReviewMgt {
+public class ReviewService {
 
     public boolean writeReview(int userId, String resRef, String reviewText, int rating) {
         // Implementation here

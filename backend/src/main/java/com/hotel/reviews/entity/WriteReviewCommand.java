@@ -3,18 +3,18 @@ package com.hotel.reviews.entity;
 import javax.persistence.Entity;
 
 import com.hotel.reviews.interfaces.ReviewCommand;
-import com.hotel.reviews.service.ReviewMgt;
+import com.hotel.reviews.service.ReviewService;
 
 @Entity
 // Concrete Command (Command Design Pattern)
 public class WriteReviewCommand implements ReviewCommand {
-    private ReviewMgt reviewMgt;
+    private ReviewService reviewMgt;
     private int userId;
     private String resRef;
     private String reviewText;
     private int rating;
 
-    public WriteReviewCommand(ReviewMgt reviewMgt, int userId, String resRef, String reviewText, int rating) {
+    public WriteReviewCommand(ReviewService reviewMgt, int userId, String resRef, String reviewText, int rating) {
         this.reviewMgt = reviewMgt;
         this.userId = userId;
         this.resRef = resRef;
