@@ -1,39 +1,44 @@
 package com.hotel.reservations.entity;
 
-import javax.persistence.Column;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.UUID;
+
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.hotel.accounts.entity.AccountEntity;
+import com.hotel.payments.entity.PaymentEntity;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-import java.util.Date;
-
 @Entity
-@Data
 @Table(name = "reservations")
-public class ReservationEntity {
-    @Id
-    @Column(name = "reservation_ref", unique = true, nullable = false)
+@AllArgsConstructor
+@Data
+// Discount Decorator Design Pattern - ConcreteComponent
+public class ReservationEntity extends PaymentEntity {
+    
+    // Might create Idclass later
     private String reservationRef = UUID.randomUUID().toString();
+    
 
-    @OneToOne
-    @JoinColumn(name = "room_id")
+    @ManyToOne
+    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     private RoomEntity room;
 
     @OneToOne
     private RoomSettingEntity roomSetting;
 
-    private int guestID;
-
     private Integer numGuests;
 
-    private Date startDate;
+    private LocalDate startDate;
 
-    private Date endDate;
+    private LocalDate endDate;
 
     private boolean isClaimed;
 
@@ -43,31 +48,56 @@ public class ReservationEntity {
 
     private boolean isPaid;
 
-    public ReservationEntity(RoomEntity room, RoomSettingEntity roomSetting, int guestID, Integer numGuests,
-            Date startDate, Date endDate) {
+    public ReservationEntity() {
+    }
+
+    public ReservationEntity(String paymentRef) {
+        super(paymentRef);
+    }
+
+    public ReservationEntity(RoomEntity room, RoomSettingEntity roomSetting, AccountEntity guest, Integer numGuests,
+            LocalDate startDate, LocalDate endDate) {
         this.room = room;
         this.roomSetting = roomSetting;
-        this.guestID = guestID;
+        super.setClient(guest);
         this.numGuests = numGuests;
         this.startDate = startDate;
         this.endDate = endDate;
         this.isClaimed = false;
         this.isCancelled = false;
         this.isPaid = false;
-        this.stayPrice = calculatePrice();
+        this.stayPrice = getPrice();
     }
 
     // Implement IChargeable soon
-    private double calculatePrice() {
+    @Override
+    public double getPrice() {
 
         // Room already has a price. We just need to calculate the number of days and
         // multiply by the price
 
-        long timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-
-        long daysDiff = TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS);
+        long daysDiff = ChronoUnit.DAYS.between(startDate, endDate);
 
         return daysDiff * room.getPrice();
+    }
+
+    @Override
+    public String getDiscountDetails() {
+        return "";
+    }
+
+    @Override
+    public String getChargeDetails() {
+        return "Reservation for " + numGuests + " guests from " + startDate + " to " + endDate + " at room "
+                + room.getRoomId() + " for " + getPrice() + "";
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = LocalDate.parse(startDate);
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = LocalDate.parse(endDate);
     }
 
 }

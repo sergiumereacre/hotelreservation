@@ -13,9 +13,6 @@ import com.hotel.accounts.entity.GuestAccountEntity;
 @Repository
 public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
 
-    // Common methods
-   // Optional<AccountEntity> findByEmail(String email);
-
     // Staff-specific methods
     List<AccountEntity> findAllByIsStaff(boolean isStaff);
     Optional<AccountEntity> findByIdAndIsStaff(Long id, boolean isStaff);

@@ -1,10 +1,10 @@
 package com.hotel.discounts.interfaces;
 
-// Component (Decorator Pattern)
-public interface IDiscountMgt {
-    // Waiting for IChargeable interface
-    void applySimpleDiscount(IChargeable chargeable, double flatDiscount, double percentageDiscount, int applierId);
+import com.hotel.loyalty.entity.LoyaltyEntity;
+import com.hotel.payments.entity.PaymentEntity;
 
-    // Waiting for IChargeable and ILoyaltyStatus interfaces
-    void applyLoyaltyDiscount(IChargeable chargeable, ILoyaltyStatus loyaltyStatus);
+public interface IDiscountMgt {
+    void applySimpleDiscount(PaymentEntity chargeable, double flatDiscount, double percentageDiscount, int applierId);
+
+    void applyLoyaltyDiscount(PaymentEntity chargeable, LoyaltyEntity loyaltyStatus);
 }

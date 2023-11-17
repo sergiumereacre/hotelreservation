@@ -1,16 +1,27 @@
 package com.hotel.discounts.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-// BaseDecorator (Decorator Pattern)
+import com.hotel.payments.entity.PaymentEntity;
+
 @Entity
-public abstract class DiscountDecoratorEntity implements IChargeable {
+@Table(name = "discount_decorator_entity")
+// Discount Decorator Design Pattern - BaseDecorator
+public abstract class DiscountDecoratorEntity extends PaymentEntity {
     
-    protected IChargeable chargeable;
+    // (fetch = javax.persistence.FetchType.LAZY)
+
+    @OneToOne
+    @JoinColumn(name = "payment_ref", referencedColumnName = "payment_ref")
+    protected PaymentEntity chargeable;
+
     protected double flatDiscount;
     protected double percentageDiscount;
 
-    DiscountDecoratorEntity(IChargeable chargeable) {
+    public DiscountDecoratorEntity(PaymentEntity chargeable) {
         this.chargeable = chargeable;
     }
 
@@ -23,7 +34,4 @@ public abstract class DiscountDecoratorEntity implements IChargeable {
     public String getDiscountDetails() {
         return chargeable.getDiscountDetails();
     }
-
-    //public abstract double getPrice();
-    //public abstract String getDiscountDetails();
 }
