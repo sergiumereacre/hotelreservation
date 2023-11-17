@@ -11,22 +11,22 @@ import javax.persistence.Table;
 
 import com.hotel.payments.interfaces.IChargeable;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "payments")
 @Inheritance(strategy = InheritanceType.JOINED)
-// @MappedSuperclass
+@NoArgsConstructor
+@Data
+// Discount Decorator Design Pattern - Component // @MappedSuperclass
 public abstract class PaymentEntity implements IChargeable{
 
     @Id
     @Column(name = "payment_ref", unique = true, nullable = false)
     private String paymentRef = UUID.randomUUID().toString();
-
-    public abstract double getPrice();
-    public abstract String getDiscountDetails();
-    public abstract String getChargeDetails();
-    public abstract void setIsPaid(boolean isPaid);
-    public abstract boolean getIsPaid();
-
-    public PaymentEntity() {
+    
+    public PaymentEntity(String paymentRef) {
+        this.paymentRef = paymentRef;
     }
 }

@@ -2,25 +2,23 @@ package com.hotel.payments.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hotel.payments.interfaces.IBilling;
-import com.hotel.payments.interfaces.IInvoice;
-import com.hotel.payments.interfaces.IPayment;
+import com.hotel.payments.entity.PaymentEntity;
+import com.hotel.payments.repository.PaymentRepository;
 
 @Service
-public class PaymentService implements IPayment {
-    @Override
-    public boolean processPayment(int invoiceId, String paymentType) {
-        return false;
+public class PaymentService {
+
+    @Autowired
+    private PaymentRepository paymentRepository;
+
+    public List<PaymentEntity> getAllPayments() {
+        return paymentRepository.findAll();
     }
 
-    @Override
-    public IInvoice generateIInvoice(List<IBilling> billings) {
-        return null;
-    }
-
-    public List<IInvoice> getInvoiceHistory(int userId) {
-        return null;
+    public PaymentEntity getPaymentByRef(String paymentRef) {
+        return paymentRepository.findById(paymentRef).orElse(null);
     }
 }

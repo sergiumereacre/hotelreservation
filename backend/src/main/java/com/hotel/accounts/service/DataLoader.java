@@ -51,6 +51,8 @@ public class DataLoader implements CommandLineRunner {
         accountController.createGuest(guest2);
 
         // Add more dummy guests as needed
+
+        
     }
 
     private void loadStaffData() {

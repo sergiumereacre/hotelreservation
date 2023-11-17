@@ -20,10 +20,12 @@ import java.util.List;
 public class ReservationService implements IReservationMgt {
 
 
-    private final ReservationRepository repository;
+    @Autowired
+    private ReservationRepository repository;
 
 
-    private final RoomSettingRepository roomSettingRepository;
+    @Autowired
+    private RoomSettingRepository roomSettingRepository;
 
     // Autowire hotelservice
     @Autowired

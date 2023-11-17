@@ -1,7 +1,10 @@
 package com.hotel.reservations.entity;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.UUID;
+
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -12,20 +15,18 @@ import com.hotel.payments.entity.PaymentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.UUID;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-
 @Entity
 @Table(name = "reservations")
 @AllArgsConstructor
 @Data
+// Discount Decorator Design Pattern - ConcreteComponent
 public class ReservationEntity extends PaymentEntity {
     
     // Might create Idclass later
     private String reservationRef = UUID.randomUUID().toString();
+    
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     private RoomEntity room;
 
@@ -49,6 +50,10 @@ public class ReservationEntity extends PaymentEntity {
     private boolean isPaid;
 
     public ReservationEntity() {
+    }
+
+    public ReservationEntity(String paymentRef) {
+        super(paymentRef);
     }
 
     public ReservationEntity(RoomEntity room, RoomSettingEntity roomSetting, int guestID, Integer numGuests,
@@ -78,26 +83,22 @@ public class ReservationEntity extends PaymentEntity {
     }
 
     @Override
-    public void setIsPaid(boolean isPaid) {
-        this.isPaid = isPaid;
-    }
-
-    @Override
-    public boolean getIsPaid() {
-        return this.isPaid;
-    }
-
-    @Override
     public String getDiscountDetails() {
         return "";
     }
-
-    
 
     @Override
     public String getChargeDetails() {
         return "Reservation for " + numGuests + " guests from " + startDate + " to " + endDate + " at room "
                 + room.getRoomId() + " for " + getPrice() + "";
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = LocalDate.parse(startDate);
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = LocalDate.parse(endDate);
     }
 
 }
