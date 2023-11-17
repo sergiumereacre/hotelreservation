@@ -97,7 +97,7 @@ public class AccountService {
         return repository.findAllGuests();
     }
 
-    public GuestAccountEntity getGuestById(Long id) {
+    public GuestAccountEntity getGuestById(long id) {
         return (GuestAccountEntity) repository.findById(id).orElse(null);
     }
 

@@ -1,5 +1,6 @@
 package com.hotel.reservations.repository;
 
+import com.hotel.accounts.entity.AccountEntity;
 import com.hotel.reservations.entity.ReservationEntity;
 import com.hotel.reservations.entity.RoomEntity;
 
@@ -15,6 +16,8 @@ import java.util.Optional;
 @Repository
 public interface ReservationRepository extends JpaRepository<ReservationEntity, String> {
         Optional<ReservationEntity> findByReservationRef(String reservationRef);
+
+        List<ReservationEntity> findAllByClient(AccountEntity client);
 
         // // Find by list of room ids, start date, and end date
         // @Query("SELECT r FROM ReservationEntity r WHERE r.room IN :roomIds")
