@@ -8,14 +8,15 @@ import com.hotel.reviews.service.ReviewService;
 @Entity
 // Concrete Command (Command Design Pattern)
 public class WriteReviewCommand implements ReviewCommand {
-    private ReviewService reviewMgt;
+    private ReviewService reviewService;
+
     private int userId;
     private String resRef;
     private String reviewText;
     private int rating;
 
-    public WriteReviewCommand(ReviewService reviewMgt, int userId, String resRef, String reviewText, int rating) {
-        this.reviewMgt = reviewMgt;
+    public WriteReviewCommand(ReviewService reviewService, int userId, String resRef, String reviewText, int rating) {
+        this.reviewService = reviewService;
         this.userId = userId;
         this.resRef = resRef;
         this.reviewText = reviewText;
@@ -24,7 +25,7 @@ public class WriteReviewCommand implements ReviewCommand {
 
     @Override
     public boolean execute() {
-        return reviewMgt.writeReview(userId, resRef, reviewText, rating);
+        return reviewService.writeReview(userId, resRef, reviewText, rating);
     }
 }
 

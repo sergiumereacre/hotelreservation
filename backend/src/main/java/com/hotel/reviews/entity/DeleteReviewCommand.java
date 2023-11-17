@@ -8,19 +8,20 @@ import com.hotel.reviews.service.ReviewService;
 @Entity
 // Concrete Command (Command Design Pattern)
 public class DeleteReviewCommand implements ReviewCommand {
-    private ReviewService reviewMgt;
+    private ReviewService reviewService;
+
     private int reviewId;
     private int userId;
 
-    public DeleteReviewCommand(ReviewService reviewMgt, int reviewId, int userId) {
-        this.reviewMgt = reviewMgt;
+    public DeleteReviewCommand(ReviewService reviewService, int reviewId, int userId) {
+        this.reviewService = reviewService;
         this.reviewId = reviewId;
         this.userId = userId;
     }
 
     @Override
     public boolean execute() {
-        return reviewMgt.deleteReview(reviewId, userId);
+        return reviewService.deleteReview(reviewId, userId);
     }
 }
 
