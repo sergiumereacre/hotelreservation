@@ -6,11 +6,11 @@ import javax.persistence.OneToOne;
 import com.hotel.payments.entity.InvoiceEntity;
 
 @Entity
-public class CashPaymentCommand extends PaymentCommand {
+public class CashValidateCommand extends PaymentCommand {
     @OneToOne
     private InvoiceEntity invoice;
 
-    public CashPaymentCommand(InvoiceEntity invoice) {
+    public CashValidateCommand(InvoiceEntity invoice) {
         this.invoice = invoice;
     }
 
@@ -18,6 +18,6 @@ public class CashPaymentCommand extends PaymentCommand {
     @Override
     public void execute() {
         this.invoice.setPaymentType("Cash");
-        this.invoice.setPaid(false);
+        this.invoice.setPaid(true);
     }
 }

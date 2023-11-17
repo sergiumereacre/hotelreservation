@@ -1,5 +1,8 @@
 package com.hotel.reservations.repository;
 
+import com.hotel.accounts.entity.AccountEntity;
+import com.hotel.accounts.entity.GuestAccountEntity;
+import com.hotel.accounts.repository.AccountRepository;
 import com.hotel.reservations.entity.DoubleRoomEntity;
 import com.hotel.reservations.entity.ReservationEntity;
 import com.hotel.reservations.entity.RoomEntity;
@@ -41,7 +44,9 @@ public class ReservationRepositoryTest {
         RoomSettingEntity roomSettingEntity = new RoomSettingEntity();
         // Save the RoomSettingEntity to the database
         roomSettingEntity = entityManager.persistAndFlush(roomSettingEntity);
-        int guestId = 1; // Example guest ID
+        AccountEntity guestEntity = new GuestAccountEntity();
+        // Save the GuestAccountEntity to the database
+        guestEntity = entityManager.persistAndFlush(guestEntity);
         Integer numberOfGuests = 2; // Example number of guests
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = LocalDate.now().plusDays(1);
@@ -50,7 +55,7 @@ public class ReservationRepositoryTest {
         reservationEntity = new ReservationEntity(
                 roomEntity,
                 roomSettingEntity,
-                guestId,
+                guestEntity,
                 numberOfGuests,
                 startDate,
                 endDate

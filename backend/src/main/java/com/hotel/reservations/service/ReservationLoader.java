@@ -1,5 +1,6 @@
 package com.hotel.reservations.service;
 
+import com.hotel.accounts.service.AccountService;
 import com.hotel.reservations.controller.HotelController;
 import com.hotel.reservations.controller.ReservationController;
 import com.hotel.reservations.entity.ReservationEntity;
@@ -18,6 +19,9 @@ public class ReservationLoader implements CommandLineRunner {
     @Autowired
     private ReservationService reservationService;
 
+    @Autowired
+    private AccountService accountService;
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -27,7 +31,7 @@ public class ReservationLoader implements CommandLineRunner {
     private void loadReservationData() {
         ReservationEntity reservation1 = new ReservationEntity();
         reservation1.setReservationRef("123456789");
-        reservation1.setGuestID(1);
+        reservation1.setClient(accountService.getGuestById(1));
         reservation1.setStartDate("2021-04-01");
         reservation1.setEndDate("2021-04-05");
         reservation1.setNumGuests(2);

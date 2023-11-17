@@ -18,7 +18,7 @@ public class CardEntity {
     private long id;
 
     // Card number is 16 digits.
-    private int cardNumber;
+    private String cardNumber;
 
     // Name on card.
     private String cardHolderName;

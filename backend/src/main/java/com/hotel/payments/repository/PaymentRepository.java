@@ -6,5 +6,5 @@ import com.hotel.payments.entity.PaymentEntity;
 
 public interface PaymentRepository extends JpaRepository<PaymentEntity, String> {
 
-    
+    // Get all from userId
 } 
