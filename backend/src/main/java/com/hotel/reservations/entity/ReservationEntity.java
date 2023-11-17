@@ -1,18 +1,16 @@
 package com.hotel.reservations.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.hotel.accounts.entity.AccountEntity;
 import com.hotel.payments.entity.PaymentEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.UUID;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -25,8 +23,7 @@ public class ReservationEntity extends PaymentEntity {
     
     // Might create Idclass later
     private String reservationRef = UUID.randomUUID().toString();
-
-// (fetch = FetchType.LAZY)
+    
 
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "room_id")
@@ -34,8 +31,6 @@ public class ReservationEntity extends PaymentEntity {
 
     @OneToOne
     private RoomSettingEntity roomSetting;
-
-    private int guestID;
 
     private Integer numGuests;
 
@@ -58,11 +53,11 @@ public class ReservationEntity extends PaymentEntity {
         super(paymentRef);
     }
 
-    public ReservationEntity(RoomEntity room, RoomSettingEntity roomSetting, int guestID, Integer numGuests,
+    public ReservationEntity(RoomEntity room, RoomSettingEntity roomSetting, AccountEntity guest, Integer numGuests,
             LocalDate startDate, LocalDate endDate) {
         this.room = room;
         this.roomSetting = roomSetting;
-        this.guestID = guestID;
+        super.setClient(guest);
         this.numGuests = numGuests;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -85,21 +80,9 @@ public class ReservationEntity extends PaymentEntity {
     }
 
     @Override
-    public void setIsPaid(boolean isPaid) {
-        this.isPaid = isPaid;
-    }
-
-    @Override
-    public boolean getIsPaid() {
-        return this.isPaid;
-    }
-
-    @Override
     public String getDiscountDetails() {
         return "";
     }
-
-    
 
     @Override
     public String getChargeDetails() {

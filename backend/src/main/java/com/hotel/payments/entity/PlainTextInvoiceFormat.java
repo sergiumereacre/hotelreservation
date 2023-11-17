@@ -1,14 +1,25 @@
 package com.hotel.payments.entity;
 
-import javax.persistence.Entity;
+import com.hotel.payments.service.InvoiceFormat;
 
-import com.hotel.payments.interfaces.IInvoice;
-import com.hotel.payments.interfaces.IInvoiceFormat;
-
-// @Entity
-public class PlainTextInvoiceFormat implements IInvoiceFormat {
+public class PlainTextInvoiceFormat extends InvoiceFormat {
     @Override
-    public String formatInvoice(IInvoice invoice) {
-        return "";
+    public String format() {
+        return format(this.getInvoice());
+    }
+
+    @Override
+    public String format(InvoiceEntity invoice) {
+        return "Invoice\n" +
+        "Invoice ID: " + invoice.getInvoiceID() + "\n" +
+        "Paid by: " + invoice.getGuest().getName() + "\n" +
+        "Invoice Total: " + invoice.getTotal() + "\n";
+    }
+
+    public PlainTextInvoiceFormat(InvoiceEntity invoice) {
+        super(invoice);
+    }
+
+    public PlainTextInvoiceFormat() {
     }
 }
