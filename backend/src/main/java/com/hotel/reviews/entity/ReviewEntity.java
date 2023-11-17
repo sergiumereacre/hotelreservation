@@ -15,7 +15,7 @@ public class ReviewEntity {
     private LocalDateTime lastUpdated;
 
     // Constructor, if needed
-    // public Review(int reviewId, int authorId, String reviewText, int rating, LocalDateTime timeCreated) {
+    // public ReviewEntity(int reviewId, int authorId, String reviewText, int rating, LocalDateTime timeCreated) {
     //    // Initialize variables here
     // }
 
