@@ -1,6 +1,5 @@
 package com.hotel.payments.service;
 
-import com.hotel.payments.entity.PaymentEntity;
 import com.hotel.payments.interfaces.IPaymentCommand;
 
 public class PaymentInvoker {
@@ -12,8 +11,8 @@ public class PaymentInvoker {
         this.paymentCommand = paymentCommand;
     }
 
-    public PaymentEntity processPayment() {
+    public void processPayment() {
         // Execute the command.
-        return paymentCommand.execute();
+        paymentCommand.execute();
     }
 }

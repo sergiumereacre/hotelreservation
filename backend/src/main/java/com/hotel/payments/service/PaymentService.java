@@ -26,19 +26,19 @@ public class PaymentService {
     }
 
     // Process payment with card.
-    public PaymentEntity processPaymentWithCard(CardEntity cardDetails) {
+    public void processPaymentWithCard(CardEntity cardDetails) {
         IPaymentCommand cardPaymentCommand = new CardPaymentCommand(cardDetails, this);
         PaymentInvoker paymentInvoker = new PaymentInvoker();
         paymentInvoker.setPaymentCommand(cardPaymentCommand);
-        return paymentInvoker.processPayment();
+        paymentInvoker.processPayment();
     }
 
     // Process payment with cash.
-    public PaymentEntity processPaymentWithCash() {
+    public void processPaymentWithCash() {
         IPaymentCommand cashPaymentCommand = new CashPaymentCommand(this);
         PaymentInvoker paymentInvoker = new PaymentInvoker();
         paymentInvoker.setPaymentCommand(cashPaymentCommand);
-        return paymentInvoker.processPayment();
+        paymentInvoker.processPayment();
     }
 
     public void validateCardDetails(CardEntity cardEntity) {

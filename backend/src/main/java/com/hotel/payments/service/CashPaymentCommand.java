@@ -1,7 +1,6 @@
 package com.hotel.payments.service;
 
 import com.hotel.payments.interfaces.IPaymentCommand;
-import com.hotel.payments.entity.PaymentEntity;
 
 public class CashPaymentCommand implements IPaymentCommand {
     // Declare the required fields.
@@ -14,8 +13,8 @@ public class CashPaymentCommand implements IPaymentCommand {
 
     // Execute the command.
     @Override
-    public PaymentEntity execute() {
+    public void execute() {
         // Process cash payment.
-        return service.processPaymentWithCash();
+        service.processPaymentWithCash();
     }
 }
