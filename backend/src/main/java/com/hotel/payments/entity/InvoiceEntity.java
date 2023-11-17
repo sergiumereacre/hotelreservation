@@ -28,7 +28,7 @@ public abstract class InvoiceEntity implements IInvoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long invoiceID;
+    private long invoiceID;
 
     @OneToMany
     private List<BillEntity> bills;
@@ -50,7 +50,7 @@ public abstract class InvoiceEntity implements IInvoice {
         this.guest = guest;
     }
 
-     @Override
+    @Override
     public String printInvoice(InvoiceFormat format) {
         return "";
     }

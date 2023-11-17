@@ -73,11 +73,14 @@ public class AccountService {
         return repository.findByIdAndIsStaff(id, true).orElse(null);
     }
 
-
-
     public boolean isAdmin(Long id) {
         AccountEntity account = repository.findById(id).orElse(null);
         return account != null && "Admin".equalsIgnoreCase(account.getRole());
+    }
+
+    public boolean isStaff(Long id) {
+        AccountEntity account = repository.findById(id).orElse(null);
+        return account != null && account.isStaff();
     }
 
     public Optional<AccountEntity> authenticateStaff(String email, String password) {
@@ -94,7 +97,7 @@ public class AccountService {
         return repository.findAllGuests();
     }
 
-    public GuestAccountEntity getGuestById(Long id) {
+    public GuestAccountEntity getGuestById(long id) {
         return (GuestAccountEntity) repository.findById(id).orElse(null);
     }
 

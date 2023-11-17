@@ -24,7 +24,7 @@ public abstract class AccountEntity {
 
     @NotBlank(message = "Password is required.")
     @Size(min = 6, message = "Password should be at least 6 characters.")
-    private String password; // Should be encrypted in real scenarios.
+    private String password;
 
     private boolean isStaff; // Indicates if the account is of type staff
 

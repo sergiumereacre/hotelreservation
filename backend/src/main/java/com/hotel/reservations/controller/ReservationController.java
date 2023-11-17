@@ -38,9 +38,9 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.getReservation(reservationRef));
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<ReservationEntity>> getAllReservations() {
-        return ResponseEntity.ok(reservationService.getAllReservations());
+    @GetMapping("{userId}/all")
+    public ResponseEntity<List<ReservationEntity>> getAllReservations(@PathVariable long userId) {
+        return ResponseEntity.ok(reservationService.getAllReservations(userId));
     }
 
     @PutMapping("/reservation/{reservationRef}/preferences")
@@ -79,8 +79,6 @@ public class ReservationController {
     @PostMapping("/make-reservations")
     public ResponseEntity<?> makeReservation(@RequestBody JsonNode payload) {
 
-        // System.out.println(payload.toString());
-
         int guestId = payload.get("guestId").asInt();
 
         JsonNode roomListJson = payload.get("roomIds");
@@ -97,12 +95,6 @@ public class ReservationController {
         int numGuests = payload.get("numGuests").asInt();
 
         List<ReservationEntity> reservation = null;
-
-        // try {
-           
-        // } catch (Exception e) {
-        //     System.out.println(e);
-        // }
 
          reservation = reservationService.makeReservation(guestId, roomIdList, startDate, endDate,
                     numGuests);

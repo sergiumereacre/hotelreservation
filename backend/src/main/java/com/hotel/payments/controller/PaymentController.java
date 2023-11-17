@@ -1,62 +1,87 @@
 package com.hotel.payments.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.ui.Model;
-import com.stripe.exception.StripeException;
-import com.stripe.model.Charge;
-import com.hotel.payments.entity.ChargeRequestEntity;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.hotel.payments.entity.CardEntity;
 import com.hotel.payments.entity.PaymentEntity;
-import com.hotel.payments.entity.ChargeRequestEntity.Currency;
+import com.hotel.payments.service.InvoiceService;
 import com.hotel.payments.service.PaymentService;
-import com.hotel.payments.service.StripeService;
 
 @RequestMapping("/payments")
 @RestController
 public class PaymentController {
 
-    @Autowired PaymentService service;
-    @Autowired StripeService stripeService;
-    
+    @Autowired
+    private PaymentService paymentService;
+
+    @Autowired
+    private InvoiceService invoiceService;
 
     @GetMapping("/all")
     public ResponseEntity<Iterable<PaymentEntity>> getAllPayments() {
-        return ResponseEntity.ok(service.getAllPayments());
+        return ResponseEntity.ok(paymentService.getAllPayments());
     }
 
-   
-
-    @PostMapping("/charge")
-    public String charge(ChargeRequestEntity chargeRequest, Model model)
-        throws StripeException {
-        chargeRequest.setDescription("Example charge");
-        chargeRequest.setCurrency(Currency.EUR);
-        Charge charge = stripeService.charge(chargeRequest);
-        model.addAttribute("id", charge.getId());
-        model.addAttribute("status", charge.getStatus());
-        model.addAttribute("chargeId", charge.getId());
-        model.addAttribute("balance_transaction", charge.getBalanceTransaction());
-        return "result";
-    }
-
-    @ExceptionHandler(StripeException.class)
-    public String handleError(Model model, StripeException ex) {
-        model.addAttribute("error", ex.getMessage());
-        return "result";
-    }
-
-     @GetMapping("/payment/{paymentRef}")
+    @GetMapping("/payment/{paymentRef}")
     public ResponseEntity<PaymentEntity> getPaymentByRef(@PathVariable String paymentRef) {
-        return ResponseEntity.ok(service.getPaymentByRef(paymentRef));
+        return ResponseEntity.ok(paymentService.getPaymentByRef(paymentRef));
+    }
+
+    @PutMapping("/processCardPayment/{invoiceID}")
+    public ResponseEntity<String> processCardPayment(@RequestBody CardEntity cardEntity, @PathVariable long invoiceID) {
+
+        try {
+            invoiceService.processPaymentWithCard(cardEntity, invoiceID);
+            // Additional logic if needed
+            return ResponseEntity.ok("Card payment processed successfully.");
+        } catch (IllegalArgumentException e) {
+            // Handle validation errors
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        catch (Exception e) {
+            // Handle other exceptions
+            // Print e
+            return ResponseEntity.badRequest().body(e.getMessage());
+            // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
+        }
+    }
+
+    @PutMapping("/processCashPayment/{invoiceID}")
+    public ResponseEntity<String> processCashPayment(@PathVariable long invoiceID) {
+        // long invoiceID = payload.get("invoiceID").asLong();        
+        
+        try {
+            invoiceService.processPaymentWithCash(invoiceID);
+            // Additional logic if needed
+            return ResponseEntity.ok("Cash payment processed successfully.");
+        } catch (Exception e) {
+            // Handle other exceptions
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
+        }
+    }
+
+    @PutMapping("/validateCashPayment/{invoiceID}")
+    public ResponseEntity<String> validateCashPayment(@RequestBody JsonNode payload, @PathVariable long invoiceID) {
+        // long invoiceID = payload.get("invoiceID").asLong();
+        long guestID = payload.get("guestID").asLong();
+
+        try {
+            invoiceService.validateCashPayment(invoiceID, guestID);
+            // Additional logic if needed
+            return ResponseEntity.ok("Cash payment confirmed and validated successfully.");
+        } catch (Exception e) {
+            // Handle other exceptions
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
+        }
     }
 
 }
