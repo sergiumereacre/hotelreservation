@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.hotel.accounts.entity.AccountEntity;
 import com.hotel.reservations.interfaces.IReservationMgt;
 import com.hotel.reviews.entity.ReviewEntity;
 //import com.stripe.model.Review;
@@ -19,7 +20,7 @@ public class ReviewService {
     private Map<Integer, ReviewEntity> reviewMap = new HashMap<>();
 
     // Dependencies
-    private IGuestMgt guestMgt;
+    private AccountEntity guestMgt;
     private IReservationMgt reservationMgt;
 
     // Method to write a new review
@@ -93,7 +94,7 @@ public class ReviewService {
     }
 
     // Setters for dependencies
-    public void setGuestMgt(IGuestMgt guestMgt) {
+    public void setGuestMgt(AccountEntity guestMgt) {
         this.guestMgt = guestMgt;
     }
 

@@ -1,14 +1,17 @@
 package com.hotel.reviews.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
-import com.hotel.reviews.interfaces.ReviewCommand;
 import com.hotel.reviews.service.ReviewService;
 
 @Entity
 // Concrete Command (Command Design Pattern)
-public class DeleteReviewCommand implements ReviewCommand {
+public class DeleteReviewCommand extends ReviewCommandEntity {
     private ReviewService reviewService;
+
+    @Id
+    private long deleteReviewCommandId;
 
     private int reviewId;
     private int userId;
