@@ -2,23 +2,14 @@ package com.hotel.reviews.entity;
 
 import javax.persistence.Entity;
 
-import com.hotel.reviews.service.ReviewService;
-
 @Entity
 // Concrete Command (Command Design Pattern)
 public class EditReviewCommand extends ReviewCommandEntity {
-    private ReviewService reviewService;
-
-
-
-    private int userId;
-    private int reviewId;
     private String reviewText;
     private int rating;
 
-    public EditReviewCommand(ReviewService reviewService, int userId, int reviewId, String reviewText, int rating) {
-        this.reviewService = reviewService;
-        this.userId = userId;
+    public EditReviewCommand(Long author, Long reviewId, String reviewText, int rating) {
+        this.author = author;
         this.reviewId = reviewId;
         this.reviewText = reviewText;
         this.rating = rating;
@@ -26,7 +17,7 @@ public class EditReviewCommand extends ReviewCommandEntity {
 
     @Override
     public boolean execute() {
-        return reviewService.editReview(userId, reviewId, reviewText, rating);
+        return false; //reviewService.editReview(userId, reviewId, reviewText, rating);
     }
 }
 

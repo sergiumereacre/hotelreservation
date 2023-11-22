@@ -1,10 +1,8 @@
 package com.hotel.reviews.entity;
 
-import javax.persistence.Entity;
-
 import com.hotel.reviews.interfaces.ReviewCommand;
 
-@Entity
+//@Entity
 // Invoker (Command Design Pattern)
 public class ReviewInvoker {
     private ReviewCommand command;

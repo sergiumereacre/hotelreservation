@@ -2,21 +2,26 @@ package com.hotel.reviews.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hotel.accounts.entity.AccountEntity;
+import com.hotel.accounts.service.AccountService;
 import com.hotel.reservations.interfaces.IReservationMgt;
 import com.hotel.reviews.entity.ReviewEntity;
+import com.hotel.reviews.repository.ReviewRepository;
 
 @Service
 // Reciever (Command Design Pattern)
 public class ReviewService {
-    // A simple in-memory store for demonstration purposes
-    private Map<Integer, ReviewEntity> reviewMap = new HashMap<>();
+
+    @Autowired
+    private ReviewRepository reviewRepository;
+
+    @Autowired
+    private AccountService accountService;
 
     // Dependencies
     private AccountEntity guestMgt;
@@ -32,27 +37,28 @@ public class ReviewService {
         // ...
 
         // Create and store the review
-        int reviewId = generateReviewId(); // Method to generate a unique review ID
         ReviewEntity newReview = new ReviewEntity();
-        newReview.setReviewId(reviewId);
-        newReview.setAuthorId(userId);
+        newReview.setAuthor(accountService.getGuestById(userId));
         newReview.setReviewText(reviewText);
         newReview.setRating(rating);
         newReview.setTimeCreated(LocalDateTime.now());
         newReview.setLastUpdated(LocalDateTime.now());
 
-        reviewMap.put(reviewId, newReview);
+        reviewRepository.save(newReview);
         return true;
     }
 
     // Method to edit an existing review
-    public boolean editReview(int userId, int reviewId, String reviewText, int rating) {
+    public boolean editReview(int userId, Long reviewId, String reviewText, int rating) {
         // Check if review exists and can be managed by the user
         if (!canManageReview(reviewId, userId)) {
             return false;
         }
 
-        ReviewEntity review = reviewMap.get(reviewId);
+        ReviewEntity review = reviewRepository.findById(reviewId).orElse(null);
+        if (review == null) {
+            return false;
+        }
         review.setReviewText(reviewText);
         review.setRating(rating);
         review.setLastUpdated(LocalDateTime.now());
@@ -61,18 +67,19 @@ public class ReviewService {
     }
 
     // Method to check if a user can manage a review
-    public boolean canManageReview(int reviewId, int userId) {
-        ReviewEntity review = reviewMap.get(reviewId);
-        return review != null && review.getAuthorId() == userId;
+    public boolean canManageReview(Long reviewId, Long userId) {
+        ReviewEntity review = reviewRepository.findById(userId).orElse(null);
+
+        return review != null && review.getAuthor().getId() == userId;
     }
 
     // Method to delete a review
-    public boolean deleteReview(int reviewId, int userId) {
+    public boolean deleteReview(Long reviewId, Long userId) {
         if (!canManageReview(reviewId, userId)) {
             return false;
         }
 
-        reviewMap.remove(reviewId);
+        reviewRepository.deleteById(reviewId);
         return true;
     }
 
@@ -85,11 +92,6 @@ public class ReviewService {
             }
         }
         return userReviews;
-    }
-
-    // Helper method to generate a unique review ID
-    private int generateReviewId() {
-        return reviewMap.size() + 1;
     }
 
     // Setters for dependencies

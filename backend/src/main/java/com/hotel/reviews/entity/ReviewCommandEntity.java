@@ -17,5 +17,8 @@ public abstract class ReviewCommandEntity implements ReviewCommand {
     @Id
     double reviewCommandId;
 
+    protected Long author;
+    protected Long reviewId;
+
 
 }
