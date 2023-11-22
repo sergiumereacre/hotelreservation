@@ -1,31 +1,32 @@
 package com.hotel.reviews.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hotel.accounts.entity.AccountEntity;
 import com.hotel.accounts.service.AccountService;
-import com.hotel.reservations.interfaces.IReservationMgt;
+import com.hotel.reservations.service.ReservationService;
+import com.hotel.reviews.entity.EditReviewRatingCommand;
+import com.hotel.reviews.entity.EditReviewTextCommand;
 import com.hotel.reviews.entity.ReviewEntity;
+import com.hotel.reviews.entity.ReviewInvoker;
 import com.hotel.reviews.repository.ReviewRepository;
 
 @Service
-// Reciever (Command Design Pattern)
+// Client (Command Design Pattern)
 public class ReviewService {
-
     @Autowired
     private ReviewRepository reviewRepository;
 
     @Autowired
     private AccountService accountService;
 
-    // Dependencies
-    private AccountEntity guestMgt;
-    private IReservationMgt reservationMgt;
+    @Autowired
+    private ReservationService reservationService;
+
+    ReviewInvoker reviewInvoker = new ReviewInvoker();
 
     // Method to write a new review
     public boolean writeReview(int userId, String resRef, String reviewText, int rating) {
@@ -33,8 +34,10 @@ public class ReviewService {
         if (reviewText == null || reviewText.isEmpty()) {
             return false;
         }
-        // Assuming guestMgt and reservationMgt are used here for further checks
-        // ...
+
+        if (reservationService.getReservation(resRef) == null) {
+            return false;
+        }
 
         // Create and store the review
         ReviewEntity newReview = new ReviewEntity();
@@ -48,8 +51,7 @@ public class ReviewService {
         return true;
     }
 
-    // Method to edit an existing review
-    public boolean editReview(Long userId, Long reviewId, String reviewText, int rating) {
+    public boolean editReviewText(Long userId, Long reviewId, String reviewText) {
         // Check if review exists and can be managed by the user
         if (!canManageReview(reviewId, userId)) {
             return false;
@@ -59,18 +61,41 @@ public class ReviewService {
         if (review == null) {
             return false;
         }
-        review.setReviewText(reviewText);
-        review.setRating(rating);
+        
+        reviewInvoker.setCommand(new EditReviewTextCommand(userId, review, reviewText));
         review.setLastUpdated(LocalDateTime.now());
+        reviewInvoker.executeCommand();
+
+        reviewRepository.save(review);
+
+        return true;
+    }
+
+    public boolean editReviewRating(Long userId, Long reviewId, int rating) {
+        // Check if review exists and can be managed by the user
+        if (!canManageReview(reviewId, userId)) {
+            return false;
+        }
+
+        ReviewEntity review = reviewRepository.findById(reviewId).orElse(null);
+        if (review == null) {
+            return false;
+        }
+
+        reviewInvoker.setCommand(new EditReviewRatingCommand(userId, review, rating));
+        review.setLastUpdated(LocalDateTime.now());
+        reviewInvoker.executeCommand();
+
+        reviewRepository.save(review);
 
         return true;
     }
 
     // Method to check if a user can manage a review
     public boolean canManageReview(Long reviewId, Long userId) {
-        ReviewEntity review = reviewRepository.findById(userId).orElse(null);
+        ReviewEntity review = reviewRepository.findById(reviewId).orElse(null);
 
-        return review != null && review.getAuthor().getId() == userId;
+        return review != null && review.getAuthor().getId().equals(userId);
     }
 
     // Method to delete a review
@@ -85,25 +110,7 @@ public class ReviewService {
 
     // Method to get a list of reviews by a user
     public List<ReviewEntity> getReviewList(Long userId) {
-        // List<ReviewEntity> userReviews = new ArrayList<>();
-        // for (ReviewEntity review : reviewMap.values()) {
-        //     if (review.getAuthorId() == userId) {
-        //         userReviews.add(review);
-        //     }
-        // }
-        
         return reviewRepository.findReviewsByAuthor(userId);
     }
-
-    // Setters for dependencies
-    public void setGuestMgt(AccountEntity guestMgt) {
-        this.guestMgt = guestMgt;
-    }
-
-    public void setReservationMgt(IReservationMgt reservationMgt) {
-        this.reservationMgt = reservationMgt;
-    }
-
-    // Dependencies and other methods...
 }
 

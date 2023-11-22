@@ -11,8 +11,7 @@ public class ReviewInvoker {
         this.command = command;
     }
 
-    public boolean executeCommand() {
-        return command.execute();
+    public void executeCommand() {
+        command.execute();
     }
 }
-

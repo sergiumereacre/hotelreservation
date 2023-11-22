@@ -35,12 +35,19 @@ public class ReviewController {
         return ResponseEntity.ok(success);
     }
 
-    @PutMapping("/{reviewId}")
-    public ResponseEntity<Boolean> editReview(@PathVariable Long reviewId,
+    @PutMapping("/{reviewId}/editText")
+    public ResponseEntity<Boolean> editReviewText(@PathVariable Long reviewId,
             @RequestParam Long userId,
-            @RequestParam String reviewText,
+            @RequestParam String reviewText) {
+        boolean success = reviewService.editReviewText(reviewId, userId, reviewText);
+        return ResponseEntity.ok(success);
+    }
+
+        @PutMapping("/{reviewId}/editRating")
+    public ResponseEntity<Boolean> editReviewRating(@PathVariable Long reviewId,
+            @RequestParam Long userId,
             @RequestParam int rating) {
-        boolean success = reviewService.editReview(reviewId, userId, reviewText, rating);
+        boolean success = reviewService.editReviewRating(reviewId, userId, rating);
         return ResponseEntity.ok(success);
     }
 
