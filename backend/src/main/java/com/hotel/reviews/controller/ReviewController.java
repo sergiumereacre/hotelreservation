@@ -36,8 +36,8 @@ public class ReviewController {
     }
 
     @PutMapping("/{reviewId}")
-    public ResponseEntity<Boolean> editReview(@PathVariable int reviewId,
-            @RequestParam int userId,
+    public ResponseEntity<Boolean> editReview(@PathVariable Long reviewId,
+            @RequestParam Long userId,
             @RequestParam String reviewText,
             @RequestParam int rating) {
         boolean success = reviewService.editReview(reviewId, userId, reviewText, rating);
@@ -45,14 +45,14 @@ public class ReviewController {
     }
 
     @DeleteMapping("/{reviewId}")
-    public ResponseEntity<Boolean> deleteReview(@PathVariable int reviewId,
-            @RequestParam int userId) {
+    public ResponseEntity<Boolean> deleteReview(@PathVariable Long reviewId,
+            @RequestParam Long userId) {
         boolean success = reviewService.deleteReview(reviewId, userId);
         return ResponseEntity.ok(success);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<ReviewEntity>> getReviewsByUser(@PathVariable int userId) {
+    public ResponseEntity<List<ReviewEntity>> getReviewsByUser(@PathVariable Long userId) {
         List<ReviewEntity> reviews = reviewService.getReviewList(userId);
         return ResponseEntity.ok(reviews);
     }

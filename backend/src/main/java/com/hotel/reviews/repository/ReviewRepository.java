@@ -1,5 +1,8 @@
 package com.hotel.reviews.repository;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,7 +12,6 @@ import com.hotel.reviews.entity.ReviewEntity;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
-    @Query("SELECT r FROM ReservationEntity r WHERE r.room = :roomId AND  r.startDate <= :endDate AND r.endDate >= :startDate")
-        Optional<ReviewEntity> findReviewsByAuthor(@Param("author") Integer roomId,
-                        @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    @Query("SELECT r FROM ReviewEntity r WHERE r.author = :authorId")
+        List<ReviewEntity> findReviewsByAuthor(@Param("authorId") Long authorId);
 }

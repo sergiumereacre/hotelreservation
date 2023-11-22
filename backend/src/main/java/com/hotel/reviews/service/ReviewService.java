@@ -49,7 +49,7 @@ public class ReviewService {
     }
 
     // Method to edit an existing review
-    public boolean editReview(int userId, Long reviewId, String reviewText, int rating) {
+    public boolean editReview(Long userId, Long reviewId, String reviewText, int rating) {
         // Check if review exists and can be managed by the user
         if (!canManageReview(reviewId, userId)) {
             return false;
@@ -84,14 +84,15 @@ public class ReviewService {
     }
 
     // Method to get a list of reviews by a user
-    public List<ReviewEntity> getReviewList(int userId) {
-        List<ReviewEntity> userReviews = new ArrayList<>();
-        for (ReviewEntity review : reviewMap.values()) {
-            if (review.getAuthorId() == userId) {
-                userReviews.add(review);
-            }
-        }
-        return userReviews;
+    public List<ReviewEntity> getReviewList(Long userId) {
+        // List<ReviewEntity> userReviews = new ArrayList<>();
+        // for (ReviewEntity review : reviewMap.values()) {
+        //     if (review.getAuthorId() == userId) {
+        //         userReviews.add(review);
+        //     }
+        // }
+        
+        return reviewRepository.findReviewsByAuthor(userId);
     }
 
     // Setters for dependencies
