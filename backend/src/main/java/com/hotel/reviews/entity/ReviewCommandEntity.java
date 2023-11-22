@@ -9,6 +9,7 @@ import com.hotel.reviews.interfaces.ReviewCommand;
 
 import lombok.Data;
 
+// Command Interface? (Command Design Pattern)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data

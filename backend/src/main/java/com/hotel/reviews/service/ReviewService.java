@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.hotel.accounts.entity.AccountEntity;
 import com.hotel.reservations.interfaces.IReservationMgt;
 import com.hotel.reviews.entity.ReviewEntity;
-//import com.stripe.model.Review;
 
 @Service
 // Reciever (Command Design Pattern)
