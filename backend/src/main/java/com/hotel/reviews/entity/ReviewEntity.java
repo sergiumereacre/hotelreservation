@@ -14,9 +14,9 @@ import com.hotel.reservations.entity.ReservationEntity;
 
 import lombok.Data;
 
+// Reciever (Command Design Pattern)
 @Entity
 @Data
-// Reciever (Command Design Pattern)
 public class ReviewEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

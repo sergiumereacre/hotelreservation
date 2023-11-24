@@ -15,11 +15,10 @@ import com.hotel.discounts.repository.DiscountRepository;
 import com.hotel.loyalty.entity.LoyaltyEntity;
 import com.hotel.payments.entity.PaymentEntity;
 
-// Note: Creation of percentage discounts by staff (limited to a certain percentage off) for bookings. Only one discount can be applied per reservation. 
+// Note: Creation of percentage discounts by staff (limited to a certain percentage off) for bookings. Only one discount can be applied per reservation.
 
 @Service
 public class DiscountService implements IDiscountMgt {
-    // Sort out account stuff here
     private final AccountRepository accountRepository;
 
     DiscountService(AccountRepository accountRepository) {
@@ -34,25 +33,18 @@ public class DiscountService implements IDiscountMgt {
         Optional<AccountEntity> accountOptional = accountRepository.findById((long) applierId);
         accountOptional.ifPresent(account -> {
             if (percentageDiscount <= 75 && account.isStaff()) {
-                // chargeable = new SimpleDiscount(chargeable, flatDiscount, percentageDiscount);
-
                 DiscountDecoratorEntity discount = new SimpleDiscountEntity(chargeable, flatDiscount, percentageDiscount);
-                // di
                 discountRepository.save(discount);
             }
         });
     }
 
-    // Need to update business logic
     @Override
     public void applyLoyaltyDiscount(PaymentEntity chargeable, LoyaltyEntity loyaltyStatus) {
         Optional<AccountEntity> accountOptional = accountRepository.findById(loyaltyStatus.getGuestAccount().getId());
         accountOptional.ifPresent(account -> {
             if (account.isStaff()) {
-                // chargeable = new LoyaltyDiscount(chargeable, loyaltyStatus);
-
                 DiscountDecoratorEntity discount = new LoyaltyDiscountEntity(chargeable, loyaltyStatus);
-
                 discountRepository.save(discount);
             }
         });

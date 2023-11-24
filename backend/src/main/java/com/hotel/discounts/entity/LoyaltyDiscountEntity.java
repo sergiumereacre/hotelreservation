@@ -7,12 +7,10 @@ import javax.persistence.Table;
 import com.hotel.loyalty.entity.LoyaltyEntity;
 import com.hotel.payments.entity.PaymentEntity;
 
+// ConcreteDecorator (Decorator Design Pattern)
 @Entity
 @Table(name = "loyalty_discount")
-// Discount Decorator Design Pattern - ConcreteDecorator
 public class LoyaltyDiscountEntity extends DiscountDecoratorEntity {
-
-    // (fetch = javax.persistence.FetchType.LAZY)
     @OneToOne
     private LoyaltyEntity loyaltyStatus;
 
@@ -24,7 +22,6 @@ public class LoyaltyDiscountEntity extends DiscountDecoratorEntity {
     @Override
     public double getPrice() {
         double originalPrice = chargeable.getPrice();
-        // double discountPercentage = loyaltyStatus.getDiscount();
 
         double discountPercentage = getDiscountPercentage();
         double discountedPrice = originalPrice - (originalPrice * (discountPercentage / 100.0));
@@ -33,10 +30,7 @@ public class LoyaltyDiscountEntity extends DiscountDecoratorEntity {
 
     @Override
     public String getDiscountDetails() {
-        // return "Loyalty Discount: " + loyaltyStatus.getType() + " - " +
-        // loyaltyStatus.getDiscount() + "%";
         return "Loyalty Discount: " + loyaltyStatus.getType() + " - " + getDiscountPercentage() + "%";
-
     }
 
     @Override
@@ -44,18 +38,6 @@ public class LoyaltyDiscountEntity extends DiscountDecoratorEntity {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getChargeDetails'");
     }
-
-    // @Override
-    // public void setIsPaid(boolean isPaid) {
-    //     // TODO Auto-generated method stub
-    //     throw new UnsupportedOperationException("Unimplemented method 'setIsPaid'");
-    // }
-
-    // @Override
-    // public boolean getIsPaid() {
-    //     // TODO Auto-generated method stub
-    //     throw new UnsupportedOperationException("Unimplemented method 'getIsPaid'");
-    // }
 
     private double getDiscountPercentage() {
         double discountPercentage = 0.0;

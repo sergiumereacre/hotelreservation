@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -17,11 +16,11 @@ import com.hotel.payments.interfaces.IChargeable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+// Component (Decorator Design Pattern)
 @Entity
 @Table(name = "payments")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
-// Discount Decorator Design Pattern - Component // @MappedSuperclass
 @NoArgsConstructor
 public abstract class PaymentEntity implements IChargeable{
 

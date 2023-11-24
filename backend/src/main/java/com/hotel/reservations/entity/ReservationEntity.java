@@ -16,11 +16,11 @@ import com.hotel.payments.entity.PaymentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+// ConcreteComponent (Decorator Design Pattern)
 @Entity
 @Table(name = "reservations")
 @AllArgsConstructor
 @Data
-// Discount Decorator Design Pattern - ConcreteComponent
 public class ReservationEntity extends PaymentEntity {
     
     // Might create Idclass later

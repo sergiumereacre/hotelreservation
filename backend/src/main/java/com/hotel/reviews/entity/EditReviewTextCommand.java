@@ -2,8 +2,8 @@ package com.hotel.reviews.entity;
 
 import javax.persistence.Entity;
 
-@Entity
 // Concrete Command (Command Design Pattern)
+@Entity
 public class EditReviewTextCommand extends ReviewCommandEntity {
     private String reviewText;
 
