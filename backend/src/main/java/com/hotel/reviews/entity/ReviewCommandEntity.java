@@ -6,7 +6,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 
-import com.hotel.reviews.interfaces.ReviewCommand;
+import com.hotel.reviews.interfaces.IReviewCommand;
 
 import lombok.Data;
 
@@ -14,7 +14,7 @@ import lombok.Data;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
-public abstract class ReviewCommandEntity implements ReviewCommand {
+public abstract class ReviewCommandEntity implements IReviewCommand {
     @Id
     double reviewCommandId;
     

@@ -35,8 +35,7 @@ public class LoyaltyDiscountEntity extends DiscountDecoratorEntity {
 
     @Override
     public String getChargeDetails() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getChargeDetails'");
+        return "Price: " + getPrice() + ", Discount Details: " + getDiscountDetails();
     }
 
     private double getDiscountPercentage() {

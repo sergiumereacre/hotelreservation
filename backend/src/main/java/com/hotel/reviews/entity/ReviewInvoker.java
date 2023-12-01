@@ -1,12 +1,12 @@
 package com.hotel.reviews.entity;
 
-import com.hotel.reviews.interfaces.ReviewCommand;
+import com.hotel.reviews.interfaces.IReviewCommand;
 
 // Invoker (Command Design Pattern)
 public class ReviewInvoker {
-    private ReviewCommand command;
+    private IReviewCommand command;
 
-    public void setCommand(ReviewCommand command) {
+    public void setCommand(IReviewCommand command) {
         this.command = command;
     }
 
