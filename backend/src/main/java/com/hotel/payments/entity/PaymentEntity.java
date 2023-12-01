@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @NoArgsConstructor
-public abstract class PaymentEntity implements IChargeable{
+public abstract class PaymentEntity implements IChargeable {
 
     @Id
     @Column(name = "payment_ref", unique = true, nullable = false)

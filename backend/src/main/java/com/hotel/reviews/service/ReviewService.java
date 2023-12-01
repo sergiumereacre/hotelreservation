@@ -14,8 +14,8 @@ import com.hotel.reviews.entity.ReviewEntity;
 import com.hotel.reviews.entity.ReviewInvoker;
 import com.hotel.reviews.repository.ReviewRepository;
 
-@Service
 // Client (Command Design Pattern)
+@Service
 public class ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
